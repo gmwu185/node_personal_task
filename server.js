@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const headers = require('./headers');
 const handleSuccess = require('./handleSuccess');
 const handleError = require('./handleError');
-const Posts = require('./model/Posts');
+const Posts = require('./model/posts');
 
 dotenv.config({ path: './config.env' });
 

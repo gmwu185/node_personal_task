@@ -1,19 +1,12 @@
 const http = require('http');
-const dotenv = require('dotenv');
-const mongoose = require('mongoose');
+
 const headers = require('./headers');
 const handleSuccess = require('./handleSuccess');
 const handleError = require('./handleError');
 const Posts = require('./model/posts');
 
-dotenv.config({ path: './config.env' });
+require('./connections');  // or require('./connections/index');
 
-const DB = process.env.DATABASE.replace(
-  'myFirstDatabase',
-  process.env.DATABASE_COLLECTIONS
-).replace('<password>', process.env.DATABASE_PASSWORD);
-
-mongoose.connect(DB).then(() => console.log('資料庫連接成功'));
 const requestListener = async (req, res) => {
   let body = '';
   req.on('data', (chunk) => {

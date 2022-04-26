@@ -1,11 +1,9 @@
-const http = require('http');
-
 const headers = require('./headers');
 const handleSuccess = require('./handleSuccess');
 const handleError = require('./handleError');
 const Posts = require('./model/posts');
 
-require('./connections');  // or require('./connections/index');
+require('./connections'); // or require('./connections/index');
 
 const requestListener = async (req, res) => {
   let body = '';
@@ -50,5 +48,4 @@ const requestListener = async (req, res) => {
   }
 };
 
-const server = http.createServer(requestListener);
-server.listen(process.env.PORT || 3005);
+module.exports = requestListener;

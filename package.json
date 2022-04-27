@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node bin/www",
+    "dev": "nodemon bin/www"
   },
   "engines": {
     "node": "16.x"

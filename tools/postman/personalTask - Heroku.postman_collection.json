@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "855ee88f-5224-4756-bca8-1fffdd9a4edf",
-		"name": "posts - heroku",
+		"_postman_id": "8d21129e-cfd7-4525-a926-af63314f6b3e",
+		"name": "personalTask - Heroku",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -11,10 +11,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://glacial-tundra-14824.herokuapp.com/posts",
+					"raw": "https://damp-shore-91853.herokuapp.com/posts",
 					"protocol": "https",
 					"host": [
-						"glacial-tundra-14824",
+						"damp-shore-91853",
 						"herokuapp",
 						"com"
 					],
@@ -40,10 +40,10 @@
 					}
 				},
 				"url": {
-					"raw": "https://glacial-tundra-14824.herokuapp.com/posts",
+					"raw": "https://damp-shore-91853.herokuapp.com/posts",
 					"protocol": "https",
 					"host": [
-						"glacial-tundra-14824",
+						"damp-shore-91853",
 						"herokuapp",
 						"com"
 					],
@@ -69,10 +69,10 @@
 					}
 				},
 				"url": {
-					"raw": "https://glacial-tundra-14824.herokuapp.com/posts/623a09eefb88bc09b099ffa5",
+					"raw": "https://damp-shore-91853.herokuapp.com/posts/623a09eefb88bc09b099ffa5",
 					"protocol": "https",
 					"host": [
-						"glacial-tundra-14824",
+						"damp-shore-91853",
 						"herokuapp",
 						"com"
 					],
@@ -90,10 +90,10 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "https://glacial-tundra-14824.herokuapp.com/posts/623a09eefb88bc09b099ffa5",
+					"raw": "https://damp-shore-91853.herokuapp.com/posts/623a09eefb88bc09b099ffa5",
 					"protocol": "https",
 					"host": [
-						"glacial-tundra-14824",
+						"damp-shore-91853",
 						"herokuapp",
 						"com"
 					],
@@ -111,15 +111,65 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "https://glacial-tundra-14824.herokuapp.com/posts",
+					"raw": "https://damp-shore-91853.herokuapp.com/posts",
 					"protocol": "https",
 					"host": [
-						"glacial-tundra-14824",
+						"damp-shore-91853",
 						"herokuapp",
 						"com"
 					],
 					"path": [
 						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "編輯單筆 post",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"name\": \"test-edit\",\n \"content\": \"test-edit 1122\",\n \"tags\": [\"感情\"],\n \"type\": \"person\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://damp-shore-91853.herokuapp.com/posts/6269796f678505eb933e6510",
+					"protocol": "https",
+					"host": [
+						"damp-shore-91853",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"posts",
+						"6269796f678505eb933e6510"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OPTIONS API",
+			"request": {
+				"method": "OPTIONS",
+				"header": [],
+				"url": {
+					"raw": "https://damp-shore-91853.herokuapp.com/",
+					"protocol": "https",
+					"host": [
+						"damp-shore-91853",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						""
 					]
 				}
 			},

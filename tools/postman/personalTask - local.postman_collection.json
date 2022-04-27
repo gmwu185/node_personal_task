@@ -56,25 +56,6 @@
 			"response": []
 		},
 		{
-			"name": "刪除所有 post",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3005/posts",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3005",
-					"path": [
-						"posts"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "刪除單筆 post",
 			"request": {
 				"method": "DELETE",
@@ -89,6 +70,25 @@
 					"path": [
 						"posts",
 						"6269796e678505eb933e650e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "刪除所有 post",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3005/posts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3005",
+					"path": [
+						"posts"
 					]
 				}
 			},

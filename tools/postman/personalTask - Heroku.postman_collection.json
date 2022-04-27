@@ -55,36 +55,6 @@
 			"response": []
 		},
 		{
-			"name": "編輯單筆 post",
-			"request": {
-				"method": "PATCH",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"content\": \"修改2\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://damp-shore-91853.herokuapp.com/posts/623a09eefb88bc09b099ffa5",
-					"protocol": "https",
-					"host": [
-						"damp-shore-91853",
-						"herokuapp",
-						"com"
-					],
-					"path": [
-						"posts",
-						"623a09eefb88bc09b099ffa5"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "刪除單筆 post",
 			"request": {
 				"method": "DELETE",

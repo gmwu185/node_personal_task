@@ -61,7 +61,7 @@ module.exports = {
           },
           { eturnDocument: 'after' }
         );
-        handleSuccess(res, editPost);
+        editPost !== null ? handleSuccess(res, editPost) : handleError(res);
       } else {
         handleError(res);
       }

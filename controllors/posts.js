@@ -59,7 +59,7 @@ module.exports = {
             tags: data.tags,
             type: data.type,
           },
-          { eturnDocument: 'after' }
+          { returnDocument: 'after' }
         );
         editPost !== null ? handleSuccess(res, editPost) : handleError(res);
       } else {

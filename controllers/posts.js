@@ -3,19 +3,20 @@ const handleError = require('../handStates/handleError');
 const Posts = require('../model/posts');
 
 module.exports = {
-  async getPosts({ req, res }) {
+  async getPosts(req, res) {
     const allPosts = await Posts.find();
     handleSuccess(res, allPosts);
   },
-  async createdPost({ req, res, body }) {
+  async createdPost(req, res) {
     try {
-      const data = JSON.parse(body);
-      if (data.content) {
+      const { body } = req;
+      // console.log('createdPost req.body', req.body);
+      if (body.content) {
         const newPost = await Posts.create({
-          name: data.name,
-          content: data.content,
-          tags: data.tags,
-          type: data.type,
+          name: body.name,
+          content: body.content,
+          tags: body.tags,
+          type: body.type,
         });
         handleSuccess(res, newPost);
       } else {

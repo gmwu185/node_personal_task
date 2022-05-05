@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const postsControllors = require('../controllers/posts');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -7,8 +8,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/posts', function(req, res, next) {
-  console.log('GET /posts');
-  res.end();
+  postsControllors.getPosts({ req, res });
 });
 router.post('/posts', function(req, res, next) {
   console.log('POST /posts');

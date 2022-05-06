@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "1e37da27-8f87-4a30-a982-254a64aafffb",
-		"name": "personalTask - local",
+		"_postman_id": "39827a9f-ba28-4b34-a884-fcac6901e40f",
+		"name": "personalTask - local-express",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -11,12 +11,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3005/posts",
+					"raw": "http://localhost:3000/posts",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3005",
+					"port": "3000",
 					"path": [
 						"posts"
 					]
@@ -34,7 +34,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n \"name\": \"test1\",\n \"content\": \"test1\",\n \"tags\": [\"感情\"],\n \"type\": \"person\"\n}",
+					"raw": "{\n \"name\": \"test-body\",\n \"content\": \"test333\",\n \"tags\": [\"感情\"],\n \"type\": \"person\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -42,12 +42,31 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3005/posts",
+					"raw": "http://localhost:3000/posts",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3005",
+					"port": "3000",
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "刪除所有 post",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/posts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
 					"path": [
 						"posts"
 					]
@@ -61,34 +80,15 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3005/posts/6269796e678505eb933e650e",
+					"raw": "http://localhost:3000/posts/62749c7970cae0c9b4dc9e72",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3005",
+					"port": "3000",
 					"path": [
 						"posts",
-						"6269796e678505eb933e650e"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "刪除所有 post",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3005/posts",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3005",
-					"path": [
-						"posts"
+						"62749c7970cae0c9b4dc9e72"
 					]
 				}
 			},
@@ -101,7 +101,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n \"name\": \"test-edit\",\n \"content\": \"test-edit\",\n \"tags\": [\"感情\"],\n \"type\": \"person\"\n}",
+					"raw": "{\n \"name\": \"test-edit111\",\n \"content\": \"test-edit1111\",\n \"tags\": [\"感情\"],\n \"type\": \"person\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -109,15 +109,15 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3005/posts/626970b437fda791412ee750",
+					"raw": "http://localhost:3000/posts/62749decc3031217a0acd924",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3005",
+					"port": "3000",
 					"path": [
 						"posts",
-						"626970b437fda791412ee750"
+						"62749decc3031217a0acd924"
 					]
 				}
 			},
@@ -129,7 +129,7 @@
 				"method": "OPTIONS",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:3005",
+					"raw": "http://127.0.0.1:3000",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -137,7 +137,7 @@
 						"0",
 						"1"
 					],
-					"port": "3005"
+					"port": "3000"
 				}
 			},
 			"response": []

@@ -47,18 +47,19 @@ module.exports = {
       handleError(res, err);
     }
   },
-  async upDatePost({ req, res, body }) {
+  async upDatePost(req, res) {
     try {
-      const data = JSON.parse(body);
+      const { body } = req;
+      // const data = JSON.parse(body);
       const urlID = req.url.split('/').pop();
-      if (data.content) {
+      if (body.content) {
         const editPost = await Posts.findByIdAndUpdate(
           urlID,
           {
-            name: data.name,
-            content: data.content,
-            tags: data.tags,
-            type: data.type,
+            name: body.name,
+            content: body.content,
+            tags: body.tags,
+            type: body.type,
           },
           { returnDocument: 'after' }
         );

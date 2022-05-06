@@ -12,5 +12,6 @@ router.get('/posts', PostsControllors.getPosts);
 router.post('/posts', PostsControllors.createdPost);
 router.delete('/posts', PostsControllors.delALL);
 router.delete('/posts/:id', PostsControllors.delOne);
+router.patch('/posts/:id', PostsControllors.upDatePost);
 
 module.exports = router;

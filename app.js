@@ -6,6 +6,7 @@ var cors = require('cors');
 
 /* router ------------------------------------------------------------------- */
 var indexRouter = require('./routes/index');
+var postsRouter = require('./routes/posts');
 var usersRouter = require('./routes/users');
 /* /router ------------------------------------------------------------------- */
 
@@ -22,6 +23,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/posts', postsRouter);
 app.use('/users', usersRouter);
 /* express 設定 --------------------------------------------------------------- */
 

@@ -1,16 +1,14 @@
-const headers = require('./headers');
 const handleError = (res, err) => {
-  res.writeHead(400, headers);
   let message = '';
   if (err) {
+    console.log('handleError if err', err);
     message = err.message;
   } else {
     message = "欄位未填寫正確或無此 id";
   }
-  res.write(JSON.stringify({
-    "status": "false",
+  res.status(400).json({
+    status: "false",
     message
-  }))
-  res.end();
+  }).end();
 }
 module.exports = handleError;

@@ -23,6 +23,12 @@ module.exports = {
         handleError(res);
       }
     } catch (err) {
+      console.log(
+        'POST err.name => ',
+        err.name,
+        'POST err.message => ',
+        err.message
+      );
       handleError(res, err);
     }
   },

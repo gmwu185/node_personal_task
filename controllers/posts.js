@@ -26,11 +26,11 @@ module.exports = {
       handleError(res, err);
     }
   },
-  async delALL({ req, res }) {
+  async delALL(req, res) {
     const delPosts = await Posts.deleteMany();
     handleSuccess(res, delPosts);
   },
-  async delOne({ req, res }) {
+  async delOne(req, res) {
     try {
       const urlID = req.url.split('/').pop();
       const findByIdAndDeletePosts = await Posts.findByIdAndDelete({

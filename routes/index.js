@@ -10,5 +10,7 @@ router.get('/', function (req, res, next) {
 
 router.get('/posts', PostsControllors.getPosts);
 router.post('/posts', PostsControllors.createdPost);
+router.delete('/posts', PostsControllors.delALL);
+router.delete('/posts/:id', PostsControllors.delOne);
 
 module.exports = router;

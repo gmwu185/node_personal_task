@@ -13,5 +13,6 @@ router.post('/posts', PostsControllors.createdPost);
 router.delete('/posts', PostsControllors.delALL);
 router.delete('/posts/:id', PostsControllors.delOne);
 router.patch('/posts/:id', PostsControllors.upDatePost);
+router.options('/', (req, res, next) => res.status(200).end());
 
 module.exports = router;

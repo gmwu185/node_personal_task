@@ -9,14 +9,12 @@ module.exports = {
   },
   async createdPost(req, res) {
     try {
-      const { body } = req;
-      // console.log('createdPost req.body', req.body);
-      if (body.content) {
+      if (req.body.content) {
         const newPost = await Posts.create({
-          name: body.name,
-          content: body.content,
-          tags: body.tags,
-          type: body.type,
+          name: req.body.name,
+          content: req.body.content,
+          tags: req.body.tags,
+          type: req.body.type,
         });
         handleSuccess(res, newPost);
       } else {
@@ -38,11 +36,10 @@ module.exports = {
   },
   async delOne(req, res) {
     try {
-      const urlID = req.url.split('/').pop();
       const findByIdAndDeletePosts = await Posts.findByIdAndDelete({
-        _id: urlID,
+        _id: req.params.id,
       });
-      findByIdAndDeletePosts ? handleSuccess(res, urlID) : handleError(res);
+      findByIdAndDeletePosts ? handleSuccess(res, req.params.id) : handleError(res);
     } catch (err) {
       console.log(
         'POST err.name => ',
@@ -55,17 +52,14 @@ module.exports = {
   },
   async upDatePost(req, res) {
     try {
-      const { body } = req;
-      // const data = JSON.parse(body);
-      const urlID = req.url.split('/').pop();
-      if (body.content) {
+      if (req.body.content) {
         const editPost = await Posts.findByIdAndUpdate(
-          urlID,
+          req.params.id,
           {
-            name: body.name,
-            content: body.content,
-            tags: body.tags,
-            type: body.type,
+            name: req.body.name,
+            content: req.body.content,
+            tags: req.body.tags,
+            type: req.body.type,
           },
           { returnDocument: 'after' }
         );

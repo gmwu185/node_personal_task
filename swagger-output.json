@@ -117,7 +117,8 @@
             "name": "body",
             "in": "body",
             "type": "object",
-            "description": "資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的 *",
+            "required": true,
+            "description": "資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的*",
             "schema": {
               "type": "object",
               "properties": {

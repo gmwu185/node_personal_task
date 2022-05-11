@@ -32,20 +32,21 @@ module.exports = {
     handleSuccess(res, allPosts);
   },
   async createdPost(req, res) {
-    /** #swagger.tags = ['posts (貼文)']
-     ** #swagger.description = '新增單筆貼文'
-     ** #swagger.parameters['body'] = {
-          in: "body",
-          type: "object",
-          description: "資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的 *",
-          schema: {
-            "$name": "createdPost--test",
-            "content": "createdPost-test",
-            "tags": ["感情", "工作"],
-            "type": "person"
-          }
-        }
-     */
+/** #swagger.tags = ['posts (貼文)']
+ ** #swagger.description = '新增單筆貼文'
+ ** #swagger.parameters['body'] = {
+      in: "body",
+      type: "object",
+      required: true,
+      description: "資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的*",
+      schema: {
+        "$name": "createdPost--test",
+        "content": "createdPost-test",
+        "tags": ["感情", "工作"],
+        "type": "person"
+      }
+    }
+ */
     try {
       if (req.body.content) {
         const newPost = await Posts.create({

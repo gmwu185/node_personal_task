@@ -4,10 +4,48 @@ const Posts = require('../model/posts');
 
 module.exports = {
   async getPosts(req, res) {
+    /** #swagger.tags = ['posts (貼文)']
+      *? #swagger.responses[200] = {
+        description: '取得<strong>全部貼文</strong>',
+        schema:
+        {
+          "status": true,
+          "data": [
+            {
+              "_id": "62749decc3031217a0acd924",
+              "name": "test-edit333",
+              "tags": [
+                "感情"
+              ],
+              "type": "person",
+              "image": "",
+              "content": "test-edit333",
+              "likes": 0,
+              "comments": 0,
+              "__v": 0
+            },
+          ]
+        }
+      }
+    */
     const allPosts = await Posts.find();
     handleSuccess(res, allPosts);
   },
   async createdPost(req, res) {
+    /** #swagger.tags = ['posts (貼文)']
+     ** #swagger.description = '新增單筆貼文'
+     ** #swagger.parameters['body'] = {
+          in: "body",
+          type: "object",
+          description: "資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的 *",
+          schema: {
+            "$name": "createdPost--test",
+            "content": "createdPost-test",
+            "tags": ["感情", "工作"],
+            "type": "person"
+          }
+        }
+     */
     try {
       if (req.body.content) {
         const newPost = await Posts.create({
@@ -31,15 +69,23 @@ module.exports = {
     }
   },
   async delALL(req, res) {
+    /** #swagger.tags = ['posts (貼文)']
+     *! #swagger.description = '刪除全部貼文'
+     */
     const delPosts = await Posts.deleteMany();
     handleSuccess(res, delPosts);
   },
   async delOne(req, res) {
+    /** #swagger.tags = ['posts (貼文)']
+     *! #swagger.description = '刪除單筆貼文'
+     */
     try {
       const findByIdAndDeletePosts = await Posts.findByIdAndDelete({
         _id: req.params.id,
       });
-      findByIdAndDeletePosts ? handleSuccess(res, req.params.id) : handleError(res);
+      findByIdAndDeletePosts
+        ? handleSuccess(res, req.params.id)
+        : handleError(res);
     } catch (err) {
       console.log(
         'POST err.name => ',
@@ -51,6 +97,9 @@ module.exports = {
     }
   },
   async upDatePost(req, res) {
+    /** #swagger.tags = ['posts (貼文)']
+     ** #swagger.description = '更新單筆貼文'
+     */
     try {
       if (req.body.content) {
         const editPost = await Posts.findByIdAndUpdate(

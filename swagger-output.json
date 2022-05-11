@@ -16,14 +16,18 @@
   "paths": {
     "/": {
       "get": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "index (首頁)"
+        ],
+        "description": "index GET API",
         "parameters": [],
         "responses": {}
       },
       "options": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "index (首頁)"
+        ],
+        "description": "index OPTIONS API",
         "parameters": [],
         "responses": {
           "200": {
@@ -34,28 +38,131 @@
     },
     "/posts/": {
       "get": {
-        "tags": [],
+        "tags": [
+          "posts (貼文)"
+        ],
         "description": "",
         "parameters": [],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "取得<strong>全部貼文</strong>",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "62749decc3031217a0acd924"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "test-edit333"
+                      },
+                      "tags": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "type": {
+                        "type": "string",
+                        "example": "person"
+                      },
+                      "image": {
+                        "type": "string",
+                        "example": ""
+                      },
+                      "content": {
+                        "type": "string",
+                        "example": "test-edit333"
+                      },
+                      "likes": {
+                        "type": "number",
+                        "example": 0
+                      },
+                      "comments": {
+                        "type": "number",
+                        "example": 0
+                      },
+                      "__v": {
+                        "type": "number",
+                        "example": 0
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
       },
       "post": {
-        "tags": [],
-        "description": "",
-        "parameters": [],
+        "tags": [
+          "posts (貼文)"
+        ],
+        "description": "新增單筆貼文",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "type": "object",
+            "description": "資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的 *",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "createdPost--test"
+                },
+                "content": {
+                  "type": "string",
+                  "example": "createdPost-test"
+                },
+                "tags": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "type": {
+                  "type": "string",
+                  "example": "person"
+                }
+              },
+              "required": [
+                "name"
+              ]
+            }
+          }
+        ],
         "responses": {}
       },
       "delete": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "posts (貼文)"
+        ],
+        "description": "刪除全部貼文",
         "parameters": [],
         "responses": {}
       }
     },
     "/posts/{id}": {
       "delete": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "posts (貼文)"
+        ],
+        "description": "刪除單筆貼文",
         "parameters": [
           {
             "name": "id",
@@ -67,8 +174,10 @@
         "responses": {}
       },
       "patch": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "posts (貼文)"
+        ],
+        "description": "更新單筆貼文",
         "parameters": [
           {
             "name": "id",
@@ -82,8 +191,10 @@
     },
     "/users/": {
       "get": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "users (使用者)"
+        ],
+        "description": "取得所有使用者資料",
         "parameters": [],
         "responses": {}
       }

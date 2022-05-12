@@ -15,6 +15,16 @@ const doc = { // 生成資料、格式、設定
       description: '請加上 API Token'
     }
   },
+  definitions: {
+    createdPosts: {
+      schema: {
+        "$name": "createdPost--test 加入 swagger.js 中",
+        "content": "createdPost-test",
+        "tags": ["感情", "工作"],
+        "type": "person"
+      }
+    }
+  }
 };
 const outputFile = './swagger-output.json'; // 使用套件生成文件讀取用的 JSON 資料檔
 const endpointsFiles = ['./app.js']; // 專案系統的注入點，成為套件所讀取的檔案

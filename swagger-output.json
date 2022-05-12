@@ -106,34 +106,18 @@
             "required": true,
             "description": "資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的*",
             "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "createdPost--test"
-                },
-                "content": {
-                  "type": "string",
-                  "example": "createdPost-test"
-                },
-                "tags": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "type": {
-                  "type": "string",
-                  "example": "person"
-                }
-              },
-              "required": [
-                "name"
-              ]
+              "$ref": "#/definitions/createdPosts"
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Some description...",
+            "schema": {
+              "$ref": "#/definitions/createdPosts"
+            }
+          }
+        }
       },
       "delete": {
         "tags": [
@@ -192,5 +176,37 @@
       }
     }
   },
-  "definitions": {}
+  "definitions": {
+    "createdPosts": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "createdPost--test 加入 swagger.js 中"
+            },
+            "content": {
+              "type": "string",
+              "example": "createdPost-test"
+            },
+            "tags": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "type": {
+              "type": "string",
+              "example": "person"
+            }
+          },
+          "required": [
+            "name"
+          ]
+        }
+      }
+    }
+  }
 }

@@ -17,12 +17,10 @@ const doc = { // 生成資料、格式、設定
   },
   definitions: {
     createdPosts: {
-      schema: {
-        "$name": "createdPost--test 加入 swagger.js 中",
-        "content": "createdPost-test",
-        "tags": ["感情", "工作"],
-        "type": "person"
-      }
+      "$name": "createdPost--test 加入 swagger.js 中",
+      "content": "createdPost-test",
+      "tags": ["感情", "工作"],
+      "type": "person"
     }
   }
 };

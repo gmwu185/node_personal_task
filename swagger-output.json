@@ -180,33 +180,28 @@
     "createdPosts": {
       "type": "object",
       "properties": {
-        "schema": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "example": "createdPost--test 加入 swagger.js 中"
-            },
-            "content": {
-              "type": "string",
-              "example": "createdPost-test"
-            },
-            "tags": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "type": {
-              "type": "string",
-              "example": "person"
-            }
-          },
-          "required": [
-            "name"
-          ]
+        "name": {
+          "type": "string",
+          "example": "createdPost--test 加入 swagger.js 中"
+        },
+        "content": {
+          "type": "string",
+          "example": "createdPost-test"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "type": {
+          "type": "string",
+          "example": "person"
         }
-      }
+      },
+      "required": [
+        "name"
+      ]
     }
   }
 }

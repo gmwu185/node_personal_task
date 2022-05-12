@@ -79,7 +79,10 @@ module.exports = {
   async delOne(req, res) {
     /** #swagger.tags = ['posts (貼文)']
      *! #swagger.description = '刪除單筆貼文'
-     */
+     * #swagger.security = [{
+        'apiKeyAuth': []
+      }]
+    */
     try {
       const findByIdAndDeletePosts = await Posts.findByIdAndDelete({
         _id: req.params.id,

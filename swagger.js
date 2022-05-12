@@ -7,6 +7,14 @@ const doc = { // 生成資料、格式、設定
   },
   host: 'localhost:3000',
   schemes: ['http', 'https'],
+  securityDefinitions: {
+    apiKeyAuth: {
+      type: 'apiKey',
+      in: 'headers',
+      name: 'authorization',
+      description: '請加上 API Token'
+    }
+  },
 };
 const outputFile = './swagger-output.json'; // 使用套件生成文件讀取用的 JSON 資料檔
 const endpointsFiles = ['./app.js']; // 專案系統的注入點，成為套件所讀取的檔案

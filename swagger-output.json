@@ -11,6 +11,14 @@
     "http",
     "https"
   ],
+  "securityDefinitions": {
+    "apiKeyAuth": {
+      "type": "apiKey",
+      "in": "headers",
+      "name": "authorization",
+      "description": "請加上 API Token"
+    }
+  },
   "consumes": [],
   "produces": [],
   "paths": {
@@ -150,7 +158,12 @@
             "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       },
       "patch": {
         "tags": [

@@ -12,14 +12,12 @@ module.exports = {
           "status": true,
           "data": [
             {
-              "_id": "62749decc3031217a0acd924",
-              "name": "test-edit333",
-              "tags": [
-                "感情"
-              ],
-              "type": "person",
+              "_id": "123456789",
+              "name": "string",
+              "tags": [ "string-1", "string-2" ],
+              "type": "string",
               "image": "",
-              "content": "test-edit333",
+              "content": "string",
               "likes": 0,
               "comments": 0,
               "__v": 0

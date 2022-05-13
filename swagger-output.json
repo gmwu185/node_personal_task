@@ -46,11 +46,11 @@
                     "properties": {
                       "_id": {
                         "type": "string",
-                        "example": "62749decc3031217a0acd924"
+                        "example": "123456789"
                       },
                       "name": {
                         "type": "string",
-                        "example": "test-edit333"
+                        "example": "string"
                       },
                       "tags": {
                         "type": "array",
@@ -60,7 +60,7 @@
                       },
                       "type": {
                         "type": "string",
-                        "example": "person"
+                        "example": "string"
                       },
                       "image": {
                         "type": "string",
@@ -68,7 +68,7 @@
                       },
                       "content": {
                         "type": "string",
-                        "example": "test-edit333"
+                        "example": "string"
                       },
                       "likes": {
                         "type": "number",

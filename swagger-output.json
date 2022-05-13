@@ -111,10 +111,23 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Some description...",
+          "400": {
+            "description": "未帶上 name 的錯誤回應",
             "schema": {
-              "$ref": "#/definitions/createdPosts"
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "false"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Post validation failed: name: 貼文姓名未填寫"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
             }
           }
         }
@@ -123,7 +136,7 @@
         "tags": [
           "posts (貼文)"
         ],
-        "description": "刪除全部貼文",
+        "description": "刪除所有貼文",
         "parameters": [],
         "responses": {}
       }
@@ -160,6 +173,36 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "type": "object",
+            "required": true,
+            "description": "Body 資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "test-edit"
+                },
+                "content": {
+                  "type": "string",
+                  "example": "test-edit"
+                },
+                "tags": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            }
           }
         ],
         "responses": {}
@@ -196,7 +239,7 @@
         },
         "type": {
           "type": "string",
-          "example": "person"
+          "example": "string"
         }
       },
       "required": [

@@ -19,8 +19,8 @@ const doc = { // 生成資料、格式、設定
     createdPosts: {
       "$name": "createdPost--test 加入 swagger.js 中",
       "content": "createdPost-test",
-      "tags": ["感情", "工作"],
-      "type": "person"
+      "tags": ["string-1", "string-2"],
+      "type": "string"
     }
   }
 };

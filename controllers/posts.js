@@ -29,50 +29,50 @@ module.exports = {
     const allPosts = await Posts.find();
     handleSuccess(res, allPosts);
   },
-async createdPost(req, res) {
-  /** #swagger.tags = ['posts (貼文)']
-   ** #swagger.description = '新增單筆貼文'
-   */
-  try {
-    if (req.body.content) {
-      /**
-        ** #swagger.parameters['body'] = {
-          in: "body",
-          type: "object",
-          required: true,
-          description: "資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的*",
-          schema: { $ref: "#/definitions/createdPosts" }
-        }
-      */
-      const newPost = await Posts.create({
-        name: req.body.name,
-        content: req.body.content,
-        tags: req.body.tags,
-        type: req.body.type,
-      });
-      handleSuccess(res, newPost);
-    } else {
-      /** 刻意加在 posts/ 路由 POST API 文件 下的第二區塊，實際上用不到。
-        ** #swagger.responses[400] = {
-          description: '未帶上 name 的錯誤回應',
-          schema: { 
-            "status": "false",
-            "message": "Post validation failed: name: 貼文姓名未填寫"
+  async createdPost(req, res) {
+    /** #swagger.tags = ['posts (貼文)']
+     ** #swagger.description = '新增單筆貼文'
+     */
+    try {
+      if (req.body.content) {
+        /**
+          ** #swagger.parameters['body'] = {
+            in: "body",
+            type: "object",
+            required: true,
+            description: "資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的*",
+            schema: { $ref: "#/definitions/createdPosts" }
           }
-        }
-      */
-      handleError(res);
+        */
+        const newPost = await Posts.create({
+          name: req.body.name,
+          content: req.body.content,
+          tags: req.body.tags,
+          type: req.body.type,
+        });
+        handleSuccess(res, newPost);
+      } else {
+        /** 刻意加在 posts/ 路由 POST API 文件 下的第二區塊，實際上用不到。
+          ** #swagger.responses[400] = {
+            description: '未帶上 name 的錯誤回應',
+            schema: { 
+              "status": "false",
+              "message": "Post validation failed: name: 貼文姓名未填寫"
+            }
+          }
+        */
+        handleError(res);
+      }
+    } catch (err) {
+      console.log(
+        'POST err.name => ',
+        err.name,
+        'POST err.message => ',
+        err.message
+      );
+      handleError(res, err);
     }
-  } catch (err) {
-    console.log(
-      'POST err.name => ',
-      err.name,
-      'POST err.message => ',
-      err.message
-    );
-    handleError(res, err);
-  }
-},
+  },
   async delALL(req, res) {
     /** #swagger.tags = ['posts (貼文)']
       *! #swagger.description = '刪除所有貼文'

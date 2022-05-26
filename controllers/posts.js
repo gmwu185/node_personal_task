@@ -8,8 +8,7 @@ module.exports = {
     /** #swagger.tags = ['posts (貼文)']
       *? #swagger.responses[200] = {
         description: '取得<strong>全部貼文</strong>',
-        schema:
-        {
+        schema: {
           "status": true,
           "data": [
             {
@@ -36,7 +35,7 @@ module.exports = {
     /** #swagger.tags = ['posts (貼文)']
      ** #swagger.description = '新增單筆貼文'
      */
-    const { userData, content, tags, type } = req.body;
+    const { userData, content, tags, type, image } = req.body;
     try {
       if (content) {
         /**
@@ -48,13 +47,22 @@ module.exports = {
             schema: { $ref: "#/definitions/createdPosts" }
           }
         */
-        const newPost = await Posts.create({
-          userData, // 取 user id 關連
-          content,
-          tags,
-          type,
-        });
-        handleSuccess(res, newPost);
+
+        if (image) {
+          if (!image.startsWith('https://') && !image.startsWith('http://')) {
+            return handleError(res, {
+              message: '請使用 https 或 http 開頭的圖片網址',
+            });
+          }
+          const newPost = await Posts.create({
+            userData: '62826721c9caa8e6fac74ef1', // 取 user id 關連
+            content,
+            tags,
+            type,
+            image,
+          });
+          handleSuccess(res, newPost);
+        }
       } else {
         /** mongoose 會先依 model 設定格式檔下錯誤，實際上用不到。
           ** #swagger.responses[400] = {
@@ -81,6 +89,9 @@ module.exports = {
     /** #swagger.tags = ['posts (貼文)']
      *! #swagger.description = '刪除所有貼文'
      */
+    // 網址 / 沒接參數判斷錯誤，才能正確執行刪除單筆
+    if (req.originalUrl === '/posts/')
+      return handleError(res, { message: `無此網站路由` }); 
     const delPosts = await Posts.deleteMany();
     handleSuccess(res, delPosts);
   },
@@ -91,6 +102,7 @@ module.exports = {
         'apiKeyAuth': []
       }]
     */
+    const { id } = req.params;
     try {
       /**
         *! #swagger.parameters['id'] = {
@@ -99,15 +111,22 @@ module.exports = {
           required: true,
         }
       */
-      if (req.params.id) {
-        const findByIdAndDeletePosts = await Posts.findByIdAndDelete({
-          _id: req.params.id,
-        });
-        findByIdAndDeletePosts
-          ? handleSuccess(res, req.params.id)
-          : handleError(res);
+      if (id) {
+        await Posts.findByIdAndDelete({
+          _id: id,
+        })
+          .then((result) => {
+            if (result === null)
+              return handleError(res, {
+                message: `無 ${id} 此 id，請重新確認`,
+              });
+            if (typeof result === 'object') return handleSuccess(res, result);
+          })
+          .catch((err) =>
+            handleError(res, { message: `無 ${id} 此 id，請重新確認` })
+          );
       } else {
-        handleError(res);
+        handleError(res, { message: `${id} 未正常帶入或格式不正確` });
       }
     } catch (err) {
       console.log(
@@ -128,7 +147,7 @@ module.exports = {
           required: true,
         }
      */
-    const { userData, content, tags, type } = req.body;
+    const { userData, content, tags, type, image } = req.body;
     try {
       if (content) {
         /**
@@ -152,6 +171,7 @@ module.exports = {
             content,
             tags,
             type,
+            image,
           },
           { returnDocument: 'after' }
         );

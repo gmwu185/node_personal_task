@@ -23,7 +23,9 @@ const userSchema = new mongoose.Schema(
       select: false,
     },
   },
-  { versionKey: false }
+  {
+    versionKey: false, // 移除預設欄位 __v
+  }
 );
 const User = mongoose.model('user', userSchema);
 

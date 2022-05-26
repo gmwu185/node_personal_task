@@ -1,6 +1,7 @@
 const handleSuccess = require('../handStates/handleSuccess');
 const handleError = require('../handStates/handleError');
 const Posts = require('../model/posts');
+// const Users = require('../model/users');
 
 module.exports = {
   async getPosts(req, res) {
@@ -26,15 +27,18 @@ module.exports = {
         }
       }
     */
-    const allPosts = await Posts.find();
-    handleSuccess(res, allPosts);
+    await Posts.find()
+      .populate('userData') // 指向 user DB ID 做關連
+      .then((result) => handleSuccess(res, result))
+      .catch((err) => handleError(res, err));
   },
   async createdPost(req, res) {
     /** #swagger.tags = ['posts (貼文)']
      ** #swagger.description = '新增單筆貼文'
      */
+    const { userData, content, tags, type } = req.body;
     try {
-      if (req.body.content) {
+      if (content) {
         /**
           ** #swagger.parameters['body'] = {
             in: "body",
@@ -45,14 +49,14 @@ module.exports = {
           }
         */
         const newPost = await Posts.create({
-          name: req.body.name,
-          content: req.body.content,
-          tags: req.body.tags,
-          type: req.body.type,
+          userData, // 取 user id 關連
+          content,
+          tags,
+          type,
         });
         handleSuccess(res, newPost);
       } else {
-        /** 刻意加在 posts/ 路由 POST API 文件 下的第二區塊，實際上用不到。
+        /** mongoose 會先依 model 設定格式檔下錯誤，實際上用不到。
           ** #swagger.responses[400] = {
             description: '未帶上 name 的錯誤回應',
             schema: { 
@@ -75,8 +79,8 @@ module.exports = {
   },
   async delALLPosts(req, res) {
     /** #swagger.tags = ['posts (貼文)']
-      *! #swagger.description = '刪除所有貼文'
-    */
+     *! #swagger.description = '刪除所有貼文'
+     */
     const delPosts = await Posts.deleteMany();
     handleSuccess(res, delPosts);
   },
@@ -95,12 +99,16 @@ module.exports = {
           required: true,
         }
       */
-      const findByIdAndDeletePosts = await Posts.findByIdAndDelete({
-        _id: req.params.id,
-      });
-      findByIdAndDeletePosts
-        ? handleSuccess(res, req.params.id)
-        : handleError(res);
+      if (req.params.id) {
+        const findByIdAndDeletePosts = await Posts.findByIdAndDelete({
+          _id: req.params.id,
+        });
+        findByIdAndDeletePosts
+          ? handleSuccess(res, req.params.id)
+          : handleError(res);
+      } else {
+        handleError(res);
+      }
     } catch (err) {
       console.log(
         'POST err.name => ',
@@ -119,9 +127,10 @@ module.exports = {
           type: 'string',
           required: true,
         }
-     */ 
+     */
+    const { userData, content, tags, type } = req.body;
     try {
-      if (req.body.content) {
+      if (content) {
         /**
           ** #swagger.parameters['body'] = {
             in: "body",
@@ -139,10 +148,10 @@ module.exports = {
         const editPost = await Posts.findByIdAndUpdate(
           req.params.id,
           {
-            name: req.body.name,
-            content: req.body.content,
-            tags: req.body.tags,
-            type: req.body.type,
+            userData,
+            content,
+            tags,
+            type,
           },
           { returnDocument: 'after' }
         );

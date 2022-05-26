@@ -73,14 +73,14 @@ module.exports = {
       handleError(res, err);
     }
   },
-  async delALL(req, res) {
+  async delALLPosts(req, res) {
     /** #swagger.tags = ['posts (貼文)']
       *! #swagger.description = '刪除所有貼文'
     */
     const delPosts = await Posts.deleteMany();
     handleSuccess(res, delPosts);
   },
-  async delOne(req, res) {
+  async delOnePost(req, res) {
     /** #swagger.tags = ['posts (貼文)']
      *! #swagger.description = '刪除單筆貼文'
      * #swagger.security = [{

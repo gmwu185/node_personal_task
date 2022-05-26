@@ -4,8 +4,8 @@ const PostsControllers = require('../controllers/posts');
 
 router.get('/', PostsControllers.getPosts);
 router.post('/', PostsControllers.createdPost);
-router.delete('/', PostsControllers.delALL);
-router.delete('/:id', PostsControllers.delOne);
+router.delete('/', PostsControllers.delALLPosts);
+router.delete('/:id', PostsControllers.delOnePost);
 router.patch('/:id', PostsControllers.upDatePost);
 
 module.exports = router;

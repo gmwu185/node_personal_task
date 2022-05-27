@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Meta API",
-    "description": "示範範例生成文件"
+    "title": "API DOC",
+    "description": ""
   },
   "host": "localhost:3000",
   "basePath": "/",
@@ -16,7 +16,7 @@
       "type": "apiKey",
       "in": "headers",
       "name": "authorization",
-      "description": "請加上 API Token"
+      "description": "Token 前請加上 Bearer，<code>Bearer ＜Token＞</code>"
     }
   },
   "consumes": [],
@@ -253,32 +253,5 @@
       }
     }
   },
-  "definitions": {
-    "createdPosts": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "example": "createdPost--test 加入 swagger.js 中"
-        },
-        "content": {
-          "type": "string",
-          "example": "createdPost-test"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "type": {
-          "type": "string",
-          "example": "string"
-        }
-      },
-      "required": [
-        "name"
-      ]
-    }
-  }
+  "definitions": {}
 }

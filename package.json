@@ -4,12 +4,17 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www",
-    "swagger": "node ./swagger.js"
+    "locall:dev": "cross-env NODE_ENV=dev nodemon ./bin/www ",
+    "locall:prod": "cross-env NODE_ENV=production nodemon ./bin/www ",
+    "server": "cross-env NODE_ENV=production nodemon ./bin/www",
+    "swagger:dev": "cross-env NODE_ENV=dev node ./swagger.js",
+    "swagger:prod": "cross-env NODE_ENV=production node ./swagger.js",
+    "swagger": "cross-env npm run swagger:dev\n npm run swagger:prod"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "debug": "~2.6.9",
     "dotenv": "^16.0.0",
     "express": "~4.16.1",

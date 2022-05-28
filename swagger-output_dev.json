@@ -35,55 +35,60 @@
             "schema": {
               "type": "object",
               "properties": {
-                "status": {
-                  "type": "boolean",
-                  "example": true
+                "_id": {
+                  "type": "string",
+                  "example": "62924730a3cca4c1b4a52226"
                 },
-                "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "_id": {
-                        "type": "string",
-                        "example": "123456789"
-                      },
-                      "name": {
-                        "type": "string",
-                        "example": "string"
-                      },
-                      "tags": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "type": {
-                        "type": "string",
-                        "example": "string"
-                      },
-                      "image": {
-                        "type": "string",
-                        "example": ""
-                      },
-                      "content": {
-                        "type": "string",
-                        "example": "string"
-                      },
-                      "likes": {
-                        "type": "number",
-                        "example": 0
-                      },
-                      "comments": {
-                        "type": "number",
-                        "example": 0
-                      },
-                      "__v": {
-                        "type": "number",
-                        "example": 0
-                      }
+                "userData": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "62908a8ebf85a52ce75989a5"
+                    },
+                    "userName": {
+                      "type": "string",
+                      "example": "jimmyWu"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "gg@mail.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "example": "123456"
+                    },
+                    "avatarUrl": {
+                      "type": "string",
+                      "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
                     }
                   }
+                },
+                "content": {
+                  "type": "string",
+                  "example": "test"
+                },
+                "tags": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "type": {
+                  "type": "string",
+                  "example": "person"
+                },
+                "image": {
+                  "type": "string",
+                  "example": "http://"
+                },
+                "likes": {
+                  "type": "number",
+                  "example": 0
+                },
+                "comments": {
+                  "type": "number",
+                  "example": 0
                 }
               },
               "xml": {
@@ -108,15 +113,15 @@
             "schema": {
               "type": "object",
               "properties": {
-                "name": {
+                "userData": {
                   "type": "string",
-                  "example": "createdPost--test 加入 swagger.js 中"
+                  "example": "62908a8ebf85a52ce75989a5"
                 },
                 "content": {
                   "type": "string",
-                  "example": "createdPost-test"
+                  "example": "test"
                 },
-                "tags": {
+                "$tags": {
                   "type": "array",
                   "items": {
                     "type": "string"
@@ -124,29 +129,73 @@
                 },
                 "type": {
                   "type": "string",
-                  "example": "string"
+                  "example": "person"
+                },
+                "image": {
+                  "type": "string",
+                  "example": "http://"
                 }
               },
               "required": [
-                "name",
-                "content"
+                "userData",
+                "content",
+                "type"
               ]
             }
           }
         ],
         "responses": {
-          "400": {
-            "description": "未帶上 name 的錯誤回應",
+          "200": {
+            "description": "建立貼正正確回應",
             "schema": {
               "type": "object",
               "properties": {
                 "status": {
-                  "type": "string",
-                  "example": "false"
+                  "type": "boolean",
+                  "example": true
                 },
-                "message": {
-                  "type": "string",
-                  "example": "Post validation failed: name: 貼文姓名未填寫"
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "userData": {
+                      "type": "string",
+                      "example": "62908a8ebf85a52ce75989a5"
+                    },
+                    "content": {
+                      "type": "string",
+                      "example": "test"
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "type": {
+                      "type": "string",
+                      "example": "person"
+                    },
+                    "image": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "likes": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "comments": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "_id": {
+                      "type": "string",
+                      "example": "62924e3af4568a486882612f"
+                    },
+                    "createAt": {
+                      "type": "string",
+                      "example": "2022-05-28T16:30:50.165Z"
+                    }
+                  }
                 }
               },
               "xml": {
@@ -179,12 +228,7 @@
             "type": "string"
           }
         ],
-        "responses": {},
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
+        "responses": {}
       },
       "patch": {
         "tags": [
@@ -207,10 +251,6 @@
             "schema": {
               "type": "object",
               "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "test-edit"
-                },
                 "content": {
                   "type": "string",
                   "example": "test-edit"
@@ -224,8 +264,23 @@
                 "type": {
                   "type": "string",
                   "example": "string"
+                },
+                "image": {
+                  "type": "string",
+                  "example": "http://"
+                },
+                "likes": {
+                  "type": "number",
+                  "example": 0
+                },
+                "comments": {
+                  "type": "number",
+                  "example": 0
                 }
-              }
+              },
+              "required": [
+                "content"
+              ]
             }
           }
         ],

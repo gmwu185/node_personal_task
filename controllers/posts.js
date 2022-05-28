@@ -26,8 +26,10 @@ module.exports = {
         }
       }
     */
-    await Posts.find()
+    const { q, timeSort } = req.query;
+    await Posts.find(q ? { content: new RegExp(q) } : {})
       .populate('userData') // 指向 user DB ID 做關連
+      .sort(timeSort === 'asc' ? 'createAt' : '-createAt')
       .then((result) => handleSuccess(res, result))
       .catch((err) => handleError(res, err));
   },
@@ -91,7 +93,7 @@ module.exports = {
      */
     // 網址 / 沒接參數判斷錯誤，才能正確執行刪除單筆
     if (req.originalUrl === '/posts/')
-      return handleError(res, { message: `無此網站路由` }); 
+      return handleError(res, { message: `無此網站路由` });
     const delPosts = await Posts.deleteMany();
     handleSuccess(res, delPosts);
   },

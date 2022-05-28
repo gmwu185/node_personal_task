@@ -1,0 +1,183 @@
+{
+	"info": {
+		"_postman_id": "39827a9f-ba28-4b34-a884-fcac6901e40f",
+		"name": "personalTask",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9556743"
+	},
+	"item": [
+		{
+			"name": "取得所有 posts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/posts?q=-test&timeSort=asc",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"posts"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "-test",
+							"description": "content 欄位查找關鍵字"
+						},
+						{
+							"key": "timeSort",
+							"value": "asc",
+							"description": "asc (true/false)"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "新增單筆 post",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"userData\": \"62826721c9caa8e6fac74ef1\",\n \"content\": \"test\",\n \"tags\": [\"感情2\"],\n \"type\": \"person\",\n \"image\": \"http://\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/posts",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "刪除所有 post",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/posts",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "刪除單筆 post",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/posts/:id",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"posts",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "編輯單筆 post",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"content\": \"test-edit11116\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/posts/:id",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"posts",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "62920de33938cb68ca88820b",
+							"description": "post ID"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "新增 user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userName\": \"jimmyWu\",\n  \"email\": \"gg@mail.com\",\n  \"password\": \"123456\",\n  \"avatarUrl\": \"https://avatars.githubusercontent.com/u/42748910?v=4\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/users",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OPTIONS API",
+			"request": {
+				"method": "OPTIONS",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}",
+					"host": [
+						"{{domain}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

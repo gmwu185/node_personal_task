@@ -1,0 +1,336 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API DOC",
+    "description": ""
+  },
+  "host": "damp-plateau-24758.herokuapp.com",
+  "basePath": "/",
+  "tags": [],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "apiKeyAuth": {
+      "type": "apiKey",
+      "in": "headers",
+      "name": "authorization",
+      "description": "Token 前請加上 Bearer，<code>Bearer ＜Token＞</code>"
+    }
+  },
+  "consumes": [],
+  "produces": [],
+  "paths": {
+    "/posts/": {
+      "get": {
+        "tags": [
+          "posts (貼文)"
+        ],
+        "description": "取得所有貼文",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "取得<strong>全部貼文</strong>",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "example": "62924730a3cca4c1b4a52226"
+                },
+                "userData": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "62908a8ebf85a52ce75989a5"
+                    },
+                    "userName": {
+                      "type": "string",
+                      "example": "jimmyWu"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "gg@mail.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "example": "123456"
+                    },
+                    "avatarUrl": {
+                      "type": "string",
+                      "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                    }
+                  }
+                },
+                "content": {
+                  "type": "string",
+                  "example": "test"
+                },
+                "tags": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "type": {
+                  "type": "string",
+                  "example": "person"
+                },
+                "image": {
+                  "type": "string",
+                  "example": "http://"
+                },
+                "likes": {
+                  "type": "number",
+                  "example": 0
+                },
+                "comments": {
+                  "type": "number",
+                  "example": 0
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "posts (貼文)"
+        ],
+        "description": "新增單筆貼文",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "type": "object",
+            "required": true,
+            "description": "資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的*",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userData": {
+                  "type": "string",
+                  "example": "62908a8ebf85a52ce75989a5"
+                },
+                "content": {
+                  "type": "string",
+                  "example": "test"
+                },
+                "$tags": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "type": {
+                  "type": "string",
+                  "example": "person"
+                },
+                "image": {
+                  "type": "string",
+                  "example": "http://"
+                }
+              },
+              "required": [
+                "userData",
+                "content",
+                "type"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "建立貼正正確回應",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "userData": {
+                      "type": "string",
+                      "example": "62908a8ebf85a52ce75989a5"
+                    },
+                    "content": {
+                      "type": "string",
+                      "example": "test"
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "type": {
+                      "type": "string",
+                      "example": "person"
+                    },
+                    "image": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "likes": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "comments": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "_id": {
+                      "type": "string",
+                      "example": "62924e3af4568a486882612f"
+                    },
+                    "createAt": {
+                      "type": "string",
+                      "example": "2022-05-28T16:30:50.165Z"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "posts (貼文)"
+        ],
+        "description": "刪除所有貼文",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/posts/{id}": {
+      "delete": {
+        "tags": [
+          "posts (貼文)"
+        ],
+        "description": "刪除單筆貼文",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      },
+      "patch": {
+        "tags": [
+          "posts (貼文)"
+        ],
+        "description": "更新單筆貼文",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "type": "object",
+            "required": true,
+            "description": "Body 資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string",
+                  "example": "test-edit"
+                },
+                "tags": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "image": {
+                  "type": "string",
+                  "example": "http://"
+                },
+                "likes": {
+                  "type": "number",
+                  "example": 0
+                },
+                "comments": {
+                  "type": "number",
+                  "example": 0
+                }
+              },
+              "required": [
+                "content"
+              ]
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/": {
+      "post": {
+        "tags": [
+          "users (使用者)"
+        ],
+        "description": "新增使用者",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "type": "object",
+            "required": true,
+            "description": "資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的*",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userName": {
+                  "type": "string",
+                  "example": "jimmyWu"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "gg@mail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "123456"
+                },
+                "avatarUrl": {
+                  "type": "string",
+                  "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                }
+              },
+              "required": [
+                "userName",
+                "email",
+                "password"
+              ]
+            }
+          }
+        ],
+        "responses": {}
+      }
+    }
+  },
+  "definitions": {}
+}

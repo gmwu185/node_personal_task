@@ -12,7 +12,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{domain}}/posts?q=-test&timeSort=asc",
+					"raw": "{{domain}}/posts",
 					"host": [
 						"{{domain}}"
 					],
@@ -23,12 +23,14 @@
 						{
 							"key": "q",
 							"value": "-test",
-							"description": "content 欄位查找關鍵字"
+							"description": "content 欄位查找關鍵字",
+							"disabled": true
 						},
 						{
 							"key": "timeSort",
 							"value": "asc",
-							"description": "asc (true/false)"
+							"description": "asc (true/false)",
+							"disabled": true
 						}
 					]
 				}
@@ -45,7 +47,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n \"userData\": \"62826721c9caa8e6fac74ef1\",\n \"content\": \"test\",\n \"tags\": [\"感情2\"],\n \"type\": \"person\",\n \"image\": \"http://\"\n}",
+					"raw": "{\n \"userData\": \"62908a8ebf85a52ce75989a5\",\n \"content\": \"test12312\",\n \"tags\": [\"感情2\"],\n \"type\": \"person\",\n \"image\": \"http://\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -112,7 +114,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n \"content\": \"test-edit11116\"\n}",
+					"raw": "{\n \"content\": \"test-edit\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -131,7 +133,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "62920de33938cb68ca88820b",
+							"value": "629250f2054069f130f1e7c4",
 							"description": "post ID"
 						}
 					]

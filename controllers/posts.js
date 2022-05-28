@@ -8,6 +8,7 @@ module.exports = {
   getPosts: handleError(async (req, res, next) => {
     await Posts.find()
       .populate('userData') // 指向 user DB ID 做關連
+      .sort(timeSort === 'asc' ? 'createAt' : '-createAt')
       .then((result) => handleSuccess(res, result))
       .catch((err) => handleError(res, err));
   }),

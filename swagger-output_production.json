@@ -27,7 +27,7 @@
         "tags": [
           "posts (貼文)"
         ],
-        "description": "",
+        "description": "取得所有貼文",
         "parameters": [],
         "responses": {
           "200": {
@@ -106,7 +106,31 @@
             "required": true,
             "description": "資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的*",
             "schema": {
-              "$ref": "#/definitions/createdPosts"
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "createdPost--test 加入 swagger.js 中"
+                },
+                "content": {
+                  "type": "string",
+                  "example": "createdPost-test"
+                },
+                "tags": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                }
+              },
+              "required": [
+                "name",
+                "content"
+              ]
             }
           }
         ],

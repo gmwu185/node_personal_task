@@ -31,4 +31,15 @@ app.use('/users', usersRouter);
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));
 /* express 設定 --------------------------------------------------------------- */
 
+// 錯誤處理
+app.use(function(err, req, res, next) {
+  // console.log('app.js use err', err);
+  err.statusCode = err.statusCode || 500;
+  res.status(err.statusCode).json({
+    message: err.message,
+    error: err,
+    stack: err.stack
+  });
+})
+
 module.exports = app;

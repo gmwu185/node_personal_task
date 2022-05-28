@@ -1,5 +1,5 @@
-const handleSuccess = require('../handStates/handleSuccess');
-const handleError = require('../handStates/handleError');
+const { handleSuccess } = require('../handStates/handles');
+const handleErrorAsync = require('../handStates/handleErrorAsync');
 const User = require('../model/users');
 
 module.exports = {
@@ -35,7 +35,7 @@ module.exports = {
       });
     } catch (err) {
       console.log('req error', err);
-      handleError(res, err);
+      handleErrorAsync(res, err);
     }
   },
 };

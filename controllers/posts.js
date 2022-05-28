@@ -1,18 +1,19 @@
-const handleSuccess = require('../handStates/handleSuccess');
-const handleError = require('../handStates/handleError');
+const { handleSuccess } = require('../handStates/handles');
+const handleErrorAsync = require('../handStates/handleErrorAsync');
 const appError = require('../customErr/appError');
 
 const Posts = require('../model/posts');
 
 module.exports = {
-  getPosts: handleError(async (req, res, next) => {
-    await Posts.find()
+  getPosts: handleErrorAsync(async (req, res, next) => {
+    const { q, timeSort } = req.query;
+    await Posts.find(q ? { content: new RegExp(q) } : {})
       .populate('userData') // 指向 user DB ID 做關連
       .sort(timeSort === 'asc' ? 'createAt' : '-createAt')
       .then((result) => handleSuccess(res, result))
-      .catch((err) => handleError(res, err));
+      .catch((err) => handleErrorAsync(res, err));
   }),
-  createdPost: handleError(async (req, res, next) => {
+  createdPost: handleErrorAsync(async (req, res, next) => {
     const { userData, content, tags, type, image } = req.body;
 
     if (!userData) return appError(400, 'userData 未帶入', next);
@@ -34,14 +35,14 @@ module.exports = {
       })
     );
   }),
-  delALLPosts: handleError(async (req, res, next) => {
+  delALLPosts: handleErrorAsync(async (req, res, next) => {
     // 網址 / 沒接參數判斷錯誤，才能正確執行刪除單筆
     if (req.originalUrl === '/posts/')
       return appError(400, `無此網站路由`, next);
     await Posts.deleteMany();
     handleSuccess(res, []);
   }),
-  delOnePost: handleError(async (req, res, next) => {
+  delOnePost: handleErrorAsync(async (req, res, next) => {
     const { id } = req.params;
     if (!id) return appError(400, `無 ${id} 此 id，請重新確認`, next);
 
@@ -71,7 +72,7 @@ module.exports = {
       : handleSuccess(res, `id ${id} 刪除成功`);
     /* /接正確與錯誤流程寫法三 */
   }),
-  upDatePost: handleError(async (req, res, next) => {
+  upDatePost: handleErrorAsync(async (req, res, next) => {
     const { id } = req.params;
     const { userData, content, tags, type, image } = req.body;
 

@@ -1,5 +1,11 @@
+const bcrypt = require('bcryptjs'); // 密碼加密
+const validator = require('validator'); // 格式驗證
+const { isAuth, generateSendJWT } = require('../handStates/auth');
+
 const { handleSuccess } = require('../handStates/handles');
 const handleErrorAsync = require('../handStates/handleErrorAsync');
+const appError = require('../customErr/appError');
+
 const User = require('../model/users');
 
 module.exports = {
@@ -38,4 +44,30 @@ module.exports = {
       handleErrorAsync(res, err);
     }
   },
+  signUp: handleErrorAsync(async (req, res, next) => {
+    const { userName, email, password, confirmPassword } = req.body;
+    const userData = {
+      userName,
+      email,
+      password,
+    };
+
+    if (
+      !userData.userName ||
+      !userData.email ||
+      !userData.password ||
+      !confirmPassword
+    )
+      return appError('400', '欄位未填寫正確！', next);
+    if (userData.password !== confirmPassword)
+      return appError('400', '密碼不一致！', next);
+    if (!validator.isLength(userData.password, { min: 8 }))
+      return appError('400', '密碼字數低於 8 碼', next);
+    if (!validator.isEmail(userData.email))
+      return next(appError('400', 'Email 格式不正確', next));
+
+    userData.password = await bcrypt.hash(userData.password, 12);
+    const newUser = await User.create(userData);
+    generateSendJWT(newUser, 201, res);
+  }),
 };

@@ -17,8 +17,8 @@ if (process.env.NODE_ENV === 'production') {
 
 let serverPath =
   process.env.NODE_ENV === 'production'
-    ? 'https://damp-shore-91853.herokuapp.com/'
-    : 'http://localhost:3000';
+    ? process.env.DOMAIN_SERVER_PRODUCTION
+    : process.env.DOMAIN_SERVER_DEV;
 
 mongoose
   .connect(DB)

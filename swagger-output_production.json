@@ -4,11 +4,9 @@
     "title": "API DOC",
     "description": ""
   },
-  "host": "damp-plateau-24758.herokuapp.com",
   "basePath": "/",
   "tags": [],
   "schemes": [
-    "http",
     "https"
   ],
   "securityDefinitions": {
@@ -284,7 +282,71 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "建立貼正正確回應",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "62924fade5520c8a5493626f"
+                        },
+                        "userData": {
+                          "type": "string",
+                          "example": "62924fade5520c8a5493626f"
+                        },
+                        "content": {
+                          "type": "string",
+                          "example": "test-edit"
+                        },
+                        "tags": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "image": {
+                          "type": "string",
+                          "example": "http://"
+                        },
+                        "likes": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "comments": {
+                          "type": "number",
+                          "example": 0
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
       }
     },
     "/users/": {
@@ -328,6 +390,14 @@
             }
           }
         ],
+        "responses": {}
+      }
+    },
+    "/users/signUp": {
+      "post": {
+        "tags": [],
+        "description": "",
+        "parameters": [],
         "responses": {}
       }
     }

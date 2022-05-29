@@ -9,41 +9,24 @@ const appError = require('../customErr/appError');
 const User = require('../model/users');
 
 module.exports = {
-  async createdUser(req, res) {
-    /** #swagger.tags = ['users (使用者)']
-     ** #swagger.description = '新增使用者'
-     */
-    try {
-      /**
-        ** #swagger.parameters['body'] = {
-          in: "body",
-          type: "object",
-          required: true,
-          description: "資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的*",
-          schema: {
-            "$userName": "jimmyWu",
-            "$email": "gg@mail.com",
-            "$password": "123456",
-            "avatarUrl": "https://avatars.githubusercontent.com/u/42748910?v=4"
-          }
-        }
-      */
-      const data = req.body;
-      const user = {
-        userName: data.userName,
-        email: data.email,
-        password: data.password,
-        avatarUrl: data.avatarUrl, // 頭像
-      };
-      await User.create(user).then(async () => {
-        const allUser = await User.find();
-        handleSuccess(res, allUser);
-      });
-    } catch (err) {
-      console.log('req error', err);
-      handleErrorAsync(res, err);
-    }
-  },
+  createdUser: handleErrorAsync(async (req, res, next) => {
+    const { userName, email, password, avatarUrl } = req.body;
+
+    if (!userName) return appError(400, 'userName 必填', next);
+    if (!email) return appError(400, 'email 必填', next);
+    if (!password) return appError(400, 'password 必填', next);
+
+    const createdUserData = {
+      userName,
+      email,
+      password,
+      avatarUrl, // 頭像
+    };
+    await User.create(createdUserData).then(async () => {
+      const allUser = await User.find();
+      handleSuccess(res, allUser);
+    });
+  }),
   signUp: handleErrorAsync(async (req, res, next) => {
     const { userName, email, password, confirmPassword } = req.body;
     const userData = {

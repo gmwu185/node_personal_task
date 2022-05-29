@@ -1,7 +1,9 @@
 const bcrypt = require('bcryptjs'); // 密碼加密
 const validator = require('validator'); // 格式驗證
-const { isAuth, generateSendJWT } = require('../handStates/auth');
+const dotenv = require('dotenv');
+dotenv.config({ path: './.env' });
 
+const { isAuth, generateSendJWT } = require('../handStates/auth');
 const { handleSuccess } = require('../handStates/handles');
 const handleErrorAsync = require('../handStates/handleErrorAsync');
 const appError = require('../customErr/appError');
@@ -67,5 +69,29 @@ module.exports = {
     const auth = await bcrypt.compare(password, user.password);
     if (!auth) return next(appError(400, '您的密碼不正確', next));
     generateSendJWT(user, 200, res);
+  }),
+  updatePassword: handleErrorAsync(async (req, res, next) => {
+    const { newPassword, confirmNewPassword } = req.body;
+    const errorMessageArr = [];
+    if (!validator.isLength(newPassword, { min: 8 })) {
+      errorMessageArr.push('密碼長度必須超過 8 碼');
+    }
+    if (newPassword !== confirmNewPassword) {
+      errorMessageArr.push('密碼不一致');
+    }
+    if (errorMessageArr.length > 0)
+      return appError('400', errorMessageArr.join(', '), next);
+
+    bcryptNewPassword = await bcrypt.hash(newPassword, 12);
+    const updateUser = await User.findByIdAndUpdate(
+      req.user.id,
+      {
+        password: bcryptNewPassword,
+      },
+      {
+        new: true, // 回傳更新後的資料, default: false
+      }
+    );
+    generateSendJWT(updateUser, 200, res);
   }),
 };

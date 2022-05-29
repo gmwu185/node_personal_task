@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+const { isAuth } = require('../handStates/auth');
+
 const UsersControllers = require('../controllers/users');
 
 router.post('/', (req, res, next) =>
@@ -26,6 +28,9 @@ router.post('/signUp', (req, res, next) =>
 );
 router.post('/signIn', (req, res, next) =>
   UsersControllers.signIn(req, res, next)
+);
+router.patch('/updatePassword', isAuth, (req, res, next) =>
+  UsersControllers.updatePassword(req, res, next)
 );
 
 module.exports = router;

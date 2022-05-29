@@ -24,5 +24,8 @@ router.post('/', (req, res, next) =>
 router.post('/signUp', (req, res, next) =>
   UsersControllers.signUp(req, res, next)
 );
+router.post('/signIn', (req, res, next) =>
+  UsersControllers.signIn(req, res, next)
+);
 
 module.exports = router;

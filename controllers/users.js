@@ -53,4 +53,19 @@ module.exports = {
     const newUser = await User.create(userData);
     generateSendJWT(newUser, 201, res);
   }),
+  signIn: handleErrorAsync(async (req, res, next) => {
+    const { email, password } = req.body;
+    if (!email || !password) return appError(400, '帳號及密碼必填', next);
+
+    const user = await User.findOne({ email }).select('+password');
+    if (!user) return next(appError(400, '未註冊使用者帳號無法登入', next));
+
+    /** auth
+     * 需是已註冊 user 的 email 才能進行
+     * 解密 password
+     */
+    const auth = await bcrypt.compare(password, user.password);
+    if (!auth) return next(appError(400, '您的密碼不正確', next));
+    generateSendJWT(user, 200, res);
+  }),
 };

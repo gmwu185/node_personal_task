@@ -10,7 +10,25 @@
 			"name": "取得所有 posts",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Token_min@mail.com}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Token_gg@mail.com}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Token_aa@mail.com}}",
+						"type": "text"
+					}
+				],
 				"url": {
 					"raw": "{{domain}}/posts",
 					"host": [
@@ -22,7 +40,7 @@
 					"query": [
 						{
 							"key": "q",
-							"value": "-test",
+							"value": "index",
 							"description": "content 欄位查找關鍵字",
 							"disabled": true
 						},
@@ -44,10 +62,28 @@
 			},
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Token_min@mail.com}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Token_gg@mail.com}}",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Token_aa@mail.com}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n \"userData\": \"62908a8ebf85a52ce75989a5\",\n \"content\": \"test12312\",\n \"tags\": [\"感情2\"],\n \"type\": \"person\",\n \"image\": \"http://\"\n}",
+					"raw": "{\n \"content\": \"03_test\",\n \"tags\": [\"感情2\"],\n \"type\": \"person\",\n \"image\": \"http://\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -70,7 +106,25 @@
 			"name": "刪除所有 post",
 			"request": {
 				"method": "DELETE",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Token_min@mail.com}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Token_gg@mail.com}}",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Token_aa@mail.com}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
 				"url": {
 					"raw": "{{domain}}/posts",
 					"host": [
@@ -87,7 +141,25 @@
 			"name": "刪除單筆 post",
 			"request": {
 				"method": "DELETE",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Token_min@mail.com}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Token_gg@mail.com}}",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Token_aa@mail.com}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
 				"url": {
 					"raw": "{{domain}}/posts/:id",
 					"host": [
@@ -100,7 +172,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": ""
+							"value": "629a2abefab305ef1296c807"
 						}
 					]
 				}
@@ -111,7 +183,25 @@
 			"name": "編輯單筆 post",
 			"request": {
 				"method": "PATCH",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Token_min@mail.com}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Token_gg@mail.com}}",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Token_aa@mail.com}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n \"content\": \"test-edit\"\n}",
@@ -133,9 +223,23 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "629250f2054069f130f1e7c4",
+							"value": "629a2b0df97cf49063a259cd",
 							"description": "post ID"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OPTIONS API",
+			"request": {
+				"method": "OPTIONS",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}",
+					"host": [
+						"{{domain}}"
 					]
 				}
 			},
@@ -168,14 +272,209 @@
 			"response": []
 		},
 		{
-			"name": "OPTIONS API",
+			"name": "註冊 signUp",
 			"request": {
-				"method": "OPTIONS",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userName\": \"小明-sign_up\",\n  \"email\": \"bb@mail.com\",\n  \"password\": \"12345678\",\n  \"confirmPassword\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "{{domain}}",
+					"raw": "{{domain}}/users/signUp",
 					"host": [
 						"{{domain}}"
+					],
+					"path": [
+						"users",
+						"signUp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "登入 signIn",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOGE2MjliMWM0YjQ1OGE1MWRiNzQ1YiIsInVzZXJOYW1lIjoiMzPlpKfmmI4iLCJpYXQiOjE2NTMyODQwODIsImV4cCI6MTY1Mzg4ODg4Mn0.lEssHS6KfSXqsgnFelOtCWIvJ7TZFEqYmjZk0BB6H9o",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"gg@mail.com\",\n  \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/users/signIn",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"users",
+						"signIn"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "重設密碼 updatePassword",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Token_min@mail.com}}",
+						"type": "text",
+						"description": "Bearer ",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Token_gg@mail.com}}",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Token_aa@mail.com}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"newPassword\": \"11223344\",\n  \"confirmNewPassword\": \"11223344\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/users/updatePassword",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"users",
+						"updatePassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "取得個人資料 getProfile",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Token_min@mail.com}}",
+						"type": "text",
+						"description": "Bearer ",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Token_gg@mail.com}}",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Token_aa@mail.com}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/users/profile",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"users",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "更新個人資料 patchProfile",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Token_min@mail.com}}",
+						"type": "text",
+						"description": "Bearer ",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Token_gg@mail.com}}",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Token_aa@mail.com}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userName\": \"newPatchUserName\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/users/profile",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"users",
+						"profile"
 					]
 				}
 			},

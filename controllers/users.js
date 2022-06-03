@@ -98,4 +98,18 @@ module.exports = {
     );
     generateSendJWT(updateUser, 200, res);
   }),
+  getProfile: handleErrorAsync(async (req, res, next) => {
+    const userObj = req.user;
+    if (!userObj) return appError(400, 'user 資訊未帶入', next);
+    handleSuccess(res, userObj);
+  }),
+  patchProfile: handleErrorAsync(async (req, res, next) => {
+    const { userName, avatarUrl, gender } = req.body;
+    const patchData = { userName, avatarUrl, gender };
+    if (!userName) return appError(400, 'userName 名稱必填', next);
+    const profileUser = await User.findByIdAndUpdate(req.user.id, patchData, {
+      new: true,
+    }).catch((err) => appError(400, '輸入欄位資料有錯誤', next));
+    handleSuccess(res, profileUser);
+  }),
 };

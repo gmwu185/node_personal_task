@@ -32,5 +32,11 @@ router.post('/signIn', (req, res, next) =>
 router.patch('/updatePassword', isAuth, (req, res, next) =>
   UsersControllers.updatePassword(req, res, next)
 );
+router.get('/profile', isAuth, (req, res, next) =>
+  UsersControllers.getProfile(req, res, next)
+);
+router.patch('/profile', isAuth, (req, res, next) =>
+  UsersControllers.patchProfile(req, res, next)
+);
 
 module.exports = router;

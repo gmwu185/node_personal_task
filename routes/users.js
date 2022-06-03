@@ -138,7 +138,6 @@ router.get(
           "_id": "629a24a903a87b6101044846",
           "userName": "userName",
           "email": "dd@mail.com",
-          "password": "$2a$12$5Xk3E0z9JnPW5RNU3nH0TulaCj56HG04DgakzgU2QoRGHvxf.wGd6"
         }
       },
     }

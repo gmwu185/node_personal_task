@@ -20,11 +20,388 @@
   "consumes": [],
   "produces": [],
   "paths": {
+    "/users/signIn": {
+      "post": {
+        "tags": [
+          "users (使用者)"
+        ],
+        "summary": "登入",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "type": "object",
+            "required": "success",
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "aa@mail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "12345678"
+                }
+              },
+              "required": [
+                "email",
+                "password"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWEyNDg1MDNhODdiNjEwMTA0NDg0MyIsInVzZXJOYW1lIjoi5bCP5piOLXNpZ25fdXAiLCJpYXQiOjE2NTQyNzQzNDYsImV4cCI6MTY1NDg3OTE0Nn0.jfSo1oeSZXbdRPC0J1hGDw6kMwxT-Dtwkr84RwbWOqM"
+                    },
+                    "wholeToken": {
+                      "type": "string",
+                      "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWEyNDg1MDNhODdiNjEwMTA0NDg0MyIsInVzZXJOYW1lIjoi5bCP5piOLXNpZ25fdXAiLCJpYXQiOjE2NTQyNzQzNDYsImV4cCI6MTY1NDg3OTE0Nn0.jfSo1oeSZXbdRPC0J1hGDw6kMwxT-Dtwkr84RwbWOqM"
+                    },
+                    "userName": {
+                      "type": "string",
+                      "example": "aa"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/users/signUp": {
+      "post": {
+        "tags": [
+          "users (使用者)"
+        ],
+        "summary": "註冊",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "type": "object",
+            "required": "success",
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userName": {
+                  "type": "string",
+                  "example": "aa"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "aa@mail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "12345678"
+                },
+                "confirmPassword": {
+                  "type": "string",
+                  "example": "12345678"
+                }
+              },
+              "required": [
+                "userName",
+                "email",
+                "password",
+                "confirmPassword"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWEzYTQ2MDI1NzU0M2Y4OTdjNDEzNiIsInVzZXJOYW1lIjoiY2MiLCJpYXQiOjE2NTQyNzQ2MzAsImV4cCI6MTY1NDg3OTQzMH0.TJZrrobqqmdnMQ2-BLhh2zMPY9y_UbST3lwSd5Yd6Ls"
+                    },
+                    "wholeToken": {
+                      "type": "string",
+                      "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWEzYTQ2MDI1NzU0M2Y4OTdjNDEzNiIsInVzZXJOYW1lIjoiY2MiLCJpYXQiOjE2NTQyNzQ2MzAsImV4cCI6MTY1NDg3OTQzMH0.TJZrrobqqmdnMQ2-BLhh2zMPY9y_UbST3lwSd5Yd6Ls"
+                    },
+                    "userName": {
+                      "type": "string",
+                      "example": "cc"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/users/updatePassword": {
+      "patch": {
+        "tags": [
+          "users (使用者)"
+        ],
+        "summary": "重設密碼",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "type": "object",
+            "required": "success",
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "newPassword": {
+                  "type": "string",
+                  "example": "11223344"
+                },
+                "confirmNewPassword": {
+                  "type": "string",
+                  "example": "11223344"
+                }
+              },
+              "required": [
+                "newPassword",
+                "confirmNewPassword"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWEyNDg1MDNhODdiNjEwMTA0NDg0MyIsInVzZXJOYW1lIjoi5bCP5piOLXNpZ25fdXAiLCJpYXQiOjE2NTQyNzQ5OTIsImV4cCI6MTY1NDg3OTc5Mn0.8ao04wrxrTAHAxtpklGTTOXz4z8dwSEI2FpFeoaaKKw"
+                    },
+                    "wholeToken": {
+                      "type": "string",
+                      "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWEyNDg1MDNhODdiNjEwMTA0NDg0MyIsInVzZXJOYW1lIjoi5bCP5piOLXNpZ25fdXAiLCJpYXQiOjE2NTQyNzQ5OTIsImV4cCI6MTY1NDg3OTc5Mn0.8ao04wrxrTAHAxtpklGTTOXz4z8dwSEI2FpFeoaaKKw"
+                    },
+                    "userName": {
+                      "type": "string",
+                      "example": "cc"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/users/profile": {
+      "get": {
+        "tags": [
+          "users (使用者)"
+        ],
+        "summary": "取得個人資料",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "gender": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "_id": {
+                      "type": "string",
+                      "example": "629a24a903a87b6101044846"
+                    },
+                    "userName": {
+                      "type": "string",
+                      "example": "userName"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "dd@mail.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "example": "$2a$12$5Xk3E0z9JnPW5RNU3nH0TulaCj56HG04DgakzgU2QoRGHvxf.wGd6"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "users (使用者)"
+        ],
+        "summary": "更新個人資料",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "type": "object",
+            "required": "success",
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userName": {
+                  "type": "string",
+                  "example": "newPatchUserName"
+                },
+                "avatarUrl": {
+                  "type": "string",
+                  "example": "https://..."
+                },
+                "gender": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "userName"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "629a3dae000fcec3e68c92c7"
+                    },
+                    "userName": {
+                      "type": "string",
+                      "example": "newPatchUserName"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "aa@mail.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "example": "$2a$12$RG4WzuHhiNukaLM.fkIZqegE9TETpN67lqWYWiiyFXOa38bjqI6gC"
+                    },
+                    "gender": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "avatarUrl": {
+                      "type": "string",
+                      "example": "https://..."
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/posts/": {
       "get": {
         "tags": [
           "posts (貼文)"
         ],
+        "summary": "觀看所有動態",
         "description": "取得所有貼文",
         "parameters": [],
         "responses": {
@@ -94,12 +471,18 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       },
       "post": {
         "tags": [
           "posts (貼文)"
         ],
+        "summary": "張貼個人動態",
         "description": "新增單筆貼文",
         "parameters": [
           {
@@ -107,27 +490,23 @@
             "in": "body",
             "type": "object",
             "required": true,
-            "description": "資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的*",
+            "description": "資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的 <span>*</span>",
             "schema": {
               "type": "object",
               "properties": {
-                "userData": {
-                  "type": "string",
-                  "example": "62908a8ebf85a52ce75989a5"
-                },
                 "content": {
                   "type": "string",
                   "example": "test"
                 },
-                "$tags": {
+                "type": {
+                  "type": "string",
+                  "example": "person"
+                },
+                "tags": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
-                },
-                "type": {
-                  "type": "string",
-                  "example": "person"
                 },
                 "image": {
                   "type": "string",
@@ -135,9 +514,7 @@
                 }
               },
               "required": [
-                "userData",
-                "content",
-                "type"
+                "content"
               ]
             }
           }
@@ -157,7 +534,7 @@
                   "properties": {
                     "userData": {
                       "type": "string",
-                      "example": "62908a8ebf85a52ce75989a5"
+                      "example": "629a3dae000fcec3e68c92c7"
                     },
                     "content": {
                       "type": "string",
@@ -175,7 +552,7 @@
                     },
                     "image": {
                       "type": "string",
-                      "example": ""
+                      "example": "http://"
                     },
                     "likes": {
                       "type": "number",
@@ -187,11 +564,11 @@
                     },
                     "_id": {
                       "type": "string",
-                      "example": "62924e3af4568a486882612f"
+                      "example": "629a3fa4f6a449c76689d3ff"
                     },
                     "createAt": {
                       "type": "string",
-                      "example": "2022-05-28T16:30:50.165Z"
+                      "example": "2022-06-03T17:06:44.297Z"
                     }
                   }
                 }
@@ -201,15 +578,26 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       },
       "delete": {
         "tags": [
           "posts (貼文)"
         ],
+        "summary": "刪除所有貼文",
         "description": "刪除所有貼文",
         "parameters": [],
-        "responses": {}
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       }
     },
     "/posts/{id}": {
@@ -217,6 +605,7 @@
         "tags": [
           "posts (貼文)"
         ],
+        "summary": "刪除單筆貼文",
         "description": "刪除單筆貼文",
         "parameters": [
           {
@@ -226,12 +615,18 @@
             "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       },
       "patch": {
         "tags": [
           "posts (貼文)"
         ],
+        "summary": "更新單筆貼文",
         "description": "更新單筆貼文",
         "parameters": [
           {
@@ -346,51 +741,12 @@
               }
             }
           }
-        }
-      }
-    },
-    "/users/": {
-      "post": {
-        "tags": [
-          "users (使用者)"
-        ],
-        "description": "新增使用者",
-        "parameters": [
+        },
+        "security": [
           {
-            "name": "body",
-            "in": "body",
-            "type": "object",
-            "required": true,
-            "description": "資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的*",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "userName": {
-                  "type": "string",
-                  "example": "jimmyWu"
-                },
-                "email": {
-                  "type": "string",
-                  "example": "gg@mail.com"
-                },
-                "password": {
-                  "type": "string",
-                  "example": "123456"
-                },
-                "avatarUrl": {
-                  "type": "string",
-                  "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
-                }
-              },
-              "required": [
-                "userName",
-                "email",
-                "password"
-              ]
-            }
+            "apiKeyAuth": []
           }
-        ],
-        "responses": {}
+        ]
       }
     }
   },

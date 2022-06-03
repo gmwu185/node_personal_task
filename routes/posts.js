@@ -1,12 +1,18 @@
 var express = require('express');
 var router = express.Router();
 
+const { isAuth } = require('../handStates/auth');
+
 const Posts = require('../model/posts');
 const PostsControllers = require('../controllers/posts');
 
-router.get('/', (req, res, next) =>
-  /** #swagger.description = '取得所有貼文'
+router.get('/', isAuth, (req, res, next) =>
+  /** #swagger.summary = '觀看所有動態'
+    * #swagger.description = '取得所有貼文'
     * #swagger.tags = ['posts (貼文)']
+    * #swagger.security = [{
+      'apiKeyAuth': []
+    }],
     * #swagger.responses[200] = {
       description: '取得<strong>全部貼文</strong>',
       schema: {
@@ -31,19 +37,22 @@ router.get('/', (req, res, next) =>
   */
   PostsControllers.getPosts(req, res, next)
 );
-router.post('/', (req, res, next) =>
-  /** #swagger.description = '新增單筆貼文'
+router.post('/', isAuth, (req, res, next) =>
+  /** #swagger.summary = '張貼個人動態'
+    * #swagger.description = '新增單筆貼文'
     * #swagger.tags = ['posts (貼文)']
+    * #swagger.security = [{
+      'apiKeyAuth': []
+    }],
     * #swagger.parameters['body'] = {
       in: "body",
       type: "object",
       required: true,
-      description: `資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的*`,
+      description: `資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的 <span>*</span>`,
       schema: { 
-        "$userData": "62908a8ebf85a52ce75989a5",
         "$content": "test",
-        "$tags": ["感情2"],
-        "$type": "person",
+        "type": "person",
+        "tags": ["感情2"],
         "image": "http://"
       }
     },
@@ -52,33 +61,41 @@ router.post('/', (req, res, next) =>
       schema: {
         "status": true,
         "data": {
-          "userData": "62908a8ebf85a52ce75989a5",
+          "userData": "629a3dae000fcec3e68c92c7",
           "content": "test",
           "tags": [
-            "感情2"
+            "string"
           ],
           "type": "person",
-          "image": "",
+          "image": "http://",
           "likes": 0,
           "comments": 0,
-          "_id": "62924e3af4568a486882612f",
-          "createAt": "2022-05-28T16:30:50.165Z"
+          "_id": "629a3fa4f6a449c76689d3ff",
+          "createAt": "2022-06-03T17:06:44.297Z"
         }
       }
     }
    */
   PostsControllers.createdPost(req, res, next)
 );
-router.delete('/', (req, res, next) =>
-  /** #swagger.description = '刪除所有貼文'
-   * #swagger.tags = ['posts (貼文)']
+router.delete('/', isAuth, (req, res, next) =>
+  /** #swagger.summary = '刪除所有貼文'
+    * #swagger.description = '刪除所有貼文'
+    * #swagger.tags = ['posts (貼文)']
+    * #swagger.security = [{
+      'apiKeyAuth': []
+    }],
    */
   PostsControllers.delALLPosts(req, res, next)
 );
-router.delete('/:id', (req, res, next) =>
-  /** #swagger.description = '刪除單筆貼文'
-   * #swagger.tags = ['posts (貼文)']
-   * #swagger.parameters['id'] = {
+router.delete('/:id', isAuth, (req, res, next) =>
+  /** #swagger.summary = '刪除單筆貼文'
+    * #swagger.description = '刪除單筆貼文'
+    * #swagger.tags = ['posts (貼文)']
+    * #swagger.security = [{
+      'apiKeyAuth': []
+    }],
+    * #swagger.parameters['id'] = {
       in: 'path',
       type: 'string',
       required: true,
@@ -86,10 +103,14 @@ router.delete('/:id', (req, res, next) =>
   */
   PostsControllers.delOnePost(req, res, next)
 );
-router.patch('/:id', (req, res, next) =>
-  /** #swagger.tags = ['posts (貼文)']
-   * #swagger.description = '更新單筆貼文',
-   * #swagger.parameters['id'] = {
+router.patch('/:id', isAuth, (req, res, next) =>
+  /** #swagger.summary = '更新單筆貼文'
+    * #swagger.tags = ['posts (貼文)']
+    * #swagger.description = '更新單筆貼文',
+    * #swagger.security = [{
+      'apiKeyAuth': []
+    }],
+    * #swagger.parameters['id'] = {
         in: 'path',
         type: 'string',
         required: true,
@@ -102,7 +123,6 @@ router.patch('/:id', (req, res, next) =>
       schema: { 
         "$content": "test-edit",
         "tags": ["string-1", "string-2"],
-        "type": "string",
         "type": "string",
         "image": "http://",
         "likes": 0,
@@ -131,7 +151,7 @@ router.patch('/:id', (req, res, next) =>
       }
     }
    */
-    
+
   PostsControllers.upDatePost(req, res, next)
 );
 

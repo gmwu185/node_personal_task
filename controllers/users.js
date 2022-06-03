@@ -99,7 +99,8 @@ module.exports = {
     generateSendJWT(updateUser, 200, res);
   }),
   getProfile: handleErrorAsync(async (req, res, next) => {
-    const userObj = req.user;
+    const { gender, _id, userName, email } = req.user;
+    const userObj = { gender, _id, userName, email };
     if (!userObj) return appError(400, 'user 資訊未帶入', next);
     handleSuccess(res, userObj);
   }),
@@ -109,7 +110,9 @@ module.exports = {
     if (!userName) return appError(400, 'userName 名稱必填', next);
     const profileUser = await User.findByIdAndUpdate(req.user.id, patchData, {
       new: true,
+      select: 'userName avatarUrl gender email',
     }).catch((err) => appError(400, '輸入欄位資料有錯誤', next));
+    console.log('patchData', patchData);
     handleSuccess(res, profileUser);
   }),
 };

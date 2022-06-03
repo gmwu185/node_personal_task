@@ -288,10 +288,6 @@
                     "email": {
                       "type": "string",
                       "example": "dd@mail.com"
-                    },
-                    "password": {
-                      "type": "string",
-                      "example": "$2a$12$5Xk3E0z9JnPW5RNU3nH0TulaCj56HG04DgakzgU2QoRGHvxf.wGd6"
                     }
                   }
                 }
@@ -367,10 +363,6 @@
                     "email": {
                       "type": "string",
                       "example": "aa@mail.com"
-                    },
-                    "password": {
-                      "type": "string",
-                      "example": "$2a$12$RG4WzuHhiNukaLM.fkIZqegE9TETpN67lqWYWiiyFXOa38bjqI6gC"
                     },
                     "gender": {
                       "type": "string",

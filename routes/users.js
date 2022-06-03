@@ -138,7 +138,6 @@ router.get(
           "_id": "629a24a903a87b6101044846",
           "userName": "userName",
           "email": "dd@mail.com",
-          "password": "$2a$12$5Xk3E0z9JnPW5RNU3nH0TulaCj56HG04DgakzgU2QoRGHvxf.wGd6"
         }
       },
     }
@@ -172,7 +171,6 @@ router.patch(
           "_id": "629a3dae000fcec3e68c92c7",
           "userName": "newPatchUserName",
           "email": "aa@mail.com",
-          "password": "$2a$12$RG4WzuHhiNukaLM.fkIZqegE9TETpN67lqWYWiiyFXOa38bjqI6gC",
           "gender": "",
           "avatarUrl": "https://..."
         }

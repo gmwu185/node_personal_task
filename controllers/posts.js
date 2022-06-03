@@ -8,12 +8,16 @@ module.exports = {
   getPosts: handleErrorAsync(async (req, res, next) => {
     const { q, timeSort } = req.query;
     await Posts.find(q ? { content: new RegExp(q) } : {})
-      .populate('userData') // 指向 user DB ID 做關連
       .sort(timeSort === 'asc' ? 'createAt' : '-createAt')
+      .populate({
+        path: 'userData',
+        select: 'email userPhoto userName createAt',
+      })
       .then((result) => handleSuccess(res, result))
       .catch((err) => handleErrorAsync(res, err));
   }),
   createdPost: handleErrorAsync(async (req, res, next) => {
+    const userID = req.user.id;
     const { userData, content, tags, type, image } = req.body;
 
     if (!userData) return appError(400, 'userData 未帶入', next);
@@ -24,16 +28,14 @@ module.exports = {
       if (!image.startsWith('https://') && !image.startsWith('http://'))
         return appError(400, '請使用 https:// 或 http:// 開頭的圖片網址', next);
     }
-    handleSuccess(
-      res,
-      await Posts.create({
-        userData,
-        content,
-        tags,
-        type,
-        image,
-      })
-    );
+    const newPost = await Posts.create({
+      userData: userID,
+      content,
+      tags,
+      type,
+      image,
+    });
+    handleSuccess(res, newPost);
   }),
   delALLPosts: handleErrorAsync(async (req, res, next) => {
     // 網址 / 沒接參數判斷錯誤，才能正確執行刪除單筆

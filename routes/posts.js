@@ -1,10 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
+const { isAuth } = require('../handStates/auth');
+
 const Posts = require('../model/posts');
 const PostsControllers = require('../controllers/posts');
 
-router.get('/', (req, res, next) =>
+router.get('/', isAuth, (req, res, next) =>
   /** #swagger.description = '取得所有貼文'
     * #swagger.tags = ['posts (貼文)']
     * #swagger.responses[200] = {
@@ -31,7 +33,7 @@ router.get('/', (req, res, next) =>
   */
   PostsControllers.getPosts(req, res, next)
 );
-router.post('/', (req, res, next) =>
+router.post('/', isAuth, (req, res, next) =>
   /** #swagger.description = '新增單筆貼文'
     * #swagger.tags = ['posts (貼文)']
     * #swagger.parameters['body'] = {
@@ -69,13 +71,13 @@ router.post('/', (req, res, next) =>
    */
   PostsControllers.createdPost(req, res, next)
 );
-router.delete('/', (req, res, next) =>
+router.delete('/', isAuth, (req, res, next) =>
   /** #swagger.description = '刪除所有貼文'
    * #swagger.tags = ['posts (貼文)']
    */
   PostsControllers.delALLPosts(req, res, next)
 );
-router.delete('/:id', (req, res, next) =>
+router.delete('/:id', isAuth, (req, res, next) =>
   /** #swagger.description = '刪除單筆貼文'
    * #swagger.tags = ['posts (貼文)']
    * #swagger.parameters['id'] = {
@@ -86,7 +88,7 @@ router.delete('/:id', (req, res, next) =>
   */
   PostsControllers.delOnePost(req, res, next)
 );
-router.patch('/:id', (req, res, next) =>
+router.patch('/:id', isAuth, (req, res, next) =>
   /** #swagger.tags = ['posts (貼文)']
    * #swagger.description = '更新單筆貼文',
    * #swagger.parameters['id'] = {
@@ -131,7 +133,7 @@ router.patch('/:id', (req, res, next) =>
       }
     }
    */
-    
+
   PostsControllers.upDatePost(req, res, next)
 );
 

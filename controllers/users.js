@@ -51,6 +51,10 @@ module.exports = {
     if (!validator.isEmail(userData.email))
       return next(appError('400', 'Email 格式不正確', next));
 
+    const checkRegisterAgain = await User.find({ email: userData.email });
+    if (checkRegisterAgain.length > 1)
+      return appError('400', 'Email 已重覆註冊', next);
+
     userData.password = await bcrypt.hash(userData.password, 12);
     const newUser = await User.create(userData);
     generateSendJWT(newUser, 201, res);

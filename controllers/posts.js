@@ -52,26 +52,25 @@ module.exports = {
     }).catch((err) => appError(400, `無 ${id} 此 id，請重新確認`, next));
     console.log('delOnePost', delOnePost);
     !delOnePost
-      ? appError(400, `無 ${id} 此 id，請重新確認`, next)
+      ? appError(400, `刪除失敗，請重新確認 ${id} id 是否正確`, next)
       : handleSuccess(res, `id ${id} 刪除成功`);
   }),
   upDatePost: handleErrorAsync(async (req, res, next) => {
     const { id } = req.params;
-    const { userData, content, tags, type, image } = req.body;
+    const { content, tags, type, image } = req.body;
 
     if (!content) return appError(400, '內容必填', next);
 
     const editPost = await Posts.findByIdAndUpdate(
-      id,
+      { _id: id },
       {
-        userData: id,
         content,
         tags,
         type,
         image,
       },
       { returnDocument: 'after' }
-    );
+    ).catch((err) => appError(400, `無 ${id} 此 id，請重新確認`, next));
     !editPost
       ? appError(400, `更新失敗，請重新確認內容或 ${id} 是否正確`, next)
       : handleSuccess(res, editPost);

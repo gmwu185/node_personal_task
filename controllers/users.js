@@ -99,7 +99,8 @@ module.exports = {
     generateSendJWT(updateUser, 200, res);
   }),
   getProfile: handleErrorAsync(async (req, res, next) => {
-    const userObj = req.user;
+    const { gender, _id, userName, email } = req.user;
+    const userObj = { gender, _id, userName, email };
     if (!userObj) return appError(400, 'user 資訊未帶入', next);
     handleSuccess(res, userObj);
   }),

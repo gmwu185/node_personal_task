@@ -110,7 +110,9 @@ module.exports = {
     if (!userName) return appError(400, 'userName 名稱必填', next);
     const profileUser = await User.findByIdAndUpdate(req.user.id, patchData, {
       new: true,
+      select: 'userName avatarUrl gender email',
     }).catch((err) => appError(400, '輸入欄位資料有錯誤', next));
+    console.log('patchData', patchData);
     handleSuccess(res, profileUser);
   }),
 };

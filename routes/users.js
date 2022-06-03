@@ -171,7 +171,6 @@ router.patch(
           "_id": "629a3dae000fcec3e68c92c7",
           "userName": "newPatchUserName",
           "email": "aa@mail.com",
-          "password": "$2a$12$RG4WzuHhiNukaLM.fkIZqegE9TETpN67lqWYWiiyFXOa38bjqI6gC",
           "gender": "",
           "avatarUrl": "https://..."
         }

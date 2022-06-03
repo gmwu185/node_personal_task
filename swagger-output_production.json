@@ -364,10 +364,6 @@
                       "type": "string",
                       "example": "aa@mail.com"
                     },
-                    "password": {
-                      "type": "string",
-                      "example": "$2a$12$RG4WzuHhiNukaLM.fkIZqegE9TETpN67lqWYWiiyFXOa38bjqI6gC"
-                    },
                     "gender": {
                       "type": "string",
                       "example": ""

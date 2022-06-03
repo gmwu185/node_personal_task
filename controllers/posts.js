@@ -21,8 +21,6 @@ module.exports = {
     const { userData, content, tags, type, image } = req.body;
 
     if (!content) return appError(400, '內容必填', next);
-    if (!tags) return appError(400, '標籤必填', next);
-    if (!type) return appError(400, '貼文類型未填寫', next);
     if (image) {
       if (!image.startsWith('https://') && !image.startsWith('http://'))
         return appError(400, '請使用 https:// 或 http:// 開頭的圖片網址', next);
@@ -33,7 +31,7 @@ module.exports = {
       tags,
       type,
       image,
-    });
+    }).catch(err=> console.log('newPost err', err));
     handleSuccess(res, newPost);
   }),
   delALLPosts: handleErrorAsync(async (req, res, next) => {

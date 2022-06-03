@@ -13,13 +13,13 @@ const postsSchema = new mongoose.Schema(
     tags: [
       {
         type: String,
-        required: [true, '貼文標籤 tags 未填寫'],
+        required: false,
       },
     ],
     type: {
       type: String,
       enum: ['group', 'person'],
-      required: [true, '貼文類型 type 未填寫'],
+      required: false,
     },
     image: {
       type: String,

@@ -7,20 +7,19 @@ const Posts = require('../model/posts');
 module.exports = {
   getPosts: handleErrorAsync(async (req, res, next) => {
     const { q, timeSort } = req.query;
-    await Posts.find(q ? { content: new RegExp(q) } : {})
+    const posts = await Posts.find(q ? { content: new RegExp(q) } : {})
       .sort(timeSort === 'asc' ? 'createAt' : '-createAt')
       .populate({
         path: 'userData',
         select: 'email userPhoto userName createAt',
       })
-      .then((result) => handleSuccess(res, result))
       .catch((err) => handleErrorAsync(res, err));
+    handleSuccess(res, posts);
   }),
   createdPost: handleErrorAsync(async (req, res, next) => {
     const userID = req.user.id;
     const { userData, content, tags, type, image } = req.body;
 
-    if (!userData) return appError(400, 'userData 未帶入', next);
     if (!content) return appError(400, '內容必填', next);
     if (!tags) return appError(400, '標籤必填', next);
     if (!type) return appError(400, '貼文類型未填寫', next);
@@ -50,29 +49,11 @@ module.exports = {
 
     const delOnePost = await Posts.findByIdAndDelete({
       _id: id,
-    });
-    /* 接正確與錯誤流程寫法一 */
-    // .then((result) => {
-    //   if (result === null) return appError(res, `無 ${id} 此 id，請重新確認`, next);
-    //   if (typeof result === 'object')
-    //     return handleSuccess(res, `${id} 刪除成功`);
-    // })
-    // .catch((err) => appError(res, `無 ${id} 此 id，請重新確認`, next));
-    /* /接正確與錯誤流程寫法一 */
-
-    /* 接正確與錯誤流程寫法二 */
-    // if(!delOnePost) {
-    //   appError(400, `無 ${id} 此 id，請重新確認`, next)
-    // } else {
-    //   handleSuccess(res, `${id} 刪除成功`);
-    // }
-    /* /接正確與錯誤流程寫法二 */
-
-    /* 接正確與錯誤流程寫法三 */
+    }).catch((err) => appError(400, `無 ${id} 此 id，請重新確認`, next));
+    console.log('delOnePost', delOnePost);
     !delOnePost
       ? appError(400, `無 ${id} 此 id，請重新確認`, next)
       : handleSuccess(res, `id ${id} 刪除成功`);
-    /* /接正確與錯誤流程寫法三 */
   }),
   upDatePost: handleErrorAsync(async (req, res, next) => {
     const { id } = req.params;

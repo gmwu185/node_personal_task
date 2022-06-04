@@ -68,11 +68,11 @@
                   "properties": {
                     "token": {
                       "type": "string",
-                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWEyNDg1MDNhODdiNjEwMTA0NDg0MyIsInVzZXJOYW1lIjoi5bCP5piOLXNpZ25fdXAiLCJpYXQiOjE2NTQyNzQzNDYsImV4cCI6MTY1NDg3OTE0Nn0.jfSo1oeSZXbdRPC0J1hGDw6kMwxT-Dtwkr84RwbWOqM"
+                      "example": "<Token>"
                     },
                     "wholeToken": {
                       "type": "string",
-                      "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWEyNDg1MDNhODdiNjEwMTA0NDg0MyIsInVzZXJOYW1lIjoi5bCP5piOLXNpZ25fdXAiLCJpYXQiOjE2NTQyNzQzNDYsImV4cCI6MTY1NDg3OTE0Nn0.jfSo1oeSZXbdRPC0J1hGDw6kMwxT-Dtwkr84RwbWOqM"
+                      "example": "Bearer <Token>"
                     },
                     "userName": {
                       "type": "string",
@@ -152,11 +152,11 @@
                   "properties": {
                     "token": {
                       "type": "string",
-                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWEzYTQ2MDI1NzU0M2Y4OTdjNDEzNiIsInVzZXJOYW1lIjoiY2MiLCJpYXQiOjE2NTQyNzQ2MzAsImV4cCI6MTY1NDg3OTQzMH0.TJZrrobqqmdnMQ2-BLhh2zMPY9y_UbST3lwSd5Yd6Ls"
+                      "example": "<Token>"
                     },
                     "wholeToken": {
                       "type": "string",
-                      "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWEzYTQ2MDI1NzU0M2Y4OTdjNDEzNiIsInVzZXJOYW1lIjoiY2MiLCJpYXQiOjE2NTQyNzQ2MzAsImV4cCI6MTY1NDg3OTQzMH0.TJZrrobqqmdnMQ2-BLhh2zMPY9y_UbST3lwSd5Yd6Ls"
+                      "example": "Bearer <Token>"
                     },
                     "userName": {
                       "type": "string",
@@ -226,11 +226,11 @@
                   "properties": {
                     "token": {
                       "type": "string",
-                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWEyNDg1MDNhODdiNjEwMTA0NDg0MyIsInVzZXJOYW1lIjoi5bCP5piOLXNpZ25fdXAiLCJpYXQiOjE2NTQyNzQ5OTIsImV4cCI6MTY1NDg3OTc5Mn0.8ao04wrxrTAHAxtpklGTTOXz4z8dwSEI2FpFeoaaKKw"
+                      "example": "<Token>"
                     },
                     "wholeToken": {
                       "type": "string",
-                      "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWEyNDg1MDNhODdiNjEwMTA0NDg0MyIsInVzZXJOYW1lIjoi5bCP5piOLXNpZ25fdXAiLCJpYXQiOjE2NTQyNzQ5OTIsImV4cCI6MTY1NDg3OTc5Mn0.8ao04wrxrTAHAxtpklGTTOXz4z8dwSEI2FpFeoaaKKw"
+                      "example": "Bearer <Token>"
                     },
                     "userName": {
                       "type": "string",

@@ -86,12 +86,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
+        }
       }
     },
     "/users/signUp": {
@@ -170,12 +165,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
+        }
       }
     },
     "/users/updatePassword": {
@@ -726,6 +716,50 @@
                       }
                     }
                   }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/upload/": {
+      "post": {
+        "tags": [
+          "upload 上傳圖片"
+        ],
+        "summary": "上傳圖片",
+        "description": "上傳圖片",
+        "parameters": [
+          {
+            "name": "singleFile",
+            "in": "formData",
+            "type": "file",
+            "required": "true",
+            "description": " <ul> <li>圖片不得大於 1024 * 1024</li> <li>僅限上傳 jpg、jpeg 與 png 格式。</li> <li>圖片長寬不符合 1:1 尺寸</li> </ul> "
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "圖片上傳成功回應",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "string",
+                  "example": "https://i.imgur.com/xxxxx.jpg"
                 }
               },
               "xml": {

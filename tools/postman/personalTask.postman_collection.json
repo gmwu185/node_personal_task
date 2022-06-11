@@ -14,8 +14,7 @@
 					{
 						"key": "Authorization",
 						"value": "{{Token_min@mail.com}}",
-						"type": "text",
-						"disabled": true
+						"type": "text"
 					},
 					{
 						"key": "Authorization",
@@ -26,7 +25,8 @@
 					{
 						"key": "Authorization",
 						"value": "{{Token_aa@mail.com}}",
-						"type": "text"
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"url": {
@@ -312,7 +312,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"email\": \"gg@mail.com\",\n  \"password\": \"12345678\"\n}",
+					"raw": "{\n  \"email\": \"aa@mail.com\",\n  \"password\": \"12345678\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -475,6 +475,54 @@
 					"path": [
 						"users",
 						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "imgurl 傳圖",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Token_min@mail.com}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Token_gg@mail.com}}",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Token_aa@mail.com}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "",
+							"type": "file",
+							"src": "/Users/jimmy-wu/Pictures/畫面截圖/20220520-第七週：Imgur 第三方圖床服務 API 介接-0010.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{domain}}/upload",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"upload"
 					]
 				}
 			},

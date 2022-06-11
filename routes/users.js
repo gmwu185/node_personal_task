@@ -28,9 +28,6 @@ router.post(
   '/signIn',
   /** #swagger.summary = '登入'
     * #swagger.tags = ['users (使用者)']
-    * #swagger.security = [{
-      'apiKeyAuth': []　
-    }],
     * #swagger.parameters['body'] = {
       in: "body",
       type: "object",
@@ -59,9 +56,6 @@ router.post(
   '/signUp',
   /** #swagger.summary = '註冊'
     * #swagger.tags = ['users (使用者)']
-    * #swagger.security = [{
-      'apiKeyAuth': []　
-    }],
     * #swagger.parameters['body'] = {
       in: "body",
       type: "object",

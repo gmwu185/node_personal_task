@@ -13,6 +13,7 @@ const { handleSuccess, handlerError } = require('./handStates/handles');
 var indexRouter = require('./routes/index');
 var postsRouter = require('./routes/posts');
 var usersRouter = require('./routes/users');
+var uploadRouter = require('./routes/upload');
 /* /router ------------------------------------------------------------------- */
 
 /* express 設定 --------------------------------------------------------------- */
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
+app.use('/upload', uploadRouter);
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));
 /* express 設定 --------------------------------------------------------------- */
 

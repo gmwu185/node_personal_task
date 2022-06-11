@@ -1165,6 +1165,150 @@
         ]
       }
     },
+    "/posts/user/{id}": {
+      "get": {
+        "tags": [
+          "動態貼文"
+        ],
+        "summary": "取得個人所有貼文列表",
+        "description": " <ul> <li>網址路由 <code>:id</code> 傳入 user id 做為查詢對象，向 posts DB 查詢。</li> </ul> ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Params path Variables <code>:id</code> (user ID)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "新增貼文留言功能",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "62a48066144c37745976f6dc"
+                      },
+                      "userData": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "629a21143742640bf2686ece"
+                          },
+                          "userName": {
+                            "type": "string",
+                            "example": "小明-sign_up"
+                          },
+                          "email": {
+                            "type": "string",
+                            "example": "min@mail.com"
+                          },
+                          "createAt": {
+                            "type": "string",
+                            "example": "2022-06-03T14:56:20.317Z"
+                          }
+                        }
+                      },
+                      "content": {
+                        "type": "string",
+                        "example": "03_test"
+                      },
+                      "tags": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "type": {
+                        "type": "string",
+                        "example": "person"
+                      },
+                      "image": {
+                        "type": "string",
+                        "example": "http://"
+                      },
+                      "likes": {
+                        "type": "array",
+                        "items": {}
+                      },
+                      "comments": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string",
+                              "example": "62a48487c1b5d0d55ef3979b"
+                            },
+                            "comment": {
+                              "type": "string",
+                              "example": "new comment"
+                            },
+                            "commentUser": {
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string",
+                                  "example": "629a21143742640bf2686ece"
+                                },
+                                "userName": {
+                                  "type": "string",
+                                  "example": "小明-sign_up"
+                                },
+                                "email": {
+                                  "type": "string",
+                                  "example": "min@mail.com"
+                                },
+                                "createAt": {
+                                  "type": "string",
+                                  "example": "2022-06-03T14:56:20.317Z"
+                                }
+                              }
+                            },
+                            "post": {
+                              "type": "string",
+                              "example": "62a48066144c37745976f6dc"
+                            },
+                            "createAt": {
+                              "type": "string",
+                              "example": "2022-06-11T12:03:19.117Z"
+                            }
+                          }
+                        }
+                      },
+                      "id": {
+                        "type": "string",
+                        "example": "62a48066144c37745976f6dc"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/upload/": {
       "post": {
         "tags": [

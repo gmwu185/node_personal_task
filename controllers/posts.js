@@ -2,6 +2,7 @@ const { handleSuccess } = require('../handStates/handles');
 const handleErrorAsync = require('../handStates/handleErrorAsync');
 const appError = require('../customErr/appError');
 
+const mongoose = require('mongoose');
 const Posts = require('../model/posts');
 const Comment = require('../model/comments');
 
@@ -63,8 +64,7 @@ module.exports = {
       tags,
       type,
       image,
-    })
-      .catch((err) => console.log('newPost err', err));
+    }).catch((err) => console.log('newPost err', err));
     handleSuccess(res, newPost);
   }),
   delALLPosts: handleErrorAsync(async (req, res, next) => {
@@ -158,5 +158,27 @@ module.exports = {
       next(appError(404, '貼文或留言 user 資料格式有誤', next))
     );
     handleSuccess(res, { comments: newComment });
+  }),
+  getMyPostList: handleErrorAsync(async (req, res, next) => {
+    const { id } = req.params;
+    if (!mongoose.isObjectIdOrHexString(id))
+      return appError(400, '無效 id', next);
+    if (!id || id === '')
+      return appError(400, '未帶入 user id 或其他錯誤', next);
+    const userAllPosts = await Posts.find({ userData: id })
+      .populate({
+        path: 'comments',
+        select: 'comment commentUser createAt',
+      })
+      .populate({
+        path: 'userData',
+        select: 'email userPhoto userName createAt',
+      })
+      .populate({
+        path: 'likes',
+        select: 'userPhoto userName',
+      })
+      .catch((err) => appError(404, 'user id 或其他錯誤', next));
+    handleSuccess(res, userAllPosts);
   }),
 };

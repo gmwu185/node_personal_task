@@ -308,5 +308,66 @@ router.post(
   */
   (req, res, next) => PostsControllers.createComment(req, res, next)
 );
+router.get(
+  '/user/:id',
+  isAuth,
+  /** #swagger.summary = '取得個人所有貼文列表',
+    * #swagger.tags = ['動態貼文']
+    * #swagger.description = `
+      <ul>
+        <li>網址路由 <code>:id</code> 傳入 user id 做為查詢對象，向 posts DB 查詢。</li>
+      </ul>
+    `,
+    * #swagger.parameters['id'] = {
+        in: 'path',
+        type: 'string',
+        required: true,
+        description: `Params path Variables <code>:id</code> (user ID)`
+      }
+    * #swagger.security = [{
+      'apiKeyAuth': []
+    }]
+    #swagger.responses[200] = {
+      description: `新增貼文留言功能`,
+      schema: {
+        "status": true,
+        "data": [
+          {
+            "_id": "62a48066144c37745976f6dc",
+            "userData": {
+              "_id": "629a21143742640bf2686ece",
+              "userName": "小明-sign_up",
+              "email": "min@mail.com",
+              "createAt": "2022-06-03T14:56:20.317Z"
+            },
+            "content": "03_test",
+            "tags": [
+              "感情2"
+            ],
+            "type": "person",
+            "image": "http://",
+            "likes": [],
+            "comments": [
+              {
+                "_id": "62a48487c1b5d0d55ef3979b",
+                "comment": "new comment",
+                "commentUser": {
+                  "_id": "629a21143742640bf2686ece",
+                  "userName": "小明-sign_up",
+                  "email": "min@mail.com",
+                  "createAt": "2022-06-03T14:56:20.317Z"
+                },
+                "post": "62a48066144c37745976f6dc",
+                "createAt": "2022-06-11T12:03:19.117Z"
+              }
+            ],
+            "id": "62a48066144c37745976f6dc"
+          }
+        ]
+      }
+    }
+  */
+  (req, res, next) => PostsControllers.getMyPostList(req, res, next)
+);
 
 module.exports = router;

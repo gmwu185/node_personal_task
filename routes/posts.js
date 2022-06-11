@@ -151,7 +151,6 @@ router.patch('/:id', isAuth, (req, res, next) =>
       }
     }
    */
-
   PostsControllers.upDatePost(req, res, next)
 );
 

@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 
 const { isAuth } = require('../handStates/auth');
-
 const UsersControllers = require('../controllers/users');
 
 router.post(
@@ -33,7 +32,6 @@ router.post(
   */
   (req, res, next) => UsersControllers.signIn(req, res, next)
 );
-
 router.post(
   '/signUp',
   /** #swagger.summary = '註冊會員'
@@ -64,7 +62,6 @@ router.post(
   */
   (req, res, next) => UsersControllers.signUp(req, res, next)
 );
-
 router.patch(
   '/updatePassword',
   isAuth,
@@ -154,6 +151,52 @@ router.patch(
     }
   */
   (req, res, next) => UsersControllers.patchProfile(req, res, next)
+);
+router.post(
+  '/:id/follow',
+  isAuth,
+  /** #swagger.summary = '追蹤朋友',
+    * #swagger.tags = ['users (會員按讚追蹤動態)'],
+    * #swagger.security = [{
+      'apiKeyAuth': []
+    }],
+    * #swagger.description = `取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。`,
+    * #swagger.parameters['id'] = {
+      description: `網址參數 <code>:id</code> 指定追蹤對象的 <code>user.id</code>。`
+    },
+    * #swagger.responses[200] = {
+      schema: {
+        "status": "success",
+        "data": {
+          "message": "您已成功將 628a629b1c4b458a51db745b 加入追蹤！"
+        }
+      }
+    }
+   */
+  (req, res, next) => UsersControllers.addFollow(req, res, next)
+);
+router.delete(
+  '/:id/follow',
+  isAuth,
+  /** #swagger.summary = '取消追蹤朋友',
+    * #swagger.tags = ['users (會員按讚追蹤動態)'],
+    * #swagger.security = [{
+        'apiKeyAuth': []
+      }],
+    * #swagger.description = `取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。`,
+    * #swagger.parameters['id'] = {
+        description: `網址參數 <code>:id</code> 指定追蹤對象的 <code>user.id</code>。`
+      },
+    * #swagger.responses[200] = {
+        schema: {
+          "status": "success",
+          "data": {
+            "message": "您已成功將 628a629b1c4b458a51db745b 取消追蹤！"
+          }
+        }
+      }
+  */
+  (req, res, next) => UsersControllers.unFollow(req, res, next)
 );
 
 module.exports = router;

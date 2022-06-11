@@ -31,7 +31,7 @@ module.exports = {
       tags,
       type,
       image,
-    }).catch(err=> console.log('newPost err', err));
+    }).catch((err) => console.log('newPost err', err));
     handleSuccess(res, newPost);
   }),
   delALLPosts: handleErrorAsync(async (req, res, next) => {
@@ -72,5 +72,45 @@ module.exports = {
     !editPost
       ? appError(400, `更新失敗，請重新確認內容或 ${id} 是否正確`, next)
       : handleSuccess(res, editPost);
+  }),
+  toggleLike: handleErrorAsync(async (req, res, next) => {
+    const postID = req.params.id;
+    const userID = req.user.id;
+    const findPost = await Posts.findById({
+      _id: postID,
+    }).catch((err) => appError(400, `無此貼文 ${postID} ID`, next));
+    // 判斷貼文按讚欄位與值判斷
+    if (findPost.like)
+      return appError(400, `此貼文沒有 likes 欄位`, next);
+    // 貼文按讚的 user id 判斷
+    if (findPost.likes.includes(userID)) {
+      const pullLike = await Posts.findOneAndUpdate(
+        { _id: postID },
+        {
+          $pull: { likes: userID },
+        },
+        { new: true } // 回傳最新改過
+      )
+        .populate('likes')
+        .exec((err, likes) => {
+          if (err)
+            return appError(400, `刪除失敗，請查明貼文 ${postID} ID`, next);
+          handleSuccess(res, likes);
+        });
+    } else {
+      const newLike = await Posts.findOneAndUpdate(
+        { _id: postID },
+        {
+          $push: { likes: userID },
+        },
+        { new: true } // 回傳最新改過
+      )
+        .populate('likes')
+        .exec((err, likes) => {
+          if (err)
+            return appError(400, `新增失敗，請查明貼文 ${postID} ID`, next);
+          handleSuccess(res, likes);
+        });
+    }
   }),
 };

@@ -9,6 +9,7 @@ const handleErrorAsync = require('../handStates/handleErrorAsync');
 const appError = require('../customErr/appError');
 
 const User = require('../model/users');
+const Posts = require('../model/posts');
 
 module.exports = {
   createdUser: handleErrorAsync(async (req, res, next) => {
@@ -194,5 +195,20 @@ module.exports = {
 
       handleSuccess(res, { message: `您已成功將 ${req.params.id} 取消追蹤！` });
     }
+  }),
+  getMyLikeList: handleErrorAsync(async (req, res, next) => {
+    const userId = req.user.id;
+    if (!userId || userId === '')
+      return next(appError(400, '未帶入 user id 或其他錯誤', next));
+    const myClickLikePosts = await Posts.find({ likes: { $in: [userId] } })
+      .populate({
+        path: 'userData',
+        select: 'email userPhoto userName createAt',
+      })
+      .populate({
+        path: 'likes',
+        select: 'userPhoto userName',
+      });
+    handleSuccess(res, myClickLikePosts);
   }),
 };

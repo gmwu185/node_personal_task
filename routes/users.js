@@ -7,7 +7,7 @@ const UsersControllers = require('../controllers/users');
 router.post(
   '/signIn',
   /** #swagger.summary = '登入會員'
-    * #swagger.tags = ['users (會員功能)']
+    * #swagger.tags = ['會員功能']
     * #swagger.parameters['body'] = {
       in: "body",
       type: "object",
@@ -35,7 +35,7 @@ router.post(
 router.post(
   '/signUp',
   /** #swagger.summary = '註冊會員'
-    * #swagger.tags = ['users (會員功能)']
+    * #swagger.tags = ['會員功能']
     * #swagger.parameters['body'] = {
       in: "body",
       type: "object",
@@ -66,7 +66,7 @@ router.patch(
   '/updatePassword',
   isAuth,
   /** #swagger.summary = '重設密碼'
-    * #swagger.tags = ['users (會員功能)']
+    * #swagger.tags = ['會員功能']
     * #swagger.security = [{
       'apiKeyAuth': []　
     }],
@@ -98,7 +98,7 @@ router.get(
   '/profile',
   isAuth,
   /** #swagger.summary = '取得個人資料'
-    * #swagger.tags = ['users (會員功能)']
+    * #swagger.tags = ['會員功能']
     * #swagger.security = [{
       'apiKeyAuth': []　
     }],
@@ -121,7 +121,7 @@ router.patch(
   '/profile',
   isAuth,
   /** #swagger.summary = '更新個人資料'
-    * #swagger.tags = ['users (會員功能)']
+    * #swagger.tags = ['會員功能']
     * #swagger.security = [{
       'apiKeyAuth': []　
     }],
@@ -152,15 +152,25 @@ router.patch(
   */
   (req, res, next) => UsersControllers.patchProfile(req, res, next)
 );
+router.get(
+  '/getLikeList',
+  isAuth,
+  /** #swagger.summary = '取得個人按讚列表',
+  * #swagger.tags = ['會員按讚追蹤動態'],
+  * #swagger.security = [{
+    'apiKeyAuth': []
+  }]
+ */
+  (req, res, next) => UsersControllers.getMyLikeList(req, res, next)
+);
 router.post(
   '/:id/follow',
   isAuth,
   /** #swagger.summary = '追蹤朋友',
-    * #swagger.tags = ['users (會員按讚追蹤動態)'],
+    * #swagger.tags = ['會員按讚追蹤動態'],
     * #swagger.security = [{
       'apiKeyAuth': []
     }],
-    * #swagger.description = `取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。`,
     * #swagger.parameters['id'] = {
       description: `網址參數 <code>:id</code> 指定追蹤對象的 <code>user.id</code>。`
     },
@@ -179,11 +189,10 @@ router.delete(
   '/:id/follow',
   isAuth,
   /** #swagger.summary = '取消追蹤朋友',
-    * #swagger.tags = ['users (會員按讚追蹤動態)'],
+    * #swagger.tags = ['會員按讚追蹤動態'],
     * #swagger.security = [{
         'apiKeyAuth': []
       }],
-    * #swagger.description = `取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。`,
     * #swagger.parameters['id'] = {
         description: `網址參數 <code>:id</code> 指定追蹤對象的 <code>user.id</code>。`
       },

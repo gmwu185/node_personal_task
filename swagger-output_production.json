@@ -23,7 +23,7 @@
     "/users/signIn": {
       "post": {
         "tags": [
-          "users (會員功能)"
+          "會員功能"
         ],
         "summary": "登入會員",
         "description": "",
@@ -92,7 +92,7 @@
     "/users/signUp": {
       "post": {
         "tags": [
-          "users (會員功能)"
+          "會員功能"
         ],
         "summary": "註冊會員",
         "description": "",
@@ -171,7 +171,7 @@
     "/users/updatePassword": {
       "patch": {
         "tags": [
-          "users (會員功能)"
+          "會員功能"
         ],
         "summary": "重設密碼",
         "description": "",
@@ -245,7 +245,7 @@
     "/users/profile": {
       "get": {
         "tags": [
-          "users (會員功能)"
+          "會員功能"
         ],
         "summary": "取得個人資料",
         "description": "",
@@ -296,7 +296,7 @@
       },
       "patch": {
         "tags": [
-          "users (會員功能)"
+          "會員功能"
         ],
         "summary": "更新個人資料",
         "description": "",
@@ -378,13 +378,29 @@
         ]
       }
     },
+    "/users/getLikeList": {
+      "get": {
+        "tags": [
+          "會員按讚追蹤動態"
+        ],
+        "summary": "取得個人按讚列表",
+        "description": "",
+        "parameters": [],
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/users/{id}/follow": {
       "post": {
         "tags": [
-          "users (會員按讚追蹤動態)"
+          "會員按讚追蹤動態"
         ],
         "summary": "追蹤朋友",
-        "description": "取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -428,10 +444,10 @@
       },
       "delete": {
         "tags": [
-          "users (會員按讚追蹤動態)"
+          "會員按讚追蹤動態"
         ],
         "summary": "取消追蹤朋友",
-        "description": "取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -477,7 +493,7 @@
     "/posts/": {
       "get": {
         "tags": [
-          "posts (動態貼文)"
+          "動態貼文"
         ],
         "summary": "取得所有貼文",
         "description": "取得所有貼文",
@@ -558,7 +574,7 @@
       },
       "post": {
         "tags": [
-          "posts (動態貼文)"
+          "動態貼文"
         ],
         "summary": "張貼個人動態",
         "description": "新增單筆貼文",
@@ -665,7 +681,7 @@
       },
       "delete": {
         "tags": [
-          "posts (動態貼文)"
+          "動態貼文"
         ],
         "summary": "刪除所有貼文",
         "description": "刪除所有貼文",
@@ -681,7 +697,7 @@
     "/posts/{id}": {
       "delete": {
         "tags": [
-          "posts (動態貼文)"
+          "動態貼文"
         ],
         "summary": "刪除單筆貼文",
         "description": "刪除單筆貼文",
@@ -702,7 +718,7 @@
       },
       "patch": {
         "tags": [
-          "posts (動態貼文)"
+          "動態貼文"
         ],
         "summary": "更新單筆貼文",
         "description": "更新單筆貼文",
@@ -810,6 +826,106 @@
                           "example": 0
                         }
                       }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/posts/{id}/likes": {
+      "patch": {
+        "tags": [
+          "會員按讚追蹤動態"
+        ],
+        "summary": "新增與移除單筆貼文按讚",
+        "description": " <ul> <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 postID 進行新增或移除按讚。</li> </ul> ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": " 新增與移除單筆貼文按讚資料格式 ",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "62930bf5f09683041ecd0b3a"
+                    },
+                    "userData": {
+                      "type": "string",
+                      "example": "6290f87ed5f22368e79e666e"
+                    },
+                    "discussContent": {
+                      "type": "string",
+                      "example": "測試github方面"
+                    },
+                    "discussPhoto": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "tag": {
+                      "type": "string",
+                      "example": "標籤 string"
+                    },
+                    "likes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "628a53f86e242867112a2321"
+                          },
+                          "userName": {
+                            "type": "string",
+                            "example": "大明123"
+                          },
+                          "userPhoto": {
+                            "type": "string",
+                            "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                          },
+                          "email": {
+                            "type": "string",
+                            "example": "min-@mail.com"
+                          },
+                          "gender": {
+                            "type": "string",
+                            "example": "male"
+                          }
+                        }
+                      }
+                    },
+                    "createAt": {
+                      "type": "string",
+                      "example": "2022-05-29T06:00:21.753Z"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "62930bf5f09683041ecd0b3a"
                     }
                   }
                 }

@@ -30,10 +30,12 @@ const postsSchema = new mongoose.Schema(
       default: Date.now,
       select: false,
     },
-    likes: {
-      type: Number,
-      default: 0,
-    },
+    likes: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'user', // id 要去找 user 的那張表的 ID
+      }
+    ],
     comments: {
       type: Number,
       default: 0,

@@ -9,7 +9,7 @@ const PostsControllers = require('../controllers/posts');
 router.get('/', isAuth, (req, res, next) =>
   /** #swagger.summary = '取得所有貼文'
     * #swagger.description = '取得所有貼文'
-    * #swagger.tags = ['posts (動態貼文)']
+    * #swagger.tags = ['動態貼文']
     * #swagger.security = [{
       'apiKeyAuth': []
     }],
@@ -40,7 +40,7 @@ router.get('/', isAuth, (req, res, next) =>
 router.post('/', isAuth, (req, res, next) =>
   /** #swagger.summary = '張貼個人動態'
     * #swagger.description = '新增單筆貼文'
-    * #swagger.tags = ['posts (動態貼文)']
+    * #swagger.tags = ['動態貼文']
     * #swagger.security = [{
       'apiKeyAuth': []
     }],
@@ -81,7 +81,7 @@ router.post('/', isAuth, (req, res, next) =>
 router.delete('/', isAuth, (req, res, next) =>
   /** #swagger.summary = '刪除所有貼文'
     * #swagger.description = '刪除所有貼文'
-    * #swagger.tags = ['posts (動態貼文)']
+    * #swagger.tags = ['動態貼文']
     * #swagger.security = [{
       'apiKeyAuth': []
     }],
@@ -91,7 +91,7 @@ router.delete('/', isAuth, (req, res, next) =>
 router.delete('/:id', isAuth, (req, res, next) =>
   /** #swagger.summary = '刪除單筆貼文'
     * #swagger.description = '刪除單筆貼文'
-    * #swagger.tags = ['posts (動態貼文)']
+    * #swagger.tags = ['動態貼文']
     * #swagger.security = [{
       'apiKeyAuth': []
     }],
@@ -103,9 +103,56 @@ router.delete('/:id', isAuth, (req, res, next) =>
   */
   PostsControllers.delOnePost(req, res, next)
 );
+router.patch(
+  '/:id/likes',
+  isAuth,
+  /** #swagger.summary = '新增與移除單筆貼文按讚',
+    * #swagger.description = `
+      <ul>
+        <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 postID 進行新增或移除按讚。</li>
+      </ul>
+    `,
+    * #swagger.tags = ['會員按讚追蹤動態'],
+    * #swagger.security = [{
+      'apiKeyAuth': []
+    }],
+    * #swagger.parameters['id'] = {
+      in: 'path',
+      type: 'string',
+      required: true,
+    },
+    * #swagger.responses[200] = {
+      description: `
+        新增與移除單筆貼文按讚資料格式
+      `,
+      schema: {
+        "status": "success",
+        "data": {
+          "_id": "62930bf5f09683041ecd0b3a",
+          "userData": "6290f87ed5f22368e79e666e",
+          "discussContent": "測試github方面",
+          "discussPhoto": "",
+          "tag": "標籤 string",
+          "likes": [
+            {
+              "_id": "628a53f86e242867112a2321",
+              "userName": "大明123",
+              "userPhoto": "https://avatars.githubusercontent.com/u/42748910?v=4",
+              "email": "min-@mail.com",
+              "gender": "male"
+            }
+          ],
+          "createAt": "2022-05-29T06:00:21.753Z",
+          "id": "62930bf5f09683041ecd0b3a"
+        }
+      }
+    }
+  */
+  (req, res, next) => PostsControllers.toggleLike(req, res, next)
+);
 router.patch('/:id', isAuth, (req, res, next) =>
   /** #swagger.summary = '更新單筆貼文'
-    * #swagger.tags = ['posts (動態貼文)']
+    * #swagger.tags = ['動態貼文']
     * #swagger.description = '更新單筆貼文',
     * #swagger.security = [{
       'apiKeyAuth': []

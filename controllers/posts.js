@@ -25,6 +25,29 @@ module.exports = {
       .catch((err) => handleErrorAsync(res, err));
     handleSuccess(res, posts);
   }),
+  getPost: handleErrorAsync(async (req, res, next) => {
+    if (!req.params.id || req.params.id === '')
+      return next(appError(400, '未帶入 post id 或其他錯誤', next));
+    console.log('req.params.id', req.params.id);
+    const findOnePost = await Posts.findOne({
+      _id: req.params.id,
+    })
+      .populate({
+        path: 'comments',
+        select: 'comment commentUser createAt',
+      })
+      .populate({
+        path: 'userData',
+        select: 'email userPhoto userName createAt',
+      })
+      .populate({
+        path: 'likes',
+        select: 'userPhoto userName',
+      })
+      .catch((err) => appError(400, '無此 id 或 id 長度不足', next));
+    if (findOnePost == null) return appError(400, '查無此 post id 貼文', next);
+    handleSuccess(res, findOnePost);
+  }),
   createdPost: handleErrorAsync(async (req, res, next) => {
     const userID = req.user.id;
     const { userData, content, tags, type, image } = req.body;
@@ -41,18 +64,6 @@ module.exports = {
       type,
       image,
     })
-      .populate({
-        path: 'userData',
-        select: 'email userPhoto userName createAt',
-      })
-      .populate({
-        path: 'comments',
-        select: 'comment commentUser createAt',
-      })
-      .populate({
-        path: 'likes',
-        select: 'userPhoto userName',
-      })
       .catch((err) => console.log('newPost err', err));
     handleSuccess(res, newPost);
   }),

@@ -500,64 +500,88 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "取得<strong>全部貼文</strong>",
+            "description": "取得所有貼文",
             "schema": {
               "type": "object",
               "properties": {
-                "_id": {
-                  "type": "string",
-                  "example": "62924730a3cca4c1b4a52226"
+                "status": {
+                  "type": "boolean",
+                  "example": true
                 },
-                "userData": {
-                  "type": "object",
-                  "properties": {
-                    "_id": {
-                      "type": "string",
-                      "example": "62908a8ebf85a52ce75989a5"
-                    },
-                    "userName": {
-                      "type": "string",
-                      "example": "jimmyWu"
-                    },
-                    "email": {
-                      "type": "string",
-                      "example": "gg@mail.com"
-                    },
-                    "password": {
-                      "type": "string",
-                      "example": "123456"
-                    },
-                    "avatarUrl": {
-                      "type": "string",
-                      "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
-                    }
-                  }
-                },
-                "content": {
-                  "type": "string",
-                  "example": "test"
-                },
-                "tags": {
+                "data": {
                   "type": "array",
                   "items": {
-                    "type": "string"
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "62a463157ec29c5077e7921a"
+                      },
+                      "userData": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "629a24a903a87b6101044846"
+                          },
+                          "userName": {
+                            "type": "string",
+                            "example": "newPatchUserName"
+                          },
+                          "email": {
+                            "type": "string",
+                            "example": "gg@mail.com"
+                          },
+                          "createAt": {
+                            "type": "string",
+                            "example": "2022-06-03T15:11:37.281Z"
+                          }
+                        }
+                      },
+                      "content": {
+                        "type": "string",
+                        "example": "01_test"
+                      },
+                      "tags": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "type": {
+                        "type": "string",
+                        "example": "person"
+                      },
+                      "image": {
+                        "type": "string",
+                        "example": "http://"
+                      },
+                      "likes": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string",
+                              "example": "629a3dae000fcec3e68c92c7"
+                            },
+                            "userName": {
+                              "type": "string",
+                              "example": "newPatchUserName"
+                            }
+                          }
+                        }
+                      },
+                      "comments": {
+                        "type": "array",
+                        "items": {}
+                      },
+                      "id": {
+                        "type": "string",
+                        "example": "62a463157ec29c5077e7921a"
+                      }
+                    }
                   }
-                },
-                "type": {
-                  "type": "string",
-                  "example": "person"
-                },
-                "image": {
-                  "type": "string",
-                  "example": "http://"
-                },
-                "likes": {
-                  "type": "number",
-                  "example": 0
-                },
-                "comments": {
-                  "type": "number",
-                  "example": 0
                 }
               },
               "xml": {
@@ -576,7 +600,7 @@
         "tags": [
           "動態貼文"
         ],
-        "summary": "張貼個人動態",
+        "summary": "新增貼文",
         "description": "新增單筆貼文",
         "parameters": [
           {
@@ -649,20 +673,20 @@
                       "example": "http://"
                     },
                     "likes": {
-                      "type": "number",
-                      "example": 0
-                    },
-                    "comments": {
-                      "type": "number",
-                      "example": 0
+                      "type": "array",
+                      "items": {}
                     },
                     "_id": {
                       "type": "string",
-                      "example": "629a3fa4f6a449c76689d3ff"
+                      "example": "62a47b276928a5e055f3978a"
                     },
                     "createAt": {
                       "type": "string",
-                      "example": "2022-06-03T17:06:44.297Z"
+                      "example": "2022-06-11T11:23:19.090Z"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "62a47b276928a5e055f3978a"
                     }
                   }
                 }
@@ -695,6 +719,115 @@
       }
     },
     "/posts/{id}": {
+      "get": {
+        "tags": [
+          "動態貼文"
+        ],
+        "summary": "取得單一貼文",
+        "description": "取得單一貼文 <ul> <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 document id 進行取得資料。</li> </ul> ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "取得單筆貼文",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "629a2c258329aaee5f70d63e"
+                    },
+                    "userData": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "629a24a903a87b6101044846"
+                        },
+                        "userName": {
+                          "type": "string",
+                          "example": "newPatchUserName"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "gg@mail.com"
+                        },
+                        "createAt": {
+                          "type": "string",
+                          "example": "2022-06-03T15:11:37.281Z"
+                        }
+                      }
+                    },
+                    "content": {
+                      "type": "string",
+                      "example": "03_test"
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "type": {
+                      "type": "string",
+                      "example": "person"
+                    },
+                    "image": {
+                      "type": "string",
+                      "example": "http://"
+                    },
+                    "likes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "629a21143742640bf2686ece"
+                          },
+                          "userName": {
+                            "type": "string",
+                            "example": "小明-sign_up"
+                          }
+                        }
+                      }
+                    },
+                    "comments": {
+                      "type": "array",
+                      "items": {}
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "629a2c258329aaee5f70d63e"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
       "delete": {
         "tags": [
           "動態貼文"
@@ -926,6 +1059,95 @@
                     "id": {
                       "type": "string",
                       "example": "62930bf5f09683041ecd0b3a"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/posts/{id}/comment": {
+      "post": {
+        "tags": [
+          "動態貼文"
+        ],
+        "summary": "新增一則貼文的留言",
+        "description": " <ul> <li>Heders Token 指定留言 user (<code>commentUser</code>)。</li> <li>網址路由 <code>:id</code> 傳入 post id 在特定貼文中留言。</li> <li>成功留言將資料寫入 <code>Comment</code> collection 中建出 document。</li> </ul> ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Params path Variables <code>:id</code> (posts ID)"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "type": "object",
+            "required": true,
+            "description": "Body 資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "comment": {
+                  "type": "string",
+                  "example": "這是留言在貼文裡的一段話"
+                }
+              },
+              "required": [
+                "comment"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "新增貼文留言功能",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "comments": {
+                      "type": "object",
+                      "properties": {
+                        "comment": {
+                          "type": "string",
+                          "example": "這是留言在貼文裡的一段話 - swagger"
+                        },
+                        "commentUser": {
+                          "type": "string",
+                          "example": "628a629b1c4b458a51db745b"
+                        },
+                        "post": {
+                          "type": "string",
+                          "example": "628c367b714bc9f6a8e17857"
+                        },
+                        "_id": {
+                          "type": "string",
+                          "example": "628c6607e6b23dcb0832041d"
+                        },
+                        "createAt": {
+                          "type": "string",
+                          "example": "2022-05-24T04:58:47.058Z"
+                        }
+                      }
                     }
                   }
                 }

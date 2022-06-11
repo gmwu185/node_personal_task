@@ -197,15 +197,42 @@ router.delete(
         description: `網址參數 <code>:id</code> 指定追蹤對象的 <code>user.id</code>。`
       },
     * #swagger.responses[200] = {
-        schema: {
-          "status": "success",
-          "data": {
-            "message": "您已成功將 628a629b1c4b458a51db745b 取消追蹤！"
-          }
+      schema: {
+        "status": "success",
+        "data": {
+          "message": "您已成功將 628a629b1c4b458a51db745b 取消追蹤！"
         }
       }
+    }
   */
   (req, res, next) => UsersControllers.unFollow(req, res, next)
+);
+router.get(
+  '/following',
+  isAuth,
+  /** #swagger.summary = '取得個人追蹤名單',
+    * #swagger.tags = ['會員按讚追蹤動態'],
+    * #swagger.security = [{
+        'apiKeyAuth': []
+      }],
+    * #swagger.responses[200] = {
+      schema: {
+        "status": true,
+        "data": [
+          {
+            "userData": {
+              "_id": "629a24a903a87b6101044846",
+              "userName": "newPatchUserName",
+              "following": []
+            },
+            "_id": "62a4899c3ae436726f403729",
+            "createdAt": "2022-06-11T12:25:00.412Z"
+          },
+        ]
+      }
+    }
+  */
+  (req, res, next) => UsersControllers.getUserFollow(req, res, next)
 );
 
 module.exports = router;

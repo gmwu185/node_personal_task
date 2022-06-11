@@ -196,6 +196,12 @@ module.exports = {
       handleSuccess(res, { message: `您已成功將 ${req.params.id} 取消追蹤！` });
     }
   }),
+  getUserFollow: handleErrorAsync(async (req, res, next) => {
+    const userId = req.user.id;
+    const findUserData = await User.findById(userId);
+    const followings = findUserData.following;
+    handleSuccess(res, followings);
+  }),
   getMyLikeList: handleErrorAsync(async (req, res, next) => {
     const userId = req.user.id;
     if (!userId || userId === '')
@@ -203,11 +209,11 @@ module.exports = {
     const myClickLikePosts = await Posts.find({ likes: { $in: [userId] } })
       .populate({
         path: 'userData',
-        select: 'email userPhoto userName createAt',
+        select: 'userName avatarUrl email',
       })
       .populate({
         path: 'likes',
-        select: 'userPhoto userName',
+        select: 'userName avatarUrl',
       });
     handleSuccess(res, myClickLikePosts);
   }),

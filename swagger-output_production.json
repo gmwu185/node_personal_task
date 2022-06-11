@@ -490,6 +490,58 @@
         ]
       }
     },
+    "/users/following": {
+      "get": {
+        "tags": [
+          "會員按讚追蹤動態"
+        ],
+        "summary": "取得個人追蹤名單",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "userData": {
+                        "type": "string",
+                        "example": "629a24a903a87b6101044846"
+                      },
+                      "_id": {
+                        "type": "string",
+                        "example": "62a4899c3ae436726f403729"
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "example": "2022-06-11T12:25:00.412Z"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/posts/": {
       "get": {
         "tags": [

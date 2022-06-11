@@ -200,5 +200,53 @@ router.patch('/:id', isAuth, (req, res, next) =>
    */
   PostsControllers.upDatePost(req, res, next)
 );
+router.post(
+  '/:id/comment',
+  isAuth,
+  /** #swagger.summary = '新增貼文留言',
+    * #swagger.tags = ['posts (動態貼文)']
+    * #swagger.description = `
+      <ul>
+        <li>Heders Token 指定留言 user (<code>commentUser</code>)。</li>
+        <li>網址路由 <code>:id</code> 傳入 post id 在特定貼文中留言。</li>
+        <li>成功留言將資料寫入 <code>Comment</code> collection 中建出 document。</li>
+      </ul>
+    `,
+    * #swagger.parameters['id'] = {
+        in: 'path',
+        type: 'string',
+        required: true,
+        description: `Params path Variables <code>:id</code> (posts ID)`
+      }
+    * #swagger.security = [{
+      'apiKeyAuth': []
+    }],
+    * #swagger.parameters['body'] = {
+      in: "body",
+      type: "object",
+      required: true,
+      description: `Body 資料格式`,
+      schema: {
+        "$comment": "這是留言在貼文裡的一段話"
+      },
+    },
+    #swagger.responses[200] = {
+      description: `新增貼文留言功能`,
+      schema: {
+        "status": "success",
+        "data": {
+          "comments": {
+            "comment": "這是留言在貼文裡的一段話 - swagger",
+            "commentUser": "628a629b1c4b458a51db745b",
+            "post": "628c367b714bc9f6a8e17857",
+            "_id": "628c6607e6b23dcb0832041d",
+            "createAt": "2022-05-24T04:58:47.058Z",
+          }
+        }
+      }
+    }
+  */
+  (req, res, next) => PostsControllers.createComment(req, res, next)
+);
 
 module.exports = router;

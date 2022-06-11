@@ -1,26 +1,29 @@
 const mongoose = require('mongoose');
 
-const commentSchema = new mongoose.Schema({
-  comment: {
-    type: String,
-    required: [true, 'comment can not be empty!'],
+const commentSchema = new mongoose.Schema(
+  {
+    comment: {
+      type: String,
+      required: [true, 'comment can not be empty!'],
+    },
+    createAt: {
+      // 注意時間欄位命名關連才會生效
+      type: Date,
+      default: Date.now,
+    },
+    commentUser: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'user',
+      require: [true, 'user must belong to a post.'],
+    },
+    post: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'post',
+      require: [true, 'comment must belong to a post.'],
+    },
   },
-  createAt: {
-    // 注意時間欄位命名關連才會生效
-    type: Date,
-    default: Date.now,
-  },
-  commentUser: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'user',
-    require: [true, 'user must belong to a post.'],
-  },
-  post: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'post',
-    require: [true, 'comment must belong to a post.'],
-  },
-});
+  { versionKey: false }
+);
 
 commentSchema.pre(/^find/, function (next) {
   this.populate({

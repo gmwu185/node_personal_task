@@ -7,9 +7,9 @@ const Posts = require('../model/posts');
 const PostsControllers = require('../controllers/posts');
 
 router.get('/', isAuth, (req, res, next) =>
-  /** #swagger.summary = '觀看所有動態'
+  /** #swagger.summary = '取得所有貼文'
     * #swagger.description = '取得所有貼文'
-    * #swagger.tags = ['posts (貼文)']
+    * #swagger.tags = ['posts (動態貼文)']
     * #swagger.security = [{
       'apiKeyAuth': []
     }],
@@ -40,7 +40,7 @@ router.get('/', isAuth, (req, res, next) =>
 router.post('/', isAuth, (req, res, next) =>
   /** #swagger.summary = '張貼個人動態'
     * #swagger.description = '新增單筆貼文'
-    * #swagger.tags = ['posts (貼文)']
+    * #swagger.tags = ['posts (動態貼文)']
     * #swagger.security = [{
       'apiKeyAuth': []
     }],
@@ -81,7 +81,7 @@ router.post('/', isAuth, (req, res, next) =>
 router.delete('/', isAuth, (req, res, next) =>
   /** #swagger.summary = '刪除所有貼文'
     * #swagger.description = '刪除所有貼文'
-    * #swagger.tags = ['posts (貼文)']
+    * #swagger.tags = ['posts (動態貼文)']
     * #swagger.security = [{
       'apiKeyAuth': []
     }],
@@ -91,7 +91,7 @@ router.delete('/', isAuth, (req, res, next) =>
 router.delete('/:id', isAuth, (req, res, next) =>
   /** #swagger.summary = '刪除單筆貼文'
     * #swagger.description = '刪除單筆貼文'
-    * #swagger.tags = ['posts (貼文)']
+    * #swagger.tags = ['posts (動態貼文)']
     * #swagger.security = [{
       'apiKeyAuth': []
     }],
@@ -105,7 +105,7 @@ router.delete('/:id', isAuth, (req, res, next) =>
 );
 router.patch('/:id', isAuth, (req, res, next) =>
   /** #swagger.summary = '更新單筆貼文'
-    * #swagger.tags = ['posts (貼文)']
+    * #swagger.tags = ['posts (動態貼文)']
     * #swagger.description = '更新單筆貼文',
     * #swagger.security = [{
       'apiKeyAuth': []

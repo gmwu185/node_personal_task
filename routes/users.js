@@ -5,29 +5,10 @@ const { isAuth } = require('../handStates/auth');
 
 const UsersControllers = require('../controllers/users');
 
-// router.post('/', (req, res, next) =>
-//   /** #swagger.summary = '新增使用者'
-//    * #swagger.description = '新增使用者'
-//    * #swagger.tags = ['users (使用者)'],
-//    * #swagger.parameters['body'] = {
-//       in: "body",
-//       type: "object",
-//       required: true,
-//       description: "資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的*",
-//       schema: {
-//         "$userName": "jimmyWu",
-//         "$email": "gg@mail.com",
-//         "$password": "123456",
-//         "avatarUrl": "https://avatars.githubusercontent.com/u/42748910?v=4"
-//       }
-//     }
-//    */
-//   UsersControllers.createdUser(req, res, next)
-// );
 router.post(
   '/signIn',
-  /** #swagger.summary = '登入'
-    * #swagger.tags = ['users (使用者)']
+  /** #swagger.summary = '登入會員'
+    * #swagger.tags = ['users (會員功能)']
     * #swagger.parameters['body'] = {
       in: "body",
       type: "object",
@@ -52,10 +33,11 @@ router.post(
   */
   (req, res, next) => UsersControllers.signIn(req, res, next)
 );
+
 router.post(
   '/signUp',
-  /** #swagger.summary = '註冊'
-    * #swagger.tags = ['users (使用者)']
+  /** #swagger.summary = '註冊會員'
+    * #swagger.tags = ['users (會員功能)']
     * #swagger.parameters['body'] = {
       in: "body",
       type: "object",
@@ -87,7 +69,7 @@ router.patch(
   '/updatePassword',
   isAuth,
   /** #swagger.summary = '重設密碼'
-    * #swagger.tags = ['users (使用者)']
+    * #swagger.tags = ['users (會員功能)']
     * #swagger.security = [{
       'apiKeyAuth': []　
     }],
@@ -119,7 +101,7 @@ router.get(
   '/profile',
   isAuth,
   /** #swagger.summary = '取得個人資料'
-    * #swagger.tags = ['users (使用者)']
+    * #swagger.tags = ['users (會員功能)']
     * #swagger.security = [{
       'apiKeyAuth': []　
     }],
@@ -142,7 +124,7 @@ router.patch(
   '/profile',
   isAuth,
   /** #swagger.summary = '更新個人資料'
-    * #swagger.tags = ['users (使用者)']
+    * #swagger.tags = ['users (會員功能)']
     * #swagger.security = [{
       'apiKeyAuth': []　
     }],

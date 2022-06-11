@@ -23,9 +23,9 @@
     "/users/signIn": {
       "post": {
         "tags": [
-          "users (使用者)"
+          "users (會員功能)"
         ],
-        "summary": "登入",
+        "summary": "登入會員",
         "description": "",
         "parameters": [
           {
@@ -92,9 +92,9 @@
     "/users/signUp": {
       "post": {
         "tags": [
-          "users (使用者)"
+          "users (會員功能)"
         ],
-        "summary": "註冊",
+        "summary": "註冊會員",
         "description": "",
         "parameters": [
           {
@@ -171,7 +171,7 @@
     "/users/updatePassword": {
       "patch": {
         "tags": [
-          "users (使用者)"
+          "users (會員功能)"
         ],
         "summary": "重設密碼",
         "description": "",
@@ -245,7 +245,7 @@
     "/users/profile": {
       "get": {
         "tags": [
-          "users (使用者)"
+          "users (會員功能)"
         ],
         "summary": "取得個人資料",
         "description": "",
@@ -296,7 +296,7 @@
       },
       "patch": {
         "tags": [
-          "users (使用者)"
+          "users (會員功能)"
         ],
         "summary": "更新個人資料",
         "description": "",
@@ -381,9 +381,9 @@
     "/posts/": {
       "get": {
         "tags": [
-          "posts (貼文)"
+          "posts (動態貼文)"
         ],
-        "summary": "觀看所有動態",
+        "summary": "取得所有貼文",
         "description": "取得所有貼文",
         "parameters": [],
         "responses": {
@@ -462,7 +462,7 @@
       },
       "post": {
         "tags": [
-          "posts (貼文)"
+          "posts (動態貼文)"
         ],
         "summary": "張貼個人動態",
         "description": "新增單筆貼文",
@@ -569,7 +569,7 @@
       },
       "delete": {
         "tags": [
-          "posts (貼文)"
+          "posts (動態貼文)"
         ],
         "summary": "刪除所有貼文",
         "description": "刪除所有貼文",
@@ -585,7 +585,7 @@
     "/posts/{id}": {
       "delete": {
         "tags": [
-          "posts (貼文)"
+          "posts (動態貼文)"
         ],
         "summary": "刪除單筆貼文",
         "description": "刪除單筆貼文",
@@ -606,7 +606,7 @@
       },
       "patch": {
         "tags": [
-          "posts (貼文)"
+          "posts (動態貼文)"
         ],
         "summary": "更新單筆貼文",
         "description": "更新單筆貼文",
@@ -734,7 +734,7 @@
     "/upload/": {
       "post": {
         "tags": [
-          "upload 上傳圖片"
+          "其他"
         ],
         "summary": "上傳圖片",
         "description": "上傳圖片",

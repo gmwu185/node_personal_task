@@ -12,7 +12,7 @@ router.post(
   isAuth,
   upload,
   /** #swagger.summary = '上傳圖片'
-    * #swagger.tags = ['upload 上傳圖片']
+    * #swagger.tags = ['其他']
     * #swagger.description = '上傳圖片',
     * #swagger.security = [{
       'apiKeyAuth': []

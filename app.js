@@ -7,16 +7,12 @@ const swaggerUI = require('swagger-ui-express');
 const swaggerFilePath = `./swagger-output_${process.env.NODE_ENV}.json`;
 const swaggerFile = require(swaggerFilePath);
 
-const { handleSuccess, handlerError } = require('./handStates/handles');
+const { handlerError } = require('./handStates/handles');
 
-/* router ------------------------------------------------------------------- */
-var indexRouter = require('./routes/index');
 var postsRouter = require('./routes/posts');
 var usersRouter = require('./routes/users');
 var uploadRouter = require('./routes/upload');
-/* /router ------------------------------------------------------------------- */
 
-/* express 設定 --------------------------------------------------------------- */
 var app = express();
 
 require('./connections');
@@ -28,12 +24,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
 app.use('/upload', uploadRouter);
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));
-/* express 設定 --------------------------------------------------------------- */
 
 // 404 錯誤
 app.use((req, res, next) => handlerError(res, 400, '無此路由資訊'));

@@ -2,7 +2,9 @@ const { handleSuccess } = require('../handStates/handles');
 const handleErrorAsync = require('../handStates/handleErrorAsync');
 const appError = require('../customErr/appError');
 
+const mongoose = require('mongoose');
 const Posts = require('../model/posts');
+const Comment = require('../model/comments');
 
 module.exports = {
   getPosts: handleErrorAsync(async (req, res, next) => {
@@ -13,8 +15,39 @@ module.exports = {
         path: 'userData',
         select: 'email userPhoto userName createAt',
       })
+      .populate({
+        path: 'comments',
+        select: 'comment commentUser createAt',
+      })
+      .populate({
+        path: 'likes',
+        select: 'userPhoto userName',
+      })
       .catch((err) => handleErrorAsync(res, err));
     handleSuccess(res, posts);
+  }),
+  getPost: handleErrorAsync(async (req, res, next) => {
+    if (!req.params.id || req.params.id === '')
+      return next(appError(400, '未帶入 post id 或其他錯誤', next));
+    console.log('req.params.id', req.params.id);
+    const findOnePost = await Posts.findOne({
+      _id: req.params.id,
+    })
+      .populate({
+        path: 'comments',
+        select: 'comment commentUser createAt',
+      })
+      .populate({
+        path: 'userData',
+        select: 'email userPhoto userName createAt',
+      })
+      .populate({
+        path: 'likes',
+        select: 'userPhoto userName',
+      })
+      .catch((err) => appError(400, '無此 id 或 id 長度不足', next));
+    if (findOnePost == null) return appError(400, '查無此 post id 貼文', next);
+    handleSuccess(res, findOnePost);
   }),
   createdPost: handleErrorAsync(async (req, res, next) => {
     const userID = req.user.id;
@@ -31,7 +64,7 @@ module.exports = {
       tags,
       type,
       image,
-    }).catch(err=> console.log('newPost err', err));
+    }).catch((err) => console.log('newPost err', err));
     handleSuccess(res, newPost);
   }),
   delALLPosts: handleErrorAsync(async (req, res, next) => {
@@ -72,5 +105,80 @@ module.exports = {
     !editPost
       ? appError(400, `更新失敗，請重新確認內容或 ${id} 是否正確`, next)
       : handleSuccess(res, editPost);
+  }),
+  toggleLike: handleErrorAsync(async (req, res, next) => {
+    const postID = req.params.id;
+    const userID = req.user.id;
+    const findPost = await Posts.findById({
+      _id: postID,
+    }).catch((err) => appError(400, `無此貼文 ${postID} ID`, next));
+    // 判斷貼文按讚欄位與值判斷
+    if (findPost.like) return appError(400, `此貼文沒有 likes 欄位`, next);
+    // 貼文按讚的 user id 判斷
+    if (findPost.likes.includes(userID)) {
+      const pullLike = await Posts.findOneAndUpdate(
+        { _id: postID },
+        {
+          $pull: { likes: userID },
+        },
+        { new: true } // 回傳最新改過
+      )
+        .populate('likes')
+        .exec((err, likes) => {
+          if (err)
+            return appError(400, `刪除失敗，請查明貼文 ${postID} ID`, next);
+          handleSuccess(res, likes);
+        });
+    } else {
+      const newLike = await Posts.findOneAndUpdate(
+        { _id: postID },
+        {
+          $push: { likes: userID },
+        },
+        { new: true } // 回傳最新改過
+      )
+        .populate('likes')
+        .exec((err, likes) => {
+          if (err)
+            return appError(400, `新增失敗，請查明貼文 ${postID} ID`, next);
+          handleSuccess(res, likes);
+        });
+    }
+  }),
+  createComment: handleErrorAsync(async (req, res, next) => {
+    const userID = req.user.id;
+    const postID = req.params.id;
+    const { comment } = req.body;
+    if (!comment) return appError(404, 'comment 欄位未帶上', next);
+    const newComment = await Comment.create({
+      post: postID,
+      commentUser: userID,
+      comment,
+    }).catch((err) =>
+      next(appError(404, '貼文或留言 user 資料格式有誤', next))
+    );
+    handleSuccess(res, { comments: newComment });
+  }),
+  getMyPostList: handleErrorAsync(async (req, res, next) => {
+    const { id } = req.params;
+    if (!mongoose.isObjectIdOrHexString(id))
+      return appError(400, '無效 id', next);
+    if (!id || id === '')
+      return appError(400, '未帶入 user id 或其他錯誤', next);
+    const userAllPosts = await Posts.find({ userData: id })
+      .populate({
+        path: 'comments',
+        select: 'comment commentUser createAt',
+      })
+      .populate({
+        path: 'userData',
+        select: 'email userPhoto userName createAt',
+      })
+      .populate({
+        path: 'likes',
+        select: 'userPhoto userName',
+      })
+      .catch((err) => appError(404, 'user id 或其他錯誤', next));
+    handleSuccess(res, userAllPosts);
   }),
 };

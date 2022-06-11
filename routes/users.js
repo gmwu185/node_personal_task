@@ -2,32 +2,12 @@ var express = require('express');
 var router = express.Router();
 
 const { isAuth } = require('../handStates/auth');
-
 const UsersControllers = require('../controllers/users');
 
-// router.post('/', (req, res, next) =>
-//   /** #swagger.summary = '新增使用者'
-//    * #swagger.description = '新增使用者'
-//    * #swagger.tags = ['users (使用者)'],
-//    * #swagger.parameters['body'] = {
-//       in: "body",
-//       type: "object",
-//       required: true,
-//       description: "資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的*",
-//       schema: {
-//         "$userName": "jimmyWu",
-//         "$email": "gg@mail.com",
-//         "$password": "123456",
-//         "avatarUrl": "https://avatars.githubusercontent.com/u/42748910?v=4"
-//       }
-//     }
-//    */
-//   UsersControllers.createdUser(req, res, next)
-// );
 router.post(
   '/signIn',
-  /** #swagger.summary = '登入'
-    * #swagger.tags = ['users (使用者)']
+  /** #swagger.summary = '登入會員'
+    * #swagger.tags = ['會員功能']
     * #swagger.parameters['body'] = {
       in: "body",
       type: "object",
@@ -54,8 +34,8 @@ router.post(
 );
 router.post(
   '/signUp',
-  /** #swagger.summary = '註冊'
-    * #swagger.tags = ['users (使用者)']
+  /** #swagger.summary = '註冊會員'
+    * #swagger.tags = ['會員功能']
     * #swagger.parameters['body'] = {
       in: "body",
       type: "object",
@@ -82,12 +62,11 @@ router.post(
   */
   (req, res, next) => UsersControllers.signUp(req, res, next)
 );
-
 router.patch(
   '/updatePassword',
   isAuth,
   /** #swagger.summary = '重設密碼'
-    * #swagger.tags = ['users (使用者)']
+    * #swagger.tags = ['會員功能']
     * #swagger.security = [{
       'apiKeyAuth': []　
     }],
@@ -119,7 +98,7 @@ router.get(
   '/profile',
   isAuth,
   /** #swagger.summary = '取得個人資料'
-    * #swagger.tags = ['users (使用者)']
+    * #swagger.tags = ['會員功能']
     * #swagger.security = [{
       'apiKeyAuth': []　
     }],
@@ -142,7 +121,7 @@ router.patch(
   '/profile',
   isAuth,
   /** #swagger.summary = '更新個人資料'
-    * #swagger.tags = ['users (使用者)']
+    * #swagger.tags = ['會員功能']
     * #swagger.security = [{
       'apiKeyAuth': []　
     }],
@@ -172,6 +151,88 @@ router.patch(
     }
   */
   (req, res, next) => UsersControllers.patchProfile(req, res, next)
+);
+router.get(
+  '/getLikeList',
+  isAuth,
+  /** #swagger.summary = '取得個人按讚列表',
+  * #swagger.tags = ['會員按讚追蹤動態'],
+  * #swagger.security = [{
+    'apiKeyAuth': []
+  }]
+ */
+  (req, res, next) => UsersControllers.getMyLikeList(req, res, next)
+);
+router.post(
+  '/:id/follow',
+  isAuth,
+  /** #swagger.summary = '追蹤朋友',
+    * #swagger.tags = ['會員按讚追蹤動態'],
+    * #swagger.security = [{
+      'apiKeyAuth': []
+    }],
+    * #swagger.parameters['id'] = {
+      description: `網址參數 <code>:id</code> 指定追蹤對象的 <code>user.id</code>。`
+    },
+    * #swagger.responses[200] = {
+      schema: {
+        "status": "success",
+        "data": {
+          "message": "您已成功將 628a629b1c4b458a51db745b 加入追蹤！"
+        }
+      }
+    }
+   */
+  (req, res, next) => UsersControllers.addFollow(req, res, next)
+);
+router.delete(
+  '/:id/follow',
+  isAuth,
+  /** #swagger.summary = '取消追蹤朋友',
+    * #swagger.tags = ['會員按讚追蹤動態'],
+    * #swagger.security = [{
+        'apiKeyAuth': []
+      }],
+    * #swagger.parameters['id'] = {
+        description: `網址參數 <code>:id</code> 指定追蹤對象的 <code>user.id</code>。`
+      },
+    * #swagger.responses[200] = {
+      schema: {
+        "status": "success",
+        "data": {
+          "message": "您已成功將 628a629b1c4b458a51db745b 取消追蹤！"
+        }
+      }
+    }
+  */
+  (req, res, next) => UsersControllers.unFollow(req, res, next)
+);
+router.get(
+  '/following',
+  isAuth,
+  /** #swagger.summary = '取得個人追蹤名單',
+    * #swagger.tags = ['會員按讚追蹤動態'],
+    * #swagger.security = [{
+        'apiKeyAuth': []
+      }],
+    * #swagger.responses[200] = {
+      schema: {
+        "status": true,
+        "data": [
+          {
+            "userData": {
+              "_id": "629a24a903a87b6101044846",
+              "userName": "newPatchUserName",
+              "following": []
+            },
+            "_id": "62a4899c3ae436726f403729",
+            "createdAt": "2022-06-11T12:25:00.412Z"
+          },
+        ]
+      }
+    }
+  */
+  (req, res, next) => UsersControllers.getUserFollow(req, res, next)
 );
 
 module.exports = router;

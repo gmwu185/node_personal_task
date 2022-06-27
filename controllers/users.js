@@ -81,13 +81,20 @@ module.exports = {
     generateSendJWT(user, 200, res);
   }),
   updatePassword: handleErrorAsync(async (req, res, next) => {
-    const { newPassword, confirmNewPassword } = req.body;
+    let { newPassword, confirmNewPassword } = req.body;
     const errorMessageArr = [];
-    if (!validator.isLength(newPassword, { min: 8 })) {
-      errorMessageArr.push('密碼長度必須超過 8 碼');
+    
+    if (!newPassword) {
+      newPassword = ''
+    }
+    if (newPassword == '') {
+      errorMessageArr.push('密碼為空字串或未帶入');
     }
     if (newPassword !== confirmNewPassword) {
       errorMessageArr.push('密碼不一致');
+    }
+    if (!validator.isLength(newPassword, { min: 8 })) {
+      errorMessageArr.push('密碼長度必須超過 8 碼');
     }
     if (validator.isNumeric(newPassword) || validator.isAlpha(newPassword)) {
       errorMessageArr.push('密碼需英數混合');
@@ -120,16 +127,11 @@ module.exports = {
     if (!userName) return appError(400, 'userName 名稱必填', next);
     if (userName.length < 2)
       return appError('400', '暱稱至少 2 個字元以上', next);
-    const profileUser = await User.findByIdAndUpdate(
-      req.user.id,
-      patchData,
-      {
-        new: true,
-        select: 'userName avatarUrl gender email',
-        returnDocument: 'after'
-      },
-    )
-      .catch((err) => appError(400, '輸入欄位資料有錯誤', next));
+    const profileUser = await User.findByIdAndUpdate(req.user.id, patchData, {
+      new: true,
+      select: 'userName avatarUrl gender email',
+      returnDocument: 'after',
+    }).catch((err) => appError(400, '輸入欄位資料有錯誤', next));
     handleSuccess(res, profileUser);
   }),
   addFollow: handleErrorAsync(async (req, res, next) => {

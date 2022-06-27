@@ -25,6 +25,7 @@ module.exports = {
       password,
       avatarUrl, // 頭像
     };
+
     await User.create(createdUserData).then(async () => {
       const allUser = await User.find();
       handleSuccess(res, allUser);
@@ -45,12 +46,16 @@ module.exports = {
       !confirmPassword
     )
       return appError('400', '欄位未填寫正確！', next);
+    if (userData.userName.length < 2)
+      return appError('400', '暱稱至少 2 個字元以上', next);
     if (userData.password !== confirmPassword)
       return appError('400', '密碼不一致！', next);
     if (!validator.isLength(userData.password, { min: 8 }))
       return appError('400', '密碼字數低於 8 碼', next);
     if (!validator.isEmail(userData.email))
       return next(appError('400', 'Email 格式不正確', next));
+    if (validator.isNumeric(password) || validator.isAlpha(password))
+      return appError('400', '密碼需英數混合', next);
 
     const checkRegisterAgain = await User.find({ email: userData.email });
     if (checkRegisterAgain.length > 0)
@@ -84,6 +89,9 @@ module.exports = {
     if (newPassword !== confirmNewPassword) {
       errorMessageArr.push('密碼不一致');
     }
+    if (validator.isNumeric(newPassword) || validator.isAlpha(newPassword)) {
+      errorMessageArr.push('密碼需英數混合');
+    }
     if (errorMessageArr.length > 0)
       return appError('400', errorMessageArr.join(', '), next);
 
@@ -110,16 +118,18 @@ module.exports = {
     const { userName, avatarUrl, gender } = req.body;
     const patchData = { userName, avatarUrl, gender };
     if (!userName) return appError(400, 'userName 名稱必填', next);
+    if (userName.length < 2)
+      return appError('400', '暱稱至少 2 個字元以上', next);
     const profileUser = await User.findByIdAndUpdate(
       req.user.id,
       patchData,
       {
         new: true,
         select: 'userName avatarUrl gender email',
+        returnDocument: 'after'
       },
-      { returnDocument: 'after' }
-    ).catch((err) => appError(400, '輸入欄位資料有錯誤', next));
-    console.log('patchData', patchData);
+    )
+      .catch((err) => appError(400, '輸入欄位資料有錯誤', next));
     handleSuccess(res, profileUser);
   }),
   addFollow: handleErrorAsync(async (req, res, next) => {

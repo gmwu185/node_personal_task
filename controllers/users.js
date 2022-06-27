@@ -94,6 +94,7 @@ module.exports = {
         password: bcryptNewPassword,
       },
       {
+        returnDocument: 'after',
         new: true, // 回傳更新後的資料, default: false
       }
     );
@@ -109,10 +110,15 @@ module.exports = {
     const { userName, avatarUrl, gender } = req.body;
     const patchData = { userName, avatarUrl, gender };
     if (!userName) return appError(400, 'userName 名稱必填', next);
-    const profileUser = await User.findByIdAndUpdate(req.user.id, patchData, {
-      new: true,
-      select: 'userName avatarUrl gender email',
-    }).catch((err) => appError(400, '輸入欄位資料有錯誤', next));
+    const profileUser = await User.findByIdAndUpdate(
+      req.user.id,
+      patchData,
+      {
+        new: true,
+        select: 'userName avatarUrl gender email',
+      },
+      { returnDocument: 'after' }
+    ).catch((err) => appError(400, '輸入欄位資料有錯誤', next));
     console.log('patchData', patchData);
     handleSuccess(res, profileUser);
   }),

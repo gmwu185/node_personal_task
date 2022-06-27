@@ -9,6 +9,7 @@ const postsSchema = new mongoose.Schema(
     content: {
       type: String,
       required: [true, 'Content 未填寫'],
+      trim: true,
     },
     tags: [
       {

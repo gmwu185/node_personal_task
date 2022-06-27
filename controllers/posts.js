@@ -64,7 +64,7 @@ module.exports = {
       tags,
       type,
       image,
-    }).catch((err) => console.log('newPost err', err));
+    });
     handleSuccess(res, newPost);
   }),
   delALLPosts: handleErrorAsync(async (req, res, next) => {

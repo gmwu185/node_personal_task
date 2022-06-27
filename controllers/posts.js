@@ -101,7 +101,7 @@ module.exports = {
         image,
       },
       { returnDocument: 'after' }
-    ).catch((err) => appError(400, `無 ${id} 此 id，請重新確認`, next));
+    );
     !editPost
       ? appError(400, `更新失敗，請重新確認內容或 ${id} 是否正確`, next)
       : handleSuccess(res, editPost);

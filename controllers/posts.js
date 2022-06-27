@@ -92,6 +92,14 @@ module.exports = {
 
     if (!content) return appError(400, '內容必填', next);
 
+    // 查找發文的 user id，比對登入會員 user id 是否為同一人
+    const findPost = await Posts.findOne({ _id: id }).populate({
+      path: 'userData',
+      select: '_id',
+    });
+    if (findPost.userData.id !== req.user.id)
+      return appError(400, '更新貼文只能是會員本人的貼文', next);
+
     const editPost = await Posts.findByIdAndUpdate(
       { _id: id },
       {

@@ -5,7 +5,7 @@ const { isAuth } = require('../handStates/auth');
 const UsersControllers = require('../controllers/users');
 
 router.post(
-  '/user/signIn',
+  '/user/sign-in',
   /** #swagger.summary = '登入會員'
     * #swagger.tags = ['會員功能']
     * #swagger.parameters['body'] = {
@@ -33,7 +33,7 @@ router.post(
   (req, res, next) => UsersControllers.signIn(req, res, next)
 );
 router.post(
-  '/user/signUp',
+  '/user/sign-up',
   /** #swagger.summary = '註冊會員'
     * #swagger.tags = ['會員功能']
     * #swagger.parameters['body'] = {
@@ -63,7 +63,7 @@ router.post(
   (req, res, next) => UsersControllers.signUp(req, res, next)
 );
 router.patch(
-  '/user/updatePassword',
+  '/user/update-password',
   isAuth,
   /** #swagger.summary = '重設密碼'
     * #swagger.tags = ['會員功能']
@@ -153,7 +153,7 @@ router.patch(
   (req, res, next) => UsersControllers.patchProfile(req, res, next)
 );
 router.get(
-  '/user/getLikeList',
+  '/user/like-list',
   isAuth,
   /** #swagger.summary = '取得個人按讚列表',
   * #swagger.tags = ['會員按讚追蹤動態'],

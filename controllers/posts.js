@@ -50,7 +50,7 @@ module.exports = {
     handleSuccess(res, findOnePost);
   }),
   createdPost: handleErrorAsync(async (req, res, next) => {
-    const userID = req.user.id;
+    const userID = req.userID;
     const { userData, content, tags, type, image } = req.body;
 
     if (!content) return appError(400, '內容必填', next);
@@ -64,7 +64,7 @@ module.exports = {
       tags,
       type,
       image,
-    }).catch((err) => console.log('newPost err', err));
+    });
     handleSuccess(res, newPost);
   }),
   delALLPosts: handleErrorAsync(async (req, res, next) => {
@@ -92,6 +92,14 @@ module.exports = {
 
     if (!content) return appError(400, '內容必填', next);
 
+    // 查找發文的 user id，比對登入會員 user id 是否為同一人
+    const findPost = await Posts.findOne({ _id: id }).populate({
+      path: 'userData',
+      select: '_id',
+    });
+    if (findPost.userData.id !== req.userID)
+      return appError(400, '更新貼文只能是會員本人的貼文', next);
+
     const editPost = await Posts.findByIdAndUpdate(
       { _id: id },
       {
@@ -101,14 +109,14 @@ module.exports = {
         image,
       },
       { returnDocument: 'after' }
-    ).catch((err) => appError(400, `無 ${id} 此 id，請重新確認`, next));
+    );
     !editPost
       ? appError(400, `更新失敗，請重新確認內容或 ${id} 是否正確`, next)
       : handleSuccess(res, editPost);
   }),
   toggleLike: handleErrorAsync(async (req, res, next) => {
     const postID = req.params.id;
-    const userID = req.user.id;
+    const userID = req.userID;
     const findPost = await Posts.findById({
       _id: postID,
     }).catch((err) => appError(400, `無此貼文 ${postID} ID`, next));
@@ -146,7 +154,7 @@ module.exports = {
     }
   }),
   createComment: handleErrorAsync(async (req, res, next) => {
-    const userID = req.user.id;
+    const userID = req.userID;
     const postID = req.params.id;
     const { comment } = req.body;
     if (!comment) return appError(404, 'comment 欄位未帶上', next);

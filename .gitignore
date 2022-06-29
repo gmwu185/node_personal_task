@@ -1,3 +1,5 @@
 config.env
 node_modules
 .DS_Store
+swagger-output_dev.json
+swagger-output_production.json

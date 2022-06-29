@@ -1,12 +1,13 @@
 var express = require('express');
 var router = express.Router();
 
-const { isAuth } = require('../handStates/auth');
+const { isAuth } = require('../middlewares/auth');
+const { doc_getPost } = require('../middlewares/doc/posts');
 
 const Posts = require('../model/posts');
 const PostsControllers = require('../controllers/posts');
 
-router.get('/', isAuth, (req, res, next) =>
+router.get('/posts', isAuth, (req, res, next) =>
   /** #swagger.summary = '取得所有貼文'
     * #swagger.description = '取得所有貼文'
     * #swagger.tags = ['動態貼文']
@@ -47,9 +48,7 @@ router.get('/', isAuth, (req, res, next) =>
   */
   PostsControllers.getPosts(req, res, next)
 );
-router.get(
-  '/:id',
-  isAuth,
+router.get('/post/:id', isAuth, (req, res, next) =>
   /** #swagger.summary = '取得單一貼文',
     #swagger.description = `取得單一貼文
       <ul>
@@ -95,9 +94,12 @@ router.get(
       }
     }
    */
-  (req, res, next) => PostsControllers.getPost(req, res, next)
+  PostsControllers.getPost(req, res, next)
 );
-router.post('/', isAuth, (req, res, next) =>
+// router.get('/post/:id', isAuth, doc_getPost, (req, res, next) =>
+//   PostsControllers.getPost(req, res, next)
+// );
+router.post('/post/', isAuth, (req, res, next) =>
   /** #swagger.summary = '新增貼文'
     * #swagger.description = '新增單筆貼文'
     * #swagger.tags = ['動態貼文']
@@ -138,7 +140,7 @@ router.post('/', isAuth, (req, res, next) =>
    */
   PostsControllers.createdPost(req, res, next)
 );
-router.delete('/', isAuth, (req, res, next) =>
+router.delete('/posts/', isAuth, (req, res, next) =>
   /** #swagger.summary = '刪除所有貼文'
     * #swagger.description = '刪除所有貼文'
     * #swagger.tags = ['動態貼文']
@@ -148,7 +150,7 @@ router.delete('/', isAuth, (req, res, next) =>
    */
   PostsControllers.delALLPosts(req, res, next)
 );
-router.delete('/:id', isAuth, (req, res, next) =>
+router.delete('/post/:id', isAuth, (req, res, next) =>
   /** #swagger.summary = '刪除單筆貼文'
     * #swagger.description = '刪除單筆貼文'
     * #swagger.tags = ['動態貼文']
@@ -164,7 +166,7 @@ router.delete('/:id', isAuth, (req, res, next) =>
   PostsControllers.delOnePost(req, res, next)
 );
 router.patch(
-  '/:id/likes',
+  '/post/:id/likes',
   isAuth,
   /** #swagger.summary = '新增與移除單筆貼文按讚',
     * #swagger.description = `
@@ -210,7 +212,7 @@ router.patch(
   */
   (req, res, next) => PostsControllers.toggleLike(req, res, next)
 );
-router.patch('/:id', isAuth, (req, res, next) =>
+router.patch('/post/:id', isAuth, (req, res, next) =>
   /** #swagger.summary = '更新單筆貼文'
     * #swagger.tags = ['動態貼文']
     * #swagger.description = '更新單筆貼文',
@@ -261,7 +263,7 @@ router.patch('/:id', isAuth, (req, res, next) =>
   PostsControllers.upDatePost(req, res, next)
 );
 router.post(
-  '/:id/comment',
+  '/post/:id/comment',
   isAuth,
   /** #swagger.summary = '新增一則貼文的留言',
     * #swagger.tags = ['動態貼文']
@@ -309,7 +311,7 @@ router.post(
   (req, res, next) => PostsControllers.createComment(req, res, next)
 );
 router.get(
-  '/user/:id',
+  '/posts/user/:id',
   isAuth,
   /** #swagger.summary = '取得個人所有貼文列表',
     * #swagger.tags = ['動態貼文']

@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
-const { isAuth } = require('../handStates/auth');
+const { isAuth } = require('../middlewares/auth');
 const UsersControllers = require('../controllers/users');
 
 router.post(
-  '/signIn',
+  '/user/sign-in',
   /** #swagger.summary = '登入會員'
     * #swagger.tags = ['會員功能']
     * #swagger.parameters['body'] = {
@@ -15,7 +15,7 @@ router.post(
       description: ``,
       schema: {
         "$email": "aa@mail.com",
-        "$password": "12345678"
+        "$password": "a12345678"
       }
     },
     * #swagger.responses[200] = {
@@ -33,7 +33,7 @@ router.post(
   (req, res, next) => UsersControllers.signIn(req, res, next)
 );
 router.post(
-  '/signUp',
+  '/user/sign-up',
   /** #swagger.summary = '註冊會員'
     * #swagger.tags = ['會員功能']
     * #swagger.parameters['body'] = {
@@ -44,8 +44,8 @@ router.post(
       schema: {
         "$userName": "aa",
         "$email": "aa@mail.com",
-        "$password": "12345678",
-        "$confirmPassword": "12345678"
+        "$password": "a1234567",
+        "$confirmPassword": "a1234567"
       }
     },
     * #swagger.responses[200] = {
@@ -63,7 +63,7 @@ router.post(
   (req, res, next) => UsersControllers.signUp(req, res, next)
 );
 router.patch(
-  '/updatePassword',
+  '/user/update-password',
   isAuth,
   /** #swagger.summary = '重設密碼'
     * #swagger.tags = ['會員功能']
@@ -76,8 +76,8 @@ router.patch(
       required: "success",
       description: ``,
       schema: {
-        "$newPassword": "11223344",
-        "$confirmNewPassword": "11223344"
+        "$newPassword": "a11223344",
+        "$confirmNewPassword": "a11223344"
       }
     },
     * #swagger.responses[200] = {
@@ -95,7 +95,7 @@ router.patch(
   (req, res, next) => UsersControllers.updatePassword(req, res, next)
 );
 router.get(
-  '/profile',
+  '/user/profile',
   isAuth,
   /** #swagger.summary = '取得個人資料'
     * #swagger.tags = ['會員功能']
@@ -118,7 +118,7 @@ router.get(
   (req, res, next) => UsersControllers.getProfile(req, res, next)
 );
 router.patch(
-  '/profile',
+  '/user/profile',
   isAuth,
   /** #swagger.summary = '更新個人資料'
     * #swagger.tags = ['會員功能']
@@ -153,7 +153,7 @@ router.patch(
   (req, res, next) => UsersControllers.patchProfile(req, res, next)
 );
 router.get(
-  '/getLikeList',
+  '/user/like-list',
   isAuth,
   /** #swagger.summary = '取得個人按讚列表',
   * #swagger.tags = ['會員按讚追蹤動態'],
@@ -164,7 +164,7 @@ router.get(
   (req, res, next) => UsersControllers.getMyLikeList(req, res, next)
 );
 router.post(
-  '/:id/follow',
+  '/user/:id/follow',
   isAuth,
   /** #swagger.summary = '追蹤朋友',
     * #swagger.tags = ['會員按讚追蹤動態'],
@@ -186,7 +186,7 @@ router.post(
   (req, res, next) => UsersControllers.addFollow(req, res, next)
 );
 router.delete(
-  '/:id/follow',
+  '/user/:id/follow',
   isAuth,
   /** #swagger.summary = '取消追蹤朋友',
     * #swagger.tags = ['會員按讚追蹤動態'],
@@ -208,7 +208,7 @@ router.delete(
   (req, res, next) => UsersControllers.unFollow(req, res, next)
 );
 router.get(
-  '/following',
+  '/user/following',
   isAuth,
   /** #swagger.summary = '取得個人追蹤名單',
     * #swagger.tags = ['會員按讚追蹤動態'],

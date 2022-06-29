@@ -15,6 +15,16 @@ var uploadRouter = require('./routes/upload');
 
 var app = express();
 
+// 補捉程式錯誤
+process.on('uncaughtException', (err) => {
+  // 記錄錯誤下來，等到服務都處理完後，停掉該 process
+  console.error('Uncaughted Exception (補捉程式錯誤)！');
+  // 印出錯誤程式行數、內容、模組檔，在主機 console 中
+  console.error(err);
+  // 停掉該 process => [nodemon] app crashed - waiting for file changes before starting...
+  process.exit(1);
+});
+
 require('./connections');
 
 app.use(cors());
@@ -24,9 +34,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/users', usersRouter);
-app.use('/posts', postsRouter);
-app.use('/upload', uploadRouter);
+app.use(usersRouter);
+app.use(postsRouter);
+app.use(uploadRouter);
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));
 
 // 404 錯誤

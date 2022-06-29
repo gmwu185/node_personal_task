@@ -3,7 +3,7 @@ const validator = require('validator'); // 格式驗證
 const dotenv = require('dotenv');
 dotenv.config({ path: './.env' });
 
-const { isAuth, generateSendJWT } = require('../handStates/auth');
+const { isAuth, generateSendJWT } = require('../middlewares/auth');
 const { handleSuccess } = require('../handStates/handles');
 const handleErrorAsync = require('../handStates/handleErrorAsync');
 const appError = require('../customErr/appError');

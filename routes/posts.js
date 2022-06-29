@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-const { isAuth } = require('../handStates/auth');
+const { isAuth } = require('../middlewares/auth');
+const { doc_getPost } = require('../middlewares/doc/posts');
 
 const Posts = require('../model/posts');
 const PostsControllers = require('../controllers/posts');
@@ -47,9 +48,7 @@ router.get('/posts', isAuth, (req, res, next) =>
   */
   PostsControllers.getPosts(req, res, next)
 );
-router.get(
-  '/post/:id',
-  isAuth,
+router.get('/post/:id', isAuth, (req, res, next) =>
   /** #swagger.summary = '取得單一貼文',
     #swagger.description = `取得單一貼文
       <ul>
@@ -95,8 +94,11 @@ router.get(
       }
     }
    */
-  (req, res, next) => PostsControllers.getPost(req, res, next)
+  PostsControllers.getPost(req, res, next)
 );
+// router.get('/post/:id', isAuth, doc_getPost, (req, res, next) =>
+//   PostsControllers.getPost(req, res, next)
+// );
 router.post('/post/', isAuth, (req, res, next) =>
   /** #swagger.summary = '新增貼文'
     * #swagger.description = '新增單筆貼文'

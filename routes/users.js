@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const { isAuth } = require('../handStates/auth');
+const { isAuth } = require('../middlewares/auth');
 const UsersControllers = require('../controllers/users');
 
 router.post(

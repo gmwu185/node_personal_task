@@ -4,7 +4,7 @@ const UploadControllers = require('../controllers/upload');
 
 const router = express.Router();
 
-const { isAuth } = require('../handStates/auth');
+const { isAuth } = require('../middlewares/auth');
 const upload = require('../service/image');
 
 router.post(

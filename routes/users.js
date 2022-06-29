@@ -15,7 +15,7 @@ router.post(
       description: ``,
       schema: {
         "$email": "aa@mail.com",
-        "$password": "12345678"
+        "$password": "a12345678"
       }
     },
     * #swagger.responses[200] = {

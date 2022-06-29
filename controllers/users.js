@@ -83,9 +83,9 @@ module.exports = {
   updatePassword: handleErrorAsync(async (req, res, next) => {
     let { newPassword, confirmNewPassword } = req.body;
     const errorMessageArr = [];
-    
+
     if (!newPassword) {
-      newPassword = ''
+      newPassword = '';
     }
     if (newPassword == '') {
       errorMessageArr.push('密碼為空字串或未帶入');
@@ -104,7 +104,7 @@ module.exports = {
 
     bcryptNewPassword = await bcrypt.hash(newPassword, 12);
     const updateUser = await User.findByIdAndUpdate(
-      req.user.id,
+      req.userID,
       {
         password: bcryptNewPassword,
       },
@@ -116,9 +116,10 @@ module.exports = {
     generateSendJWT(updateUser, 200, res);
   }),
   getProfile: handleErrorAsync(async (req, res, next) => {
-    const { gender, _id, userName, email } = req.user;
+    if (!req.userID) return appError(400, 'user 資訊未帶入', next);
+    const findUser = await User.findOne({ _id: req.userID });
+    const {gender, _id, userName, email} = findUser;
     const userObj = { gender, _id, userName, email };
-    if (!userObj) return appError(400, 'user 資訊未帶入', next);
     handleSuccess(res, userObj);
   }),
   patchProfile: handleErrorAsync(async (req, res, next) => {
@@ -127,7 +128,7 @@ module.exports = {
     if (!userName) return appError(400, 'userName 名稱必填', next);
     if (userName.length < 2)
       return appError('400', '暱稱至少 2 個字元以上', next);
-    const profileUser = await User.findByIdAndUpdate(req.user.id, patchData, {
+    const profileUser = await User.findByIdAndUpdate(req.userID, patchData, {
       new: true,
       select: 'userName avatarUrl gender email',
       returnDocument: 'after',
@@ -135,7 +136,7 @@ module.exports = {
     handleSuccess(res, profileUser);
   }),
   addFollow: handleErrorAsync(async (req, res, next) => {
-    if (req.params.id === req.user.id)
+    if (req.params.id === req.userID)
       return next(appError(401, '您無法追蹤自己', next));
 
     const checkFollowUser = await User.find({
@@ -146,7 +147,7 @@ module.exports = {
     } else {
       const following = await User.updateOne(
         {
-          _id: req.user.id,
+          _id: req.userID,
           'following.userData': { $ne: req.params.id },
         },
         {
@@ -160,10 +161,10 @@ module.exports = {
       const followers = await User.updateOne(
         {
           _id: req.params.id,
-          'followers.userData': { $ne: req.user.id },
+          'followers.userData': { $ne: req.userID },
         },
         {
-          $addToSet: { followers: { userData: req.user.id } },
+          $addToSet: { followers: { userData: req.userID } },
         }
       );
       // 有更新 modifiedCount: 1 / 沒更新 modifiedCount: 0
@@ -174,7 +175,7 @@ module.exports = {
     }
   }),
   unFollow: handleErrorAsync(async (req, res, next) => {
-    if (req.params.id === req.user.id)
+    if (req.params.id === req.userID)
       return next(appError(401, '您無法取消追蹤自己', next));
 
     const checkFollowUser = await User.find({
@@ -185,7 +186,7 @@ module.exports = {
     } else {
       const following = await User.updateOne(
         {
-          _id: req.user.id,
+          _id: req.userID,
         },
         {
           $pull: { following: { userData: req.params.id } },
@@ -202,7 +203,7 @@ module.exports = {
           _id: req.params.id,
         },
         {
-          $pull: { followers: { userData: req.user.id } },
+          $pull: { followers: { userData: req.userID } },
         }
       );
       // 有更新 modifiedCount: 1, / 沒更新 modifiedCount: 0,
@@ -215,13 +216,13 @@ module.exports = {
     }
   }),
   getUserFollow: handleErrorAsync(async (req, res, next) => {
-    const userId = req.user.id;
+    const userId = req.userID;
     const findUserData = await User.findById(userId);
     const followings = findUserData.following;
     handleSuccess(res, followings);
   }),
   getMyLikeList: handleErrorAsync(async (req, res, next) => {
-    const userId = req.user.id;
+    const userId = req.userID;
     if (!userId || userId === '')
       return next(appError(400, '未帶入 user id 或其他錯誤', next));
     const myClickLikePosts = await Posts.find({ likes: { $in: [userId] } })

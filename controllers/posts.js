@@ -50,7 +50,7 @@ module.exports = {
     handleSuccess(res, findOnePost);
   }),
   createdPost: handleErrorAsync(async (req, res, next) => {
-    const userID = req.user.id;
+    const userID = req.userID;
     const { userData, content, tags, type, image } = req.body;
 
     if (!content) return appError(400, '內容必填', next);
@@ -97,7 +97,7 @@ module.exports = {
       path: 'userData',
       select: '_id',
     });
-    if (findPost.userData.id !== req.user.id)
+    if (findPost.userData.id !== req.userID)
       return appError(400, '更新貼文只能是會員本人的貼文', next);
 
     const editPost = await Posts.findByIdAndUpdate(
@@ -116,7 +116,7 @@ module.exports = {
   }),
   toggleLike: handleErrorAsync(async (req, res, next) => {
     const postID = req.params.id;
-    const userID = req.user.id;
+    const userID = req.userID;
     const findPost = await Posts.findById({
       _id: postID,
     }).catch((err) => appError(400, `無此貼文 ${postID} ID`, next));
@@ -154,7 +154,7 @@ module.exports = {
     }
   }),
   createComment: handleErrorAsync(async (req, res, next) => {
-    const userID = req.user.id;
+    const userID = req.userID;
     const postID = req.params.id;
     const { comment } = req.body;
     if (!comment) return appError(404, 'comment 欄位未帶上', next);

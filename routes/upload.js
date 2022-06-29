@@ -8,12 +8,12 @@ const { isAuth } = require('../handStates/auth');
 const upload = require('../service/image');
 
 router.post(
-  '/',
+  '/upload/avatar',
   isAuth,
   upload,
-  /** #swagger.summary = '上傳圖片'
-    * #swagger.tags = ['其他']
-    * #swagger.description = '上傳圖片',
+  /** #swagger.summary = '上傳大頭照'
+    * #swagger.tags = ['上傳檔案']
+    * #swagger.description = '上傳大頭照',
     * #swagger.security = [{
       'apiKeyAuth': []
     }],

@@ -513,8 +513,21 @@
                     "type": "object",
                     "properties": {
                       "userData": {
-                        "type": "string",
-                        "example": "629a24a903a87b6101044846"
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "629a24a903a87b6101044846"
+                          },
+                          "userName": {
+                            "type": "string",
+                            "example": "newPatchUserName"
+                          },
+                          "following": {
+                            "type": "array",
+                            "items": {}
+                          }
+                        }
                       },
                       "_id": {
                         "type": "string",
@@ -542,7 +555,7 @@
         ]
       }
     },
-    "/posts/": {
+    "/posts": {
       "get": {
         "tags": [
           "動態貼文"
@@ -647,130 +660,9 @@
             "apiKeyAuth": []
           }
         ]
-      },
-      "post": {
-        "tags": [
-          "動態貼文"
-        ],
-        "summary": "新增貼文",
-        "description": "新增單筆貼文",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "type": "object",
-            "required": true,
-            "description": "資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的 <span>*</span>",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "content": {
-                  "type": "string",
-                  "example": "test"
-                },
-                "type": {
-                  "type": "string",
-                  "example": "person"
-                },
-                "tags": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "image": {
-                  "type": "string",
-                  "example": "http://"
-                }
-              },
-              "required": [
-                "content"
-              ]
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "建立貼正正確回應",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "boolean",
-                  "example": true
-                },
-                "data": {
-                  "type": "object",
-                  "properties": {
-                    "userData": {
-                      "type": "string",
-                      "example": "629a3dae000fcec3e68c92c7"
-                    },
-                    "content": {
-                      "type": "string",
-                      "example": "test"
-                    },
-                    "tags": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "type": {
-                      "type": "string",
-                      "example": "person"
-                    },
-                    "image": {
-                      "type": "string",
-                      "example": "http://"
-                    },
-                    "likes": {
-                      "type": "array",
-                      "items": {}
-                    },
-                    "_id": {
-                      "type": "string",
-                      "example": "62a47b276928a5e055f3978a"
-                    },
-                    "createAt": {
-                      "type": "string",
-                      "example": "2022-06-11T11:23:19.090Z"
-                    },
-                    "id": {
-                      "type": "string",
-                      "example": "62a47b276928a5e055f3978a"
-                    }
-                  }
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "動態貼文"
-        ],
-        "summary": "刪除所有貼文",
-        "description": "刪除所有貼文",
-        "parameters": [],
-        "responses": {},
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
       }
     },
-    "/posts/{id}": {
+    "/post/{id}": {
       "get": {
         "tags": [
           "動態貼文"
@@ -1028,7 +920,132 @@
         ]
       }
     },
-    "/posts/{id}/likes": {
+    "/post/": {
+      "post": {
+        "tags": [
+          "動態貼文"
+        ],
+        "summary": "新增貼文",
+        "description": "新增單筆貼文",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "type": "object",
+            "required": true,
+            "description": "資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的 <span>*</span>",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string",
+                  "example": "test"
+                },
+                "type": {
+                  "type": "string",
+                  "example": "person"
+                },
+                "tags": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "image": {
+                  "type": "string",
+                  "example": "http://"
+                }
+              },
+              "required": [
+                "content"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "建立貼正正確回應",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "userData": {
+                      "type": "string",
+                      "example": "629a3dae000fcec3e68c92c7"
+                    },
+                    "content": {
+                      "type": "string",
+                      "example": "test"
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "type": {
+                      "type": "string",
+                      "example": "person"
+                    },
+                    "image": {
+                      "type": "string",
+                      "example": "http://"
+                    },
+                    "likes": {
+                      "type": "array",
+                      "items": {}
+                    },
+                    "_id": {
+                      "type": "string",
+                      "example": "62a47b276928a5e055f3978a"
+                    },
+                    "createAt": {
+                      "type": "string",
+                      "example": "2022-06-11T11:23:19.090Z"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "62a47b276928a5e055f3978a"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/posts/": {
+      "delete": {
+        "tags": [
+          "動態貼文"
+        ],
+        "summary": "刪除所有貼文",
+        "description": "刪除所有貼文",
+        "parameters": [],
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/post/{id}/likes": {
       "patch": {
         "tags": [
           "會員按讚追蹤動態"
@@ -1128,7 +1145,7 @@
         ]
       }
     },
-    "/posts/{id}/comment": {
+    "/post/{id}/comment": {
       "post": {
         "tags": [
           "動態貼文"

@@ -1,4 +1,6 @@
 const swaggerAutogen = require('swagger-autogen')();
+const dotenv = require('dotenv');
+dotenv.config({ path: './config.env' });
 
 const doc = {
   // 生成資料、格式、設定
@@ -8,8 +10,8 @@ const doc = {
   },
   host:
     process.env.NODE_ENV === 'dev'
-      ? process.env.DOMAIN_SERVER_PRODUCTION
-      : process.env.DOMAIN_SERVER_DEV,
+      ? process.env.DOMAIN_SERVER_DEV
+      : process.env.DOMAIN_SERVER_PRODUCTION,
   schemes: process.env.NODE_ENV === 'dev' ? ['http'] : ['https'],
   securityDefinitions: {
     apiKeyAuth: {

@@ -23,6 +23,24 @@ const userSchema = new mongoose.Schema(
       enum: ['male', 'female', ''],
       default: '',
     },
+    followers: [
+      {
+        userData: { type: mongoose.Schema.ObjectId, ref: 'user' },
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
+    following: [
+      {
+        userData: { type: mongoose.Schema.ObjectId, ref: 'user' },
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
     createAt: {
       type: Date,
       default: Date.now,
@@ -33,6 +51,20 @@ const userSchema = new mongoose.Schema(
     versionKey: false, // 移除預設欄位 __v
   }
 );
+
+// 若有 find 則時觸發 following 虛擬掛載
+userSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'following',
+    populate: {
+      path: 'userData',
+      model: 'user',
+      select: 'userName userId',
+    },
+  });
+  next();
+});
+
 const User = mongoose.model('user', userSchema);
 
 module.exports = User;

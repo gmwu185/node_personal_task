@@ -27,7 +27,7 @@ module.exports = {
       });
     });
     const currentUser = await User.findById(decoded.id);
-    req.user = currentUser; // 查找
+    req.userID = currentUser.id;
     next();
   }),
   // 產生 JWT token

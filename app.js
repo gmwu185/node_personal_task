@@ -7,17 +7,23 @@ const swaggerUI = require('swagger-ui-express');
 const swaggerFilePath = `./swagger-output_${process.env.NODE_ENV}.json`;
 const swaggerFile = require(swaggerFilePath);
 
-const { handleSuccess, handlerError } = require('./handStates/handles');
+const { handlerError } = require('./handStates/handles');
 
-/* router ------------------------------------------------------------------- */
-var indexRouter = require('./routes/index');
 var postsRouter = require('./routes/posts');
 var usersRouter = require('./routes/users');
 var uploadRouter = require('./routes/upload');
-/* /router ------------------------------------------------------------------- */
 
-/* express 設定 --------------------------------------------------------------- */
 var app = express();
+
+// 補捉程式錯誤
+process.on('uncaughtException', (err) => {
+  // 記錄錯誤下來，等到服務都處理完後，停掉該 process
+  console.error('Uncaughted Exception (補捉程式錯誤)！');
+  // 印出錯誤程式行數、內容、模組檔，在主機 console 中
+  console.error(err);
+  // 停掉該 process => [nodemon] app crashed - waiting for file changes before starting...
+  process.exit(1);
+});
 
 require('./connections');
 
@@ -28,12 +34,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/posts', postsRouter);
-app.use('/upload', uploadRouter);
+app.use(usersRouter);
+app.use(postsRouter);
+app.use(uploadRouter);
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));
-/* express 設定 --------------------------------------------------------------- */
 
 // 404 錯誤
 app.use((req, res, next) => handlerError(res, 400, '無此路由資訊'));

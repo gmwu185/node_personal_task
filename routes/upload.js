@@ -4,16 +4,16 @@ const UploadControllers = require('../controllers/upload');
 
 const router = express.Router();
 
-const { isAuth } = require('../handStates/auth');
+const { isAuth } = require('../middlewares/auth');
 const upload = require('../service/image');
 
 router.post(
-  '/',
+  '/upload/avatar',
   isAuth,
   upload,
-  /** #swagger.summary = '上傳圖片'
-    * #swagger.tags = ['upload 上傳圖片']
-    * #swagger.description = '上傳圖片',
+  /** #swagger.summary = '上傳大頭照'
+    * #swagger.tags = ['上傳檔案']
+    * #swagger.description = '上傳大頭照',
     * #swagger.security = [{
       'apiKeyAuth': []
     }],

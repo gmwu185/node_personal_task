@@ -1379,20 +1379,29 @@
         ]
       }
     },
-    "/upload/avatar": {
+    "/upload/image": {
       "post": {
         "tags": [
           "上傳檔案"
         ],
         "summary": "上傳大頭照",
         "description": "上傳大頭照",
+        "consumes": [
+          "multipart/form-data"
+        ],
         "parameters": [
           {
-            "name": "singleFile",
+            "name": "type",
+            "in": "query",
+            "description": " <ul> <li>上傳類型，<code>avatar</code> 為會員頭像選填，圖片長寬不符合 1:1 尺寸</li> <li>預設不填不限比例</li> </ul>  ",
+            "type": "string"
+          },
+          {
+            "name": "image",
             "in": "formData",
             "type": "file",
             "required": "true",
-            "description": " <ul> <li>圖片不得大於 1024 * 1024</li> <li>僅限上傳 jpg、jpeg 與 png 格式。</li> <li>圖片長寬不符合 1:1 尺寸</li> </ul> "
+            "description": " <ul> <li>圖片不得大於 1024 * 1024</li> <li>僅限上傳 jpg、jpeg 與 png 格式。</li> </ul> "
           }
         ],
         "responses": {

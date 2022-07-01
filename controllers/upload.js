@@ -33,16 +33,5 @@ module.exports = {
     if (!imgUrlLink) return appError(400, 'imgUrl 建立資料不成功', next);
 
     handleSuccess(res, imgUrlLink);
-
-    // /** 寫入 DB */
-    // const updateUser = await User.findByIdAndUpdate(
-    //   { _id: userID },
-    //   {
-    //     avatarUrl: imgUrlLink,
-    //   },
-    //   { returnDocument: 'after' }
-    // );
-
-    // handleSuccess(res, updateUser);
   }),
 };

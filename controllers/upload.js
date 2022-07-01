@@ -29,9 +29,7 @@ module.exports = {
     }
 
     /** 寫入 imgUrl 圖床 storge */
-    const imgUrlLink = await uploadImg(file.buffer);
-    if (!imgUrlLink) return appError(400, 'imgUrl 建立資料不成功', next);
-
+    const imgUrlLink = await uploadImg(file.buffer, next);
     handleSuccess(res, imgUrlLink);
   }),
 };

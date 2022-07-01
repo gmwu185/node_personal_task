@@ -7,7 +7,7 @@ const uploadImg = require('../service/image');
 const User = require('../model/users');
 
 module.exports = {
-  upLoadAvatarImg: handleErrorAsync(async (req, res, next) => {
+  upLoadImgFile: handleErrorAsync(async (req, res, next) => {
     const {
       file,
       query: { type },
@@ -32,15 +32,17 @@ module.exports = {
     const imgUrlLink = await uploadImg(file.buffer);
     if (!imgUrlLink) return appError(400, 'imgUrl 建立資料不成功', next);
 
-    /** 寫入 DB */
-    const updateUser = await User.findByIdAndUpdate(
-      { _id: userID },
-      {
-        avatarUrl: imgUrlLink,
-      },
-      { returnDocument: 'after' }
-    );
+    handleSuccess(res, imgUrlLink);
 
-    handleSuccess(res, updateUser);
+    // /** 寫入 DB */
+    // const updateUser = await User.findByIdAndUpdate(
+    //   { _id: userID },
+    //   {
+    //     avatarUrl: imgUrlLink,
+    //   },
+    //   { returnDocument: 'after' }
+    // );
+
+    // handleSuccess(res, updateUser);
   }),
 };

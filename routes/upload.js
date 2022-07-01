@@ -47,7 +47,7 @@ router.post(
       }
     }
    */
-  (req, res, next) => UploadControllers.upLoadAvatarImg(req, res, next)
+  (req, res, next) => UploadControllers.upLoadImgFile(req, res, next)
 );
 
 /** multer 的 .any() 方法

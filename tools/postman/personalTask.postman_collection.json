@@ -453,43 +453,58 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "",
+									"key": "image",
+									"description": "多選檔案",
 									"type": "file",
-									"src": "/Users/jimmy-wu/Pictures/畫面截圖/20220520-第七週：Imgur 第三方圖床服務 API 介接-0010.jpg",
+									"src": [
+										"/Users/jimmy-wu/Pictures/畫面截圖/screen_shot 2022-06-27 下午2.14.21.jpg",
+										"/Users/jimmy-wu/Pictures/畫面截圖/screen_shot 2022-06-27 下午2.14.21 2.jpg"
+									],
+									"disabled": true
+								},
+								{
+									"key": "image",
+									"description": "其他檔案格式",
+									"type": "file",
+									"src": "/Users/jimmy-wu/Pictures/畫面截圖/screen_shot 2022-06-27 下午2.14.21 2.doc",
 									"disabled": true
 								},
 								{
 									"key": "",
+									"description": "錯誤不帶上 KEY image",
 									"type": "file",
-									"src": "/Users/jimmy-wu/Pictures/畫面截圖/screen_shot 2022-06-08 下午10.16.29.jpg",
+									"src": "/Users/jimmy-wu/Pictures/畫面截圖/screen_shot 2022-06-27 下午2.14.21.jpg",
 									"disabled": true
 								},
 								{
-									"key": "",
+									"key": "image",
+									"description": "一比一圖片",
 									"type": "file",
-									"src": "/Users/jimmy-wu/Pictures/畫面截圖/screen_shot 2022-06-08 下午10.16.29.abc",
+									"src": "/Users/jimmy-wu/Pictures/畫面截圖/screen_shot 2022-06-27 下午2.14.21 2.jpg",
 									"disabled": true
 								},
 								{
-									"key": "",
+									"key": "image",
+									"description": "參數不指定 avatar 不限比例",
 									"type": "file",
-									"src": "/Users/jimmy-wu/Pictures/畫面截圖/screen_shot 2022-06-08 下午10.09.17.jpg",
-									"disabled": true
-								},
-								{
-									"key": "",
-									"type": "file",
-									"src": []
+									"src": "/Users/jimmy-wu/Pictures/畫面截圖/screen_shot 2022-06-27 下午2.06.03 2.jpg"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{domain}}/upload",
+							"raw": "{{domain}}/upload/image?type=avatar",
 							"host": [
 								"{{domain}}"
 							],
 							"path": [
-								"upload"
+								"upload",
+								"image"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "avatar"
+								}
 							]
 						}
 					},

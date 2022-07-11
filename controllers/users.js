@@ -118,8 +118,8 @@ module.exports = {
   getProfile: handleErrorAsync(async (req, res, next) => {
     if (!req.userID) return appError(400, 'user 資訊未帶入', next);
     const findUser = await User.findOne({ _id: req.userID });
-    const {gender, _id, userName, email} = findUser;
-    const userObj = { gender, _id, userName, email };
+    const {gender, _id, userName, email, avatarUrl} = findUser;
+    const userObj = { gender, _id, userName, email, avatarUrl };
     handleSuccess(res, userObj);
   }),
   patchProfile: handleErrorAsync(async (req, res, next) => {

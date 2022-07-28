@@ -13,7 +13,7 @@ module.exports = {
     const filterQueryObj = {};
     if (q) {
       const regExpQ = new RegExp(q);
-      filterQueryObj.discussContent = regExpQ;
+      filterQueryObj.content = regExpQ;
     }
     if (queryUser) {
       filterQueryObj.userData = queryUser;
@@ -52,7 +52,6 @@ module.exports = {
       .skip(currentPageSkip) // 筆數位置開始計算
       .sort(filterTimeSort)
       .catch((err) => handleErrorAsync(res, err));
-      console.log('posts', posts)
     handleSuccess(res, posts);
   }),
   getPost: handleErrorAsync(async (req, res, next) => {

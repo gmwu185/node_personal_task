@@ -38,7 +38,7 @@ module.exports = {
     const posts = await Posts.find(filterQueryObj)
       .populate({
         path: 'userData',
-        select: 'email userPhoto userName createAt',
+        select: 'email avatarUrl userName createAt',
       })
       .populate({
         path: 'comments',
@@ -46,7 +46,7 @@ module.exports = {
       })
       .populate({
         path: 'likes',
-        select: 'userPhoto userName',
+        select: 'avatarUrl userName',
       })
       .limit(currentPageLimit) // 筆數長度
       .skip(currentPageSkip) // 筆數位置開始計算

@@ -199,7 +199,7 @@ router.patch(
             {
               "_id": "628a53f86e242867112a2321",
               "userName": "大明123",
-              "userPhoto": "https://avatars.githubusercontent.com/u/42748910?v=4",
+              "avatarUrl": "https://avatars.githubusercontent.com/u/42748910?v=4",
               "email": "min-@mail.com",
               "gender": "male"
             }

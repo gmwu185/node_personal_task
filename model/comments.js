@@ -28,7 +28,7 @@ const commentSchema = new mongoose.Schema(
 commentSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'commentUser', // 指定留言者 ID Document
-    select: 'userName userPhoto email _id createAt', // 取得該留言者 Document 欄位資料
+    select: 'userName avatarUrl email _id createAt', // 取得該留言者 Document 欄位資料
   });
   next();
 });

@@ -67,11 +67,11 @@ module.exports = {
       })
       .populate({
         path: 'userData',
-        select: 'email userPhoto userName createAt',
+        select: 'email avatarUrl userName createAt',
       })
       .populate({
         path: 'likes',
-        select: 'userPhoto userName',
+        select: 'avatarUrl userName',
       })
       .catch((err) => appError(400, '無此 id 或 id 長度不足', next));
     if (findOnePost == null) return appError(400, '查無此 post id 貼文', next);
@@ -208,11 +208,11 @@ module.exports = {
       })
       .populate({
         path: 'userData',
-        select: 'email userPhoto userName createAt',
+        select: 'email avatarUrl userName createAt',
       })
       .populate({
         path: 'likes',
-        select: 'userPhoto userName',
+        select: 'avatarUrl userName',
       })
       .catch((err) => appError(404, 'user id 或其他錯誤', next));
     handleSuccess(res, userAllPosts);

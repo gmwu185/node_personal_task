@@ -1107,7 +1107,7 @@
                             "type": "string",
                             "example": "大明123"
                           },
-                          "userPhoto": {
+                          "avatarUrl": {
                             "type": "string",
                             "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
                           },

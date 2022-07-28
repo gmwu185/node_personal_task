@@ -29,7 +29,7 @@ const postsSchema = new mongoose.Schema(
     createAt: {
       type: Date,
       default: Date.now,
-      select: false,
+      select: true, // 設定回傳時間呈現
     },
     likes: [
       {

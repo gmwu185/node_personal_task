@@ -8,9 +8,34 @@ const Comment = require('../model/comments');
 
 module.exports = {
   getPosts: handleErrorAsync(async (req, res, next) => {
-    const { q, timeSort } = req.query;
-    const posts = await Posts.find(q ? { content: new RegExp(q) } : {})
-      .sort(timeSort === 'asc' ? 'createAt' : '-createAt')
+    const { q, timeSort, pageNum, pageSize, queryUser } = req.query;
+    const filterTimeSort = timeSort === 'asc' ? 'createAt' : '-createAt';
+    const filterQueryObj = {};
+    if (q) {
+      const regExpQ = new RegExp(q);
+      filterQueryObj.discussContent = regExpQ;
+    }
+    if (queryUser) {
+      filterQueryObj.userData = queryUser;
+    }
+    function isPositiveInteger(str) {
+      if (typeof str === 'number') {
+        if (Number.isInteger(str) && str > 0) return true;
+        return false;
+      }
+
+      if (typeof str !== 'string') return false;
+      const num = Number(str);
+
+      if (Number.isInteger(num) && num > 0) return true;
+      return false;
+    }
+    const currentPageLimit = isPositiveInteger(pageSize) ? pageSize : 0;
+    const currentPageSkip =
+      isPositiveInteger(pageNum) && currentPageLimit > 0
+        ? Number(pageSize) * Number(pageNum)
+        : 0;
+    const posts = await Posts.find(filterQueryObj)
       .populate({
         path: 'userData',
         select: 'email userPhoto userName createAt',
@@ -23,13 +48,17 @@ module.exports = {
         path: 'likes',
         select: 'userPhoto userName',
       })
+      .limit(currentPageLimit) // 筆數長度
+      .skip(currentPageSkip) // 筆數位置開始計算
+      .sort(filterTimeSort)
       .catch((err) => handleErrorAsync(res, err));
+      console.log('posts', posts)
     handleSuccess(res, posts);
   }),
   getPost: handleErrorAsync(async (req, res, next) => {
     if (!req.params.id || req.params.id === '')
       return next(appError(400, '未帶入 post id 或其他錯誤', next));
-    console.log('req.params.id', req.params.id);
+    // console.log('req.params.id', req.params.id);
     const findOnePost = await Posts.findOne({
       _id: req.params.id,
     })

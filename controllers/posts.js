@@ -197,11 +197,24 @@ module.exports = {
   }),
   getMyPostList: handleErrorAsync(async (req, res, next) => {
     const { id } = req.params;
+    const { q, timeSort } = req.query;
+    const filterTimeSort = timeSort === 'asc' ? 'createAt' : '-createAt';
+
     if (!mongoose.isObjectIdOrHexString(id))
       return appError(400, '無效 id', next);
     if (!id || id === '')
       return appError(400, '未帶入 user id 或其他錯誤', next);
-    const userAllPosts = await Posts.find({ userData: id })
+    
+    const filterQueryObj = {};
+    if (id) {
+      filterQueryObj.userData = id;
+    }
+    if (q) {
+      const regExpQ = new RegExp(q);
+      filterQueryObj.content = regExpQ;
+    }
+    
+    const userAllPosts = await Posts.find(filterQueryObj)
       .populate({
         path: 'comments',
         select: 'comment commentUser createAt',
@@ -214,6 +227,7 @@ module.exports = {
         path: 'likes',
         select: 'avatarUrl userName',
       })
+      .sort(filterTimeSort)
       .catch((err) => appError(404, 'user id 或其他錯誤', next));
     handleSuccess(res, userAllPosts);
   }),

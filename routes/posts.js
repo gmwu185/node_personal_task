@@ -14,34 +14,256 @@ router.get('/posts', isAuth, (req, res, next) =>
     * #swagger.security = [{
       'apiKeyAuth': []
     }],
+    * #swagger.parameters['timeSort'] = {
+      in: 'query',
+      type: 'string',
+      required: false,
+      description: `
+        <code>timeSort</code> 參數：
+        <ul>
+          <li>預設新到舊</li>
+          <li>是否有 <code>asc</code> 值？，有值有舊到新；沒值有新到舊。</li>
+        </ul>
+      `,
+    },
+    * #swagger.parameters['q'] = {
+      in: 'query',
+      type: 'string',
+      required: false,
+      description: `
+        <code>q</code> 參數：
+        <ul>
+          <li>查找物件中的留言 <code>discussContent</code>。</li>
+          <li>用正則表達式以 JS 轉 mongDB 語法 <code>.find( parName: /<查尋字串>/)</code>。</li>
+        </ul>
+      `,
+    },
+    * #swagger.parameters['queryUser'] = {
+      in: 'query',
+      type: 'string',
+      required: false,
+      description: `
+        <code>queryUser</code> 參數：
+        <ul>
+          <li>查找 <code>userData</code> 指定 user id。</li>
+        </ul>
+      `,
+    },
+    * #swagger.parameters['pageNum'] = {
+      in: 'query',
+      type: 'string',
+      required: false,
+      description: `
+        <code>pageNum</code> 參數：取頁面資料筆數長度 (目前分頁數 <code>0</code> 為第一頁)
+        <ul>
+          <li>判斷網址參數 <code>pageSize</code> 是否有值，若無值會段 <code>0</code> 取出所有資料。</li>
+          <li>參數以 <code>1</code> 累計。</li>
+        </ul>
+      `,
+    },
+    * #swagger.parameters['pageSize'] = {
+      in: 'query',
+      type: 'string',
+      required: false,
+      description: `
+        <code>pageSize</code> 參數：取頁面資料區間 (分頁中每頁的資料筆數)
+        <ul>
+          <li>由第 <code>0</code> 筆數位置做為 <code>1</code> 開始計算。</li>
+          <li>參數以由 <code>1</code> 以累計。</li>
+          <li>網址參數 <code>pageSize * pageNum = 頁面數</code> 做為計算結果。</li>
+        </ul>
+      `,
+    },
     * #swagger.responses[200] = {
       description: '取得所有貼文',
       schema: {
         "status": true,
         "data": [
           {
-            "_id": "62a463157ec29c5077e7921a",
+            "_id": "629a2b0df97cf49063a259cd",
             "userData": {
               "_id": "629a24a903a87b6101044846",
               "userName": "newPatchUserName",
               "email": "gg@mail.com",
-              "createAt": "2022-06-03T15:11:37.281Z"
+              "createAt": "2022-06-03T15:11:37.281Z",
+              "followers": [
+                {
+                  "userData": "629a3dae000fcec3e68c92c7",
+                  "_id": "62a489ab3ae436726f403732",
+                  "createdAt": "2022-06-11T12:25:15.257Z"
+                }
+              ],
+              "following": []
             },
-            "content": "01_test",
+            "content": "newPost__外面看起來就超冷…\n\r我決定回被窩繼續睡…>.<-大明二  123",
             "tags": [
               "感情2"
             ],
             "type": "person",
             "image": "http://",
+            "createAt": "2022-06-03T15:38:53.190Z",
             "likes": [
               {
-                "_id": "629a3dae000fcec3e68c92c7",
-                "userName": "newPatchUserName"
+                "_id": "629a21143742640bf2686ece",
+                "userName": "小明123",
+                "following": [
+                  {
+                    "userData": {
+                      "_id": "629a36279ff4cca699138272",
+                      "userName": "小明-sign_up",
+                      "followers": [
+                        {
+                          "userData": "629a21143742640bf2686ece",
+                          "_id": "62a489ef3ae436726f403740",
+                          "createdAt": "2022-06-11T12:26:23.561Z"
+                        }
+                      ],
+                      "following": []
+                    },
+                    "_id": "62a489ef3ae436726f40373e",
+                    "createdAt": "2022-06-11T12:26:23.559Z"
+                  },
+                  {
+                    "userData": {
+                      "_id": "629a3a460257543f897c4136",
+                      "userName": "cc",
+                      "followers": [
+                        {
+                          "userData": "629a21143742640bf2686ece",
+                          "_id": "62a489f53ae436726f403746",
+                          "createdAt": "2022-06-11T12:26:29.097Z"
+                        }
+                      ],
+                      "following": []
+                    },
+                    "_id": "62a489f53ae436726f403744",
+                    "createdAt": "2022-06-11T12:26:29.096Z"
+                  },
+                  {
+                    "userData": {
+                      "_id": "629a3dae000fcec3e68c92c7",
+                      "userName": "aa_gmwu",
+                      "avatarUrl": "https://avatars.githubusercontent.com/u/42748910?v=4",
+                      "following": [
+                        {
+                          "userData": {
+                            "_id": "629a24a903a87b6101044846",
+                            "userName": "newPatchUserName",
+                            "followers": [
+                              {
+                                "userData": "629a3dae000fcec3e68c92c7",
+                                "_id": "62a489ab3ae436726f403732",
+                                "createdAt": "2022-06-11T12:25:15.257Z"
+                              }
+                            ],
+                            "following": []
+                          },
+                          "_id": "62a489ab3ae436726f403730",
+                          "createdAt": "2022-06-11T12:25:15.256Z"
+                        }
+                      ],
+                      "followers": [
+                        {
+                          "userData": "629a21143742640bf2686ece",
+                          "_id": "62e562c810e9414e747b669f",
+                          "createdAt": "2022-07-30T16:56:40.726Z"
+                        }
+                      ]
+                    },
+                    "_id": "62e562c810e9414e747b669d",
+                    "createdAt": "2022-07-30T16:56:40.725Z"
+                  }
+                ],
+                "avatarUrl": "https://i.imgur.com/hYlhp1V.jpg",
+                "followers": []
               }
             ],
-            "comments": [],
-            "id": "62a463157ec29c5077e7921a"
-          },
+            "comments": [
+              {
+                "_id": "62a4706dc8d2c03c05396a47",
+                "comment": "new comment",
+                "commentUser": {
+                  "_id": "629a21143742640bf2686ece",
+                  "userName": "小明123",
+                  "email": "min@mail.com",
+                  "createAt": "2022-06-03T14:56:20.317Z",
+                  "following": [
+                    {
+                      "userData": {
+                        "_id": "629a36279ff4cca699138272",
+                        "userName": "小明-sign_up",
+                        "followers": [
+                          {
+                            "userData": "629a21143742640bf2686ece",
+                            "_id": "62a489ef3ae436726f403740",
+                            "createdAt": "2022-06-11T12:26:23.561Z"
+                          }
+                        ],
+                        "following": []
+                      },
+                      "_id": "62a489ef3ae436726f40373e",
+                      "createdAt": "2022-06-11T12:26:23.559Z"
+                    },
+                    {
+                      "userData": {
+                        "_id": "629a3a460257543f897c4136",
+                        "userName": "cc",
+                        "followers": [
+                          {
+                            "userData": "629a21143742640bf2686ece",
+                            "_id": "62a489f53ae436726f403746",
+                            "createdAt": "2022-06-11T12:26:29.097Z"
+                          }
+                        ],
+                        "following": []
+                      },
+                      "_id": "62a489f53ae436726f403744",
+                      "createdAt": "2022-06-11T12:26:29.096Z"
+                    },
+                    {
+                      "userData": {
+                        "_id": "629a3dae000fcec3e68c92c7",
+                        "userName": "aa_gmwu",
+                        "avatarUrl": "https://avatars.githubusercontent.com/u/42748910?v=4",
+                        "following": [
+                          {
+                            "userData": {
+                              "_id": "629a24a903a87b6101044846",
+                              "userName": "newPatchUserName",
+                              "followers": [
+                                {
+                                  "userData": "629a3dae000fcec3e68c92c7",
+                                  "_id": "62a489ab3ae436726f403732",
+                                  "createdAt": "2022-06-11T12:25:15.257Z"
+                                }
+                              ],
+                              "following": []
+                            },
+                            "_id": "62a489ab3ae436726f403730",
+                            "createdAt": "2022-06-11T12:25:15.256Z"
+                          }
+                        ],
+                        "followers": [
+                          {
+                            "userData": "629a21143742640bf2686ece",
+                            "_id": "62e562c810e9414e747b669f",
+                            "createdAt": "2022-07-30T16:56:40.726Z"
+                          }
+                        ]
+                      },
+                      "_id": "62e562c810e9414e747b669d",
+                      "createdAt": "2022-07-30T16:56:40.725Z"
+                    }
+                  ],
+                  "avatarUrl": "https://i.imgur.com/hYlhp1V.jpg",
+                  "followers": []
+                },
+                "post": "629a2b0df97cf49063a259cd",
+                "createAt": "2022-06-11T10:37:33.636Z"
+              }
+            ],
+            "id": "629a2b0df97cf49063a259cd"
+          }
         ]
       }
     }
@@ -320,50 +542,132 @@ router.get(
         <li>網址路由 <code>:id</code> 傳入 user id 做為查詢對象，向 posts DB 查詢。</li>
       </ul>
     `,
-    * #swagger.parameters['id'] = {
-        in: 'path',
-        type: 'string',
-        required: true,
-        description: `Params path Variables <code>:id</code> (user ID)`
-      }
     * #swagger.security = [{
       'apiKeyAuth': []
     }]
+    * #swagger.parameters['id'] = {
+      in: 'path',
+      type: 'string',
+      required: true,
+      description: `Params path Variables <code>:id</code> (user ID)`
+    },
+    * #swagger.parameters['timeSort'] = {
+      in: 'query',
+      type: 'string',
+      required: false,
+      description: `
+        <code>timeSort</code> 參數：
+        <ul>
+          <li>預設新到舊</li>
+          <li>是否有 <code>asc</code> 值？，有值有舊到新；沒值有新到舊。</li>
+        </ul>
+      `,
+    },
+    * #swagger.parameters['q'] = {
+      in: 'query',
+      type: 'string',
+      required: false,
+      description: `
+        <code>q</code> 參數：
+        <ul>
+          <li>查找物件中的留言 <code>discussContent</code>。</li>
+          <li>用正則表達式以 JS 轉 mongDB 語法 <code>.find( parName: /<查尋字串>/)</code>。</li>
+        </ul>
+      `,
+    },
     #swagger.responses[200] = {
       description: `新增貼文留言功能`,
       schema: {
         "status": true,
         "data": [
           {
-            "_id": "62a48066144c37745976f6dc",
+            "_id": "62bbef6b47d0affc2226336a",
             "userData": {
               "_id": "629a21143742640bf2686ece",
-              "userName": "小明-sign_up",
+              "userName": "小明123",
               "email": "min@mail.com",
-              "createAt": "2022-06-03T14:56:20.317Z"
+              "createAt": "2022-06-03T14:56:20.317Z",
+              "following": [
+                {
+                  "userData": {
+                    "_id": "629a36279ff4cca699138272",
+                    "userName": "小明-sign_up",
+                    "followers": [
+                      {
+                        "userData": "629a21143742640bf2686ece",
+                        "_id": "62a489ef3ae436726f403740",
+                        "createdAt": "2022-06-11T12:26:23.561Z"
+                      }
+                    ],
+                    "following": []
+                  },
+                  "_id": "62a489ef3ae436726f40373e",
+                  "createdAt": "2022-06-11T12:26:23.559Z"
+                },
+                {
+                  "userData": {
+                    "_id": "629a3a460257543f897c4136",
+                    "userName": "cc",
+                    "followers": [
+                      {
+                        "userData": "629a21143742640bf2686ece",
+                        "_id": "62a489f53ae436726f403746",
+                        "createdAt": "2022-06-11T12:26:29.097Z"
+                      }
+                    ],
+                    "following": []
+                  },
+                  "_id": "62a489f53ae436726f403744",
+                  "createdAt": "2022-06-11T12:26:29.096Z"
+                },
+                {
+                  "userData": {
+                    "_id": "629a3dae000fcec3e68c92c7",
+                    "userName": "aa_gmwu",
+                    "avatarUrl": "https://avatars.githubusercontent.com/u/42748910?v=4",
+                    "following": [
+                      {
+                        "userData": {
+                          "_id": "629a24a903a87b6101044846",
+                          "userName": "newPatchUserName",
+                          "followers": [
+                            {
+                              "userData": "629a3dae000fcec3e68c92c7",
+                              "_id": "62a489ab3ae436726f403732",
+                              "createdAt": "2022-06-11T12:25:15.257Z"
+                            }
+                          ],
+                          "following": []
+                        },
+                        "_id": "62a489ab3ae436726f403730",
+                        "createdAt": "2022-06-11T12:25:15.256Z"
+                      }
+                    ],
+                    "followers": [
+                      {
+                        "userData": "629a21143742640bf2686ece",
+                        "_id": "62e562c810e9414e747b669f",
+                        "createdAt": "2022-07-30T16:56:40.726Z"
+                      }
+                    ]
+                  },
+                  "_id": "62e562c810e9414e747b669d",
+                  "createdAt": "2022-07-30T16:56:40.725Z"
+                }
+              ],
+              "avatarUrl": "https://i.imgur.com/hYlhp1V.jpg",
+              "followers": []
             },
-            "content": "03_test",
+            "content": "newPost003__外面看起來就超冷…\n\r我決定回被窩繼續睡…>.<-大明二",
             "tags": [
               "感情2"
             ],
             "type": "person",
             "image": "http://",
             "likes": [],
-            "comments": [
-              {
-                "_id": "62a48487c1b5d0d55ef3979b",
-                "comment": "new comment",
-                "commentUser": {
-                  "_id": "629a21143742640bf2686ece",
-                  "userName": "小明-sign_up",
-                  "email": "min@mail.com",
-                  "createAt": "2022-06-03T14:56:20.317Z"
-                },
-                "post": "62a48066144c37745976f6dc",
-                "createAt": "2022-06-11T12:03:19.117Z"
-              }
-            ],
-            "id": "62a48066144c37745976f6dc"
+            "createAt": "2022-06-29T06:21:31.448Z",
+            "comments": [],
+            "id": "62bbef6b47d0affc2226336a"
           }
         ]
       }

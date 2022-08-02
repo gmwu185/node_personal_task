@@ -159,7 +159,10 @@ module.exports = {
         },
         { new: true } // 回傳最新改過
       )
-        .populate('likes')
+        .populate({
+          path: 'likes',
+          select: 'avatarUrl userName',
+        })
         .exec((err, likes) => {
           if (err)
             return appError(400, `刪除失敗，請查明貼文 ${postID} ID`, next);
@@ -173,7 +176,6 @@ module.exports = {
         },
         { new: true } // 回傳最新改過
       )
-        // .populate('likes')
         .populate({
           path: 'likes',
           select: 'avatarUrl userName',

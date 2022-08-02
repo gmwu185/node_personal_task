@@ -173,7 +173,11 @@ module.exports = {
         },
         { new: true } // 回傳最新改過
       )
-        .populate('likes')
+        // .populate('likes')
+        .populate({
+          path: 'likes',
+          select: 'avatarUrl userName',
+        })
         .exec((err, likes) => {
           if (err)
             return appError(400, `新增失敗，請查明貼文 ${postID} ID`, next);

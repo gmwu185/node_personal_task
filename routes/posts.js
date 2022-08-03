@@ -563,6 +563,18 @@ router.get(
         </ul>
       `,
     },
+    * #swagger.parameters['post_id'] = {
+      in: 'query',
+      type: 'string',
+      required: false,
+      description: `
+        <code>post_id</code> 參數：
+        <ul>
+          <li>基於特定 user ID 下專屬單筆 post，查詢單筆 post ID。</li>
+          <li>可不帶上參數空值，帶出 user ID 所有 post。</li>
+        </ul>
+      `,
+    },
     * #swagger.parameters['q'] = {
       in: 'query',
       type: 'string',

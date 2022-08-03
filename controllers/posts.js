@@ -203,7 +203,7 @@ module.exports = {
   }),
   getMyPostList: handleErrorAsync(async (req, res, next) => {
     const { id } = req.params;
-    const { q, timeSort } = req.query;
+    const { post_id, q, timeSort } = req.query;
     const filterTimeSort = timeSort === 'asc' ? 'createAt' : '-createAt';
 
     if (!mongoose.isObjectIdOrHexString(id))
@@ -214,6 +214,9 @@ module.exports = {
     const filterQueryObj = {};
     if (id) {
       filterQueryObj.userData = id;
+    }
+    if (post_id) {
+      filterQueryObj._id = post_id;
     }
     if (q) {
       const regExpQ = new RegExp(q);
@@ -235,6 +238,7 @@ module.exports = {
       })
       .sort(filterTimeSort)
       .catch((err) => appError(404, 'user id 或其他錯誤', next));
+    
     handleSuccess(res, userAllPosts);
   }),
 };

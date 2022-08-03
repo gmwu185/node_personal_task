@@ -1521,36 +1521,109 @@
               "type": "object",
               "properties": {
                 "status": {
-                  "type": "string",
-                  "example": "success"
+                  "type": "boolean",
+                  "example": true
                 },
                 "data": {
                   "type": "object",
                   "properties": {
-                    "comments": {
+                    "_id": {
+                      "type": "string",
+                      "example": "62eab40480f19d4a8ad332c8"
+                    },
+                    "comment": {
+                      "type": "string",
+                      "example": "555 這是留言在貼文裡的一段話"
+                    },
+                    "commentUser": {
                       "type": "object",
                       "properties": {
-                        "comment": {
-                          "type": "string",
-                          "example": "這是留言在貼文裡的一段話 - swagger"
-                        },
-                        "commentUser": {
-                          "type": "string",
-                          "example": "628a629b1c4b458a51db745b"
-                        },
-                        "post": {
-                          "type": "string",
-                          "example": "628c367b714bc9f6a8e17857"
-                        },
                         "_id": {
                           "type": "string",
-                          "example": "628c6607e6b23dcb0832041d"
+                          "example": "629a3dae000fcec3e68c92c7"
+                        },
+                        "userName": {
+                          "type": "string",
+                          "example": "aa_gmwu"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "aa@mail.com"
                         },
                         "createAt": {
                           "type": "string",
-                          "example": "2022-05-24T04:58:47.058Z"
+                          "example": "2022-06-03T16:58:22.592Z"
+                        },
+                        "avatarUrl": {
+                          "type": "string",
+                          "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                        },
+                        "following": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "userData": {
+                                "type": "object",
+                                "properties": {
+                                  "_id": {
+                                    "type": "string",
+                                    "example": "629a24a903a87b6101044846"
+                                  },
+                                  "userName": {
+                                    "type": "string",
+                                    "example": "newPatchUserName"
+                                  },
+                                  "followers": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "userData": {
+                                          "type": "string",
+                                          "example": "629a3dae000fcec3e68c92c7"
+                                        },
+                                        "_id": {
+                                          "type": "string",
+                                          "example": "62a489ab3ae436726f403732"
+                                        },
+                                        "createdAt": {
+                                          "type": "string",
+                                          "example": "2022-06-11T12:25:15.257Z"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "following": {
+                                    "type": "array",
+                                    "items": {}
+                                  }
+                                }
+                              },
+                              "_id": {
+                                "type": "string",
+                                "example": "62a489ab3ae436726f403730"
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "example": "2022-06-11T12:25:15.256Z"
+                              }
+                            }
+                          }
+                        },
+                        "followers": {
+                          "type": "array",
+                          "items": {}
                         }
                       }
+                    },
+                    "post": {
+                      "type": "string",
+                      "example": "62bc05bb71cb3303534b2834"
+                    },
+                    "createAt": {
+                      "type": "string",
+                      "example": "2022-08-03T17:44:36.382Z"
                     }
                   }
                 }
@@ -1589,6 +1662,13 @@
             "type": "string",
             "required": false,
             "description": " <code>timeSort</code> 參數： <ul> <li>預設新到舊</li> <li>是否有 <code>asc</code> 值？，有值有舊到新；沒值有新到舊。</li> </ul> "
+          },
+          {
+            "name": "post_id",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "description": " <code>post_id</code> 參數： <ul> <li>基於特定 user ID 下專屬單筆 post，查詢單筆 post ID。</li> <li>可不帶上參數空值，帶出 user ID 所有 post。</li> </ul> "
           },
           {
             "name": "q",

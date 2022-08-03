@@ -5,6 +5,7 @@ const appError = require('../customErr/appError');
 const mongoose = require('mongoose');
 const Posts = require('../model/posts');
 const Comment = require('../model/comments');
+const { find } = require('../model/posts');
 
 module.exports = {
   getPosts: handleErrorAsync(async (req, res, next) => {
@@ -199,7 +200,9 @@ module.exports = {
     }).catch((err) =>
       next(appError(404, '貼文或留言 user 資料格式有誤', next))
     );
-    handleSuccess(res, { comments: newComment });
+    const findOneNewComment = await Comment.findOne({ _id: newComment._id })
+      .catch((err) => next(appError(404, '新建後留言查尋產生錯誤', next)));
+    handleSuccess(res, findOneNewComment);
   }),
   getMyPostList: handleErrorAsync(async (req, res, next) => {
     const { id } = req.params;
@@ -210,7 +213,7 @@ module.exports = {
       return appError(400, '無效 id', next);
     if (!id || id === '')
       return appError(400, '未帶入 user id 或其他錯誤', next);
-    
+
     const filterQueryObj = {};
     if (id) {
       filterQueryObj.userData = id;
@@ -222,7 +225,7 @@ module.exports = {
       const regExpQ = new RegExp(q);
       filterQueryObj.content = regExpQ;
     }
-    
+
     const userAllPosts = await Posts.find(filterQueryObj)
       .populate({
         path: 'comments',
@@ -238,7 +241,7 @@ module.exports = {
       })
       .sort(filterTimeSort)
       .catch((err) => appError(404, 'user id 或其他錯誤', next));
-    
+
     handleSuccess(res, userAllPosts);
   }),
 };

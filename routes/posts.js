@@ -517,15 +517,39 @@ router.post(
     #swagger.responses[200] = {
       description: `新增貼文留言功能`,
       schema: {
-        "status": "success",
+        "status": true,
         "data": {
-          "comments": {
-            "comment": "這是留言在貼文裡的一段話 - swagger",
-            "commentUser": "628a629b1c4b458a51db745b",
-            "post": "628c367b714bc9f6a8e17857",
-            "_id": "628c6607e6b23dcb0832041d",
-            "createAt": "2022-05-24T04:58:47.058Z",
-          }
+          "_id": "62eab40480f19d4a8ad332c8",
+          "comment": "555 這是留言在貼文裡的一段話",
+          "commentUser": {
+            "_id": "629a3dae000fcec3e68c92c7",
+            "userName": "aa_gmwu",
+            "email": "aa@mail.com",
+
+            "createAt": "2022-06-03T16:58:22.592Z",
+            "avatarUrl": "https://avatars.githubusercontent.com/u/42748910?v=4",
+            "following": [
+              {
+                "userData": {
+                  "_id": "629a24a903a87b6101044846",
+                  "userName": "newPatchUserName",
+                  "followers": [
+                    {
+                      "userData": "629a3dae000fcec3e68c92c7",
+                      "_id": "62a489ab3ae436726f403732",
+                      "createdAt": "2022-06-11T12:25:15.257Z"
+                    }
+                  ],
+                  "following": []
+                },
+                "_id": "62a489ab3ae436726f403730",
+                "createdAt": "2022-06-11T12:25:15.256Z"
+              }
+            ],
+            "followers": []
+          },
+          "post": "62bc05bb71cb3303534b2834",
+          "createAt": "2022-08-03T17:44:36.382Z"
         }
       }
     }

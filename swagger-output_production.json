@@ -250,7 +250,15 @@
         ],
         "summary": "取得個人資料",
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "queryUser",
+            "required": false,
+            "description": " 網址參數 <code>queryUser</code> <ul> <li>指定追蹤對象的 <code>user.id</code>。</li> <li>如果沒由網址傳入 queryUser (userID) 那就使用登入者的 userID</li> </ul> ",
+            "in": "query",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",

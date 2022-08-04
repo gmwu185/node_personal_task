@@ -102,6 +102,16 @@ router.get(
     * #swagger.security = [{
       'apiKeyAuth': []　
     }],
+    * #swagger.parameters['queryUser'] = {
+      required: false,
+      description: `
+        網址參數 <code>queryUser</code>
+        <ul>
+          <li>指定追蹤對象的 <code>user.id</code>。</li>
+          <li><code>queryUser</code> 如果沒由網址傳入 userID (空值或未定義)，就會是登入使用者的 userID</li>
+        </ul>
+      `
+    },
     * #swagger.responses[200] = {
       description: '',
       schema: {

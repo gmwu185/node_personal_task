@@ -8,6 +8,7 @@ const { handleSuccess } = require('../handStates/handles');
 const handleErrorAsync = require('../handStates/handleErrorAsync');
 const appError = require('../customErr/appError');
 
+const mongoose = require('mongoose');
 const User = require('../model/users');
 const Posts = require('../model/posts');
 
@@ -116,9 +117,20 @@ module.exports = {
     generateSendJWT(updateUser, 200, res);
   }),
   getProfile: handleErrorAsync(async (req, res, next) => {
+    const { queryUser } = req.query;
+    
+    const findOneObj = {};
+    // 如果沒由網址傳入 queryUser (userID) 那就使用登入者的 userID
+    queryUser
+      ? (findOneObj._id = queryUser)
+      : (findOneObj._id = req.userID);
+    
     if (!req.userID) return appError(400, 'user 資訊未帶入', next);
-    const findUser = await User.findOne({ _id: req.userID });
-    const {gender, _id, userName, email, avatarUrl} = findUser;
+    if (!mongoose.isObjectIdOrHexString(findOneObj._id))
+      return appError(400, `${findOneObj._id} 無效 id`, next);
+
+    const findUser = await User.findOne(findOneObj);
+    const { gender, _id, userName, email, avatarUrl } = findUser;
     const userObj = { gender, _id, userName, email, avatarUrl };
     handleSuccess(res, userObj);
   }),

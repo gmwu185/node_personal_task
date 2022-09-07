@@ -26,6 +26,7 @@ process.on('uncaughtException', (err) => {
 });
 
 require('./connections');
+require('./connections/passport');
 
 app.use(cors());
 app.use(logger('dev'));

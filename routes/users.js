@@ -257,9 +257,9 @@ router.get(
   '/user/google/callback',
   passport.authenticate('google', { session: false }),
   (req, res) => {
-    res.send({
+    res.json({
       status: true,
-      data: req.user,
+      data: req.user, // 套件指定 req.user 做為 google 回傳 user 資訊
     });
   }
 );

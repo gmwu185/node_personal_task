@@ -11,6 +11,7 @@ const { handlerError } = require('./handStates/handles');
 
 var postsRouter = require('./routes/posts');
 var usersRouter = require('./routes/users');
+var usersThirdOauthRouter = require('./routes/users/thirdOauth');
 var uploadRouter = require('./routes/upload');
 
 var app = express();
@@ -26,6 +27,7 @@ process.on('uncaughtException', (err) => {
 });
 
 require('./connections');
+require('./connections/passport');
 
 app.use(cors());
 app.use(logger('dev'));
@@ -35,6 +37,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(usersRouter);
+app.use(usersThirdOauthRouter);
 app.use(postsRouter);
 app.use(uploadRouter);
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));

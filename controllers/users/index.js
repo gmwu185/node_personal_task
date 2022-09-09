@@ -3,14 +3,14 @@ const validator = require('validator'); // 格式驗證
 const dotenv = require('dotenv');
 dotenv.config({ path: './.env' });
 
-const { isAuth, generateSendJWT } = require('../middlewares/auth');
-const { handleSuccess } = require('../handStates/handles');
-const handleErrorAsync = require('../handStates/handleErrorAsync');
-const appError = require('../customErr/appError');
+const { isAuth, generateSendJWT } = require('../../middlewares/auth');
+const { handleSuccess } = require('../../handStates/handles');
+const handleErrorAsync = require('../../handStates/handleErrorAsync');
+const appError = require('../../customErr/appError');
 
 const mongoose = require('mongoose');
-const User = require('../model/users');
-const Posts = require('../model/posts');
+const User = require('../../model/users');
+const Posts = require('../../model/posts');
 
 module.exports = {
   createdUser: handleErrorAsync(async (req, res, next) => {

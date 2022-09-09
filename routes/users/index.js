@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 const passport = require('passport');
 
-const { isAuth } = require('../middlewares/auth');
-const UsersControllers = require('../controllers/users');
+const { isAuth } = require('../../middlewares/auth');
+const UsersControllers = require('../../controllers/users');
 
 router.post(
   '/user/sign-in',
@@ -244,24 +244,6 @@ router.get(
     }
   */
   (req, res, next) => UsersControllers.getUserFollow(req, res, next)
-);
-
-// Google OAuth
-router.get(
-  '/user/google',
-  passport.authenticate('google', {
-    scope: ['email', 'profile'],
-  })
-);
-router.get(
-  '/user/google/callback',
-  passport.authenticate('google', { session: false }),
-  (req, res) => {
-    res.json({
-      status: true,
-      data: req.user, // 套件指定 req.user 做為 google 回傳 user 資訊
-    });
-  }
 );
 
 module.exports = router;

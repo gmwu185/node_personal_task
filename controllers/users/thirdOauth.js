@@ -20,7 +20,7 @@ const googleCallback = handleErrorAsync(async (req, res) => {
 
   let googleLoginUser = null;
   const existUserEmail = await User.findOne({ email: googleUser.email });
-  // console.log('existUserEmail -> null 沒註冊過', existUserEmail);
+  console.log('existUserEmail -> null 沒註冊過', existUserEmail);
   if (existUserEmail) {
     // 查找 Google email 回傳不為 null 表示有使用 email 註冊過
     if (!existUserEmail.googleId) {
@@ -37,6 +37,7 @@ const googleCallback = handleErrorAsync(async (req, res) => {
           new: true,
         }
       );
+      console.log('updateUser', updateUser);
       googleLoginUser = updateUser;
     } else {
       googleLoginUser = existUserEmail;

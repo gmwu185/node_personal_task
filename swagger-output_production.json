@@ -254,7 +254,7 @@
           {
             "name": "queryUser",
             "required": false,
-            "description": " 網址參數 <code>queryUser</code> <ul> <li>指定追蹤對象的 <code>user.id</code>。</li> <li>如果沒由網址傳入 queryUser (userID) 那就使用登入者的 userID</li> </ul> ",
+            "description": " 網址參數 <code>queryUser</code> <ul> <li>指定追蹤對象的 <code>user.id</code>。</li> <li><code>queryUser</code> 如果沒由網址傳入 userID (空值或未定義)，就會是登入使用者的 userID</li> </ul> ",
             "in": "query",
             "type": "string"
           }
@@ -562,6 +562,17 @@
             "apiKeyAuth": []
           }
         ]
+      }
+    },
+    "/user/google": {
+      "get": {
+        "tags": [
+          "tp-auth (第三方登入)"
+        ],
+        "summary": "google登入",
+        "description": "google登入，前端頁面需有一頁接回傳的token",
+        "parameters": [],
+        "responses": {}
       }
     },
     "/posts": {

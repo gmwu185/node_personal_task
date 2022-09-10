@@ -25,4 +25,18 @@ router.get(
    */
 );
 
+// Facebook OAuth
+router.get(
+  '/user/facebook',
+  passport.authenticate('facebook', { scope: ['public_profile', 'email'] })
+);
+router.get(
+  '/user/facebook/callback',
+  passport.authenticate('facebook', {
+    session: false,
+    failureRedirect: '/index.html',
+  }),
+  thridOauthControllers.facebookCallback
+);
+
 module.exports = router;

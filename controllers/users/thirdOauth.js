@@ -75,9 +75,74 @@ const googleCallback = handleErrorAsync(async (req, res) => {
   }
 
   // 使用 google 登入的 user 又或是 newUser，都通過驗証會發行 Token
-  generateRedirectJWT(googleLoginUser, res);
+  googleLoginUser
+    ? generateRedirectJWT(googleLoginUser, res)
+    : res.redirect(`${process.env.FRONTEND_URL}/register.html`);
+});
+
+const facebookCallback = handleErrorAsync(async (req, res) => {
+  /** facebookCallback 收 facebook User 資訊過程
+   * 1. 一開紿觸發函式不會有資料 ( req.use 先 undefined)
+   */
+  const { id, name, email, picture } = req.user._json;
+  const facebookUser = { id, name, email, picture };
+  // console.log('facebookUser', facebookUser);
+
+  // 判斷 facebook 登入所帶資料，如果其中一項沒屬性欄性沒有，就導向特定前台頁面進行註冊會員
+  if (!facebookUser.name || !facebookUser.id) {
+    res.redirect(`${process.env.FRONTEND_URL}/register.html`);
+    res.end();
+  }
+
+  let facebookLoginUser = null;
+  const existUserEmail = await User.findOne({ email: facebookUser.email });
+  // console.log('facebookUser existUserEmail', existUserEmail);
+  // 查找 facebook email 回傳不為 null 表示有使用 email 註冊過
+  if (existUserEmail) {
+    if (!existUserEmail.facebookId) {
+      /** 更新 facebook user 資訊
+       * facebookUser.id (ID) 指向 user.facebookId 欄位
+       */
+      const updateUser = await User.findByIdAndUpdate(
+        existUserEmail.id,
+        {
+          facebookId: facebookUser.id,
+        },
+        {
+          versionKey: false,
+          new: true,
+        }
+      );
+      facebookLoginUser = updateUser;
+    } else {
+      facebookLoginUser = existUserEmail;
+    }
+  } else {
+    /**
+     * 查找 facebook email 回傳 null 表示沒註冊過
+     * 未建 user 帳號建立新帳號，facebook User 資訊賦予建立
+     * 未建 user 帳號給初始密碼
+     */
+    const initPassword = await bcrypt.hash(
+      process.env.THIRD_DEFAULT_PASSWORD,
+      12
+    );
+    const newUser = await User.create({
+      password: initPassword,
+      email: facebookUser.email,
+      userName: facebookUser.name,
+      // avatarUrl: facebookUser.picture.data.url,  // FB 的 user 圖片會直接是檔案型態做為資料
+      facebookId: facebookUser.id,
+    });
+    facebookLoginUser = newUser;
+  }
+
+  facebookLoginUser
+    ? generateRedirectJWT(facebookLoginUser, res)
+    : res.redirect(`${process.env.FRONTEND_URL}/register.html`);
 });
 
 module.exports = {
   googleCallback,
+  facebookCallback,
 };

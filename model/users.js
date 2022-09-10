@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema(
   {
     googleId: String,
+    facebookId: String,
     userName: {
       type: String,
       required: [true, '名字必填'],

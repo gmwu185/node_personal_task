@@ -11,7 +11,7 @@ router.get(
   })
   /** #swagger.summary = 'google登入',
    * #swagger.description = 'google登入，前端頁面需有一頁接回傳的token',
-   * #swagger.tags = ['tp-auth (第三方登入)'],
+   * #swagger.tags = ['第三方登入'],
    */
 );
 router.get(
@@ -20,7 +20,30 @@ router.get(
   thridOauthControllers.googleCallback
   /** #swagger.summary = 'google登入後callback url',
    * #swagger.description = 'google callback後會將資料寫進user表',
-   * #swagger.tags = ['tp-auth (第三方登入)'],
+   * #swagger.tags = ['第三方登入'],
+   * #swagger.ignore = true
+   */
+);
+
+// Facebook OAuth
+router.get(
+  '/user/facebook',
+  passport.authenticate('facebook', { scope: ['public_profile', 'email'] })
+  /** #swagger.summary = 'facebook登入',
+   * #swagger.description = 'facebook登入，前端頁面需有一頁接回傳的token',
+   * #swagger.tags = ['第三方登入'],
+   */
+);
+router.get(
+  '/user/facebook/callback',
+  passport.authenticate('facebook', {
+    session: false,
+    failureRedirect: '/index.html',
+  }),
+  thridOauthControllers.facebookCallback
+  /** #swagger.summary = 'facebook登入後callback url',
+   * #swagger.description = 'facebook callback後會將資料寫進user表',
+   * #swagger.tags = ['第三方登入'],
    * #swagger.ignore = true
    */
 );

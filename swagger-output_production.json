@@ -567,10 +567,21 @@
     "/user/google": {
       "get": {
         "tags": [
-          "tp-auth (第三方登入)"
+          "第三方登入"
         ],
         "summary": "google登入",
         "description": "google登入，前端頁面需有一頁接回傳的token",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/user/facebook": {
+      "get": {
+        "tags": [
+          "第三方登入"
+        ],
+        "summary": "facebook登入",
+        "description": "facebook登入，前端頁面需有一頁接回傳的token",
         "parameters": [],
         "responses": {}
       }

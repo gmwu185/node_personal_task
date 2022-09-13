@@ -1,20 +1,21 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var cors = require('cors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const cors = require('cors');
 const swaggerUI = require('swagger-ui-express');
 const swaggerFilePath = `./swagger-output_${process.env.NODE_ENV}.json`;
 const swaggerFile = require(swaggerFilePath);
 
 const { handlerError } = require('./handStates/handles');
 
-var postsRouter = require('./routes/posts');
-var usersRouter = require('./routes/users');
-var usersThirdOauthRouter = require('./routes/users/thirdOauth');
-var uploadRouter = require('./routes/upload');
+const postsRouter = require('./routes/posts');
+const usersRouter = require('./routes/users');
+const usersThirdOauthRouter = require('./routes/users/thirdOauth');
+const uploadRouter = require('./routes/upload');
+const payRouter = require('./routes/pay');
 
-var app = express();
+const app = express();
 
 // 補捉程式錯誤
 process.on('uncaughtException', (err) => {
@@ -40,6 +41,7 @@ app.use(usersRouter);
 app.use(usersThirdOauthRouter);
 app.use(postsRouter);
 app.use(uploadRouter);
+app.use(payRouter);
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));
 
 // 404 錯誤

@@ -1,10 +1,20 @@
 const { Merchant, CreditOneTimePayment } = require('node-ecpay-aio');
 const dayjs = require('dayjs');
 
+const Pay = require('../model/pay');
+const User = require('../model/users');
+const mongoose = require('mongoose');
+
 const handleErrorAsync = require('../handStates/handleErrorAsync');
+const appError = require('../customErr/appError');
+const randomId = require('../helps/randomId');
 
 module.exports = {
   createPay: handleErrorAsync(async (req, res, next) => {
+    const newPay = await Pay.create({
+      tradeNo: `MWW${await randomId(10)}`,
+      user: req.userID,
+    });
     const merchant = new Merchant('Test', {
       // 必填
       MerchantID: process.env.ECPAY_MERCHANTID,
@@ -15,17 +25,16 @@ module.exports = {
       OrderResultURL: process.env.ECPAY_ORDERRESULTURL,
       ClientBackURL: process.env.ECPAY_CLIENTBACKURL, // 訂單付款時有錯返回網址
     });
-
     const payment = await merchant.createPayment(
       CreditOneTimePayment,
       {
-        MerchantTradeNo: `NEANo${Date.now()}`, // 訂單編號，上綠界時如果重覆送出一樣會較有新單號 (會進 db)
-        MerchantTradeDate: dayjs('2022-06-01T02:16:11.955+00:00').format(
+        MerchantTradeNo: newPay.tradeNo,
+        MerchantTradeDate: dayjs(newPay.createdAt).format(
           'YYYY/MM/DD HH:mm:ss'
         ), // 進 db 訂單成立時間
-        TotalAmount: 500, // 字串不行，只能使用純數值
-        TradeDesc: '交易描述',
-        ItemName: '商品名稱',
+        TotalAmount: newPay.totalAmount, // 字串不行，只能使用純數值
+        TradeDesc: newPay.tradeDesc,
+        ItemName: newPay.itemName,
         OrderResultURL: process.env.ECPAY_ORDERRESULTURL,
         ClientBackURL: process.env.ECPAY_CLIENTBACKURL, // 訂單付款時有錯返回網或是完成結帳導向網址
       },
@@ -38,17 +47,34 @@ module.exports = {
         UnionPay: 2, // [需申請] 銀聯卡: 0 (可用, default) | 1 (導至銀聯網) | 2 (不可用)
       }
     );
-
     const htmlRedirectPostForm = await payment.checkout();
     res.status(200).json({ resHTML: htmlRedirectPostForm });
     res.end();
   }),
   tradeConfirm: handleErrorAsync(async (req, res, next) => {
-    console.log('tradeConfirm req.body', req.body);
-    // const { MerchantTradeNo, RtnMsg, RtnCode, TradeNo, TradeDate } = req.body;
-    // const confirmOrderData = { MerchantTradeNo, RtnMsg, RtnCode, TradeNo, TradeDate };
-    // console.log('confirmOrderData', confirmOrderData);
-    res.status(200).send('OK');
+    const { MerchantTradeNo, RtnCode, RtnMsg, TradeDate, TradeNo } = req.body;
+    const updatePay = await Pay.findOneAndUpdate(
+      {
+        tradeNo: MerchantTradeNo,
+      },
+      {
+        ecPayTradeNo: TradeNo,
+        ecPayTradeDate: TradeDate,
+        ecPayRtnMsg: RtnMsg,
+        tradeStatus: RtnCode === '1' ? 0 : 1,
+      },
+      {
+        new: true,
+      }
+    );
+    await User.findByIdAndUpdate(updatePay.user.id, {
+      premiumMember: {
+        paid: 1,
+        pay: updatePay.id,
+        startAt: updatePay.createdAt,
+      },
+    });
+    res.status(200).send('OK'); // 需回應 OK 綠界才會中斷連線
   }),
   tradeRedirect: handleErrorAsync(async (req, res, next) => {
     res.redirect(process.env.FRONTEND_MEMBER_URL);

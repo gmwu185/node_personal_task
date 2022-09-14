@@ -53,6 +53,7 @@ module.exports = {
   }),
   tradeConfirm: handleErrorAsync(async (req, res, next) => {
     const { MerchantTradeNo, RtnCode, RtnMsg, TradeDate, TradeNo } = req.body;
+    console.log('req.body', req.body);
     const updatePay = await Pay.findOneAndUpdate(
       {
         tradeNo: MerchantTradeNo,
@@ -67,13 +68,15 @@ module.exports = {
         new: true,
       }
     );
-    await User.findByIdAndUpdate(updatePay.user.id, {
+    console.log('tradeConfirm updatePay', updatePay);
+    const findPayUser = await User.findByIdAndUpdate(updatePay.user.id, {
       premiumMember: {
         paid: 1,
         pay: updatePay.id,
         startAt: updatePay.createdAt,
       },
     });
+    console.log("tradeConfirm findPayUser", findPayUser);
     res.status(200).send('OK'); // 需回應 OK 綠界才會中斷連線
   }),
   tradeRedirect: handleErrorAsync(async (req, res, next) => {

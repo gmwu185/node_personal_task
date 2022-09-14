@@ -10,5 +10,8 @@ router.post('/pay/tradeConfirm', (req, res, next) =>
   PayController.tradeConfirm(req, res, next)
 );
 router.post('/pay/tradeRedirect', PayController.tradeRedirect);
+router.get('/pay/tradeResult/:id', isAuth, (req, res, next) =>
+  PayController.getTradeResult(req, res, next)
+);
 
 module.exports = router;

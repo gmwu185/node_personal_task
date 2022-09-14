@@ -49,6 +49,14 @@ const userSchema = new mongoose.Schema(
       default: Date.now,
       select: false,
     },
+    premiumMember: {
+      //0 = false, 1=true
+      paid: { type: Number, enum: [0, 1], default: 0 },
+      pay: { type: mongoose.Schema.ObjectId, ref: 'pay' },
+      startAt: {
+        type: Date,
+      },
+    },
   },
   {
     versionKey: false, // 移除預設欄位 __v

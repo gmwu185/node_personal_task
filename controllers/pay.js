@@ -53,7 +53,7 @@ module.exports = {
   }),
   tradeConfirm: handleErrorAsync(async (req, res, next) => {
     const { MerchantTradeNo, RtnCode, RtnMsg, TradeDate, TradeNo } = req.body;
-    console.log('req.body', req.body);
+    // console.log('req.body', req.body);
     const updatePay = await Pay.findOneAndUpdate(
       {
         tradeNo: MerchantTradeNo,
@@ -68,7 +68,7 @@ module.exports = {
         new: true,
       }
     );
-    console.log('tradeConfirm updatePay', updatePay);
+    // console.log('tradeConfirm updatePay', updatePay);
     const findPayUser = await User.findByIdAndUpdate(updatePay.user.id, {
       premiumMember: {
         paid: 1,
@@ -76,10 +76,32 @@ module.exports = {
         startAt: updatePay.createdAt,
       },
     });
-    console.log("tradeConfirm findPayUser", findPayUser);
+    console.log('tradeConfirm findPayUser', findPayUser);
     res.status(200).send('OK'); // 需回應 OK 綠界才會中斷連線
   }),
   tradeRedirect: handleErrorAsync(async (req, res, next) => {
     res.redirect(process.env.FRONTEND_MEMBER_URL);
+  }),
+  getTradeResult: handleErrorAsync(async (req, res, next) => {
+    const user = req.userID;
+    const payId = req.params.id;
+    if (!mongoose.isObjectIdOrHexString(payId)) {
+      return next(appError(400, '無效id', next));
+    }
+    const payRecord = await Pay.findById(
+      payId,
+      'tradeNo tradeType totalAmount tradeDesc itemName tradeStatus ecPayRtnMsg user'
+    );
+    if (payRecord === null) {
+      return next(appError(400, '查無資料', next));
+    }
+    const payUser = payRecord.user.id;
+    if (payUser !== user) {
+      return next(appError(400, '無權限查看', next));
+    }
+    res.status(200).json({
+      status: 'success',
+      data: payRecord,
+    });
   }),
 };

@@ -25,7 +25,8 @@ router.post(
         "data": {
           "token": "<Token>",
           "wholeToken": "Bearer <Token>",
-          "userName": "aa"
+          "userName": "aa",
+          "premiumMember": true
         }
       },
     }

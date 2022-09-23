@@ -58,7 +58,7 @@ const paySchema = new mongoose.Schema({
 paySchema.pre(/^find/, function (next) {
   this.populate({
     path: 'user',
-    select: 'userName id',
+    select: 'userName premiumMember id',
   });
 
   next();

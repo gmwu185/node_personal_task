@@ -35,6 +35,7 @@ module.exports = {
       {
         id: user._id,
         userName: user.userName,
+        premiumMember: user.premiumMember.paid === 1,
       },
       process.env.JWT_SECRET,
       {
@@ -48,6 +49,7 @@ module.exports = {
         token: token,
         wholeToken: `Bearer ${token}`,
         userName: user.userName,
+        premiumMember: user.premiumMember.paid === 1,
       },
     });
   },
@@ -60,6 +62,7 @@ module.exports = {
         userName: user.userName,
         avatarUrl: user.avatarUrl,
         gender: user.gender,
+        premiumMember: user.premiumMember.paid === 1,
       },
       process.env.JWT_SECRET,
       {

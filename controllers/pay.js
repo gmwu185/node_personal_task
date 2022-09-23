@@ -10,7 +10,7 @@ const appError = require('../customErr/appError');
 const randomId = require('../helps/randomId');
 
 module.exports = {
-  createPay: handleErrorAsync(async (req, res, next) => {
+  ecpay_createPay: handleErrorAsync(async (req, res, next) => {
     const newPay = await Pay.create({
       tradeNo: `MWW${await randomId(10)}`,
       user: req.userID,
@@ -71,12 +71,12 @@ module.exports = {
     // console.log('tradeConfirm updatePay', updatePay);
     const findPayUser = await User.findByIdAndUpdate(updatePay.user.id, {
       premiumMember: {
-        paid: 1,
+        paid: 1, // 1 成為付費會員 / 0 未付費
         pay: updatePay.id,
         startAt: updatePay.createdAt,
       },
     });
-    console.log('tradeConfirm findPayUser', findPayUser);
+    // console.log('tradeConfirm findPayUser', findPayUser);
     res.status(200).send('OK'); // 需回應 OK 綠界才會中斷連線
   }),
   tradeRedirect: handleErrorAsync(async (req, res, next) => {

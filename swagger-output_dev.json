@@ -78,6 +78,10 @@
                     "userName": {
                       "type": "string",
                       "example": "aa"
+                    },
+                    "premiumMember": {
+                      "type": "boolean",
+                      "example": true
                     }
                   }
                 }
@@ -1951,6 +1955,147 @@
                 "data": {
                   "type": "string",
                   "example": "https://i.imgur.com/xxxxx.jpg"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/pay/ecpay": {
+      "get": {
+        "tags": [
+          "第三方支付"
+        ],
+        "summary": "綠界-產生訂單並要求付款",
+        "description": "<p>在資料庫先新增 pay 的紀錄，再向綠界產生訂單，並取得 form data 導向付款頁面</p> 參數用法： <ul> <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li> </ul> 流程用法： <ul> <li>取得 form data 後，用 html 觸發 form submit</li> <li>測試卡號：<code>4311-9522-2222-2222</code>；安全碼：<code>222</code>；有效年月:大於當下的年月(e.g.07/28)</li> </ul> ",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "取得 form data",
+            "schema": {
+              "1": {
+                "example": "1"
+              },
+              "type": "string",
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/pay/ecpay_tradeConfirm": {
+      "post": {
+        "tags": [
+          "第三方支付"
+        ],
+        "summary": "綠界-提供回傳的 url",
+        "description": " <ul> <li>提供綠界回傳的 url</li> <li>取得交易結果，且更新document Users 和 Pays</li> </ul> ",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/pay/ecpay_tradeRedirect": {
+      "post": {
+        "tags": [
+          "第三方支付"
+        ],
+        "summary": "綠界-提供回傳的 url 轉址前端",
+        "description": " <p>提供綠界回傳的 url, 導回前端頁面</p> ",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/pay/ecpay_tradeResult/{id}": {
+      "get": {
+        "tags": [
+          "第三方支付"
+        ],
+        "summary": "綠界-取得付款結果",
+        "description": " <p>取得付款結果</p> ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "pay id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "取得單筆付款結果",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "629719ace801357b6d843506"
+                    },
+                    "tradeNo": {
+                      "type": "string",
+                      "example": "MWW6zvo77p3m0"
+                    },
+                    "tradeType": {
+                      "type": "string",
+                      "example": "creditonetime"
+                    },
+                    "totalAmount": {
+                      "type": "number",
+                      "example": 1000
+                    },
+                    "tradeDesc": {
+                      "type": "string",
+                      "example": "會員費用"
+                    },
+                    "itemName": {
+                      "type": "string",
+                      "example": "會員費用"
+                    },
+                    "tradeStatus": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "628a53f86e242867112a2321"
+                        },
+                        "userName": {
+                          "type": "string",
+                          "example": "大明123"
+                        }
+                      }
+                    },
+                    "ecPayRtnMsg": {
+                      "type": "string",
+                      "example": "交易成功"
+                    }
+                  }
                 }
               },
               "xml": {

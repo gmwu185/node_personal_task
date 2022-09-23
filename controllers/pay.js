@@ -51,7 +51,7 @@ module.exports = {
     res.status(200).json({ resHTML: htmlRedirectPostForm });
     res.end();
   }),
-  tradeConfirm: handleErrorAsync(async (req, res, next) => {
+  ecpay_tradeConfirm: handleErrorAsync(async (req, res, next) => {
     const { MerchantTradeNo, RtnCode, RtnMsg, TradeDate, TradeNo } = req.body;
     // console.log('req.body', req.body);
     const updatePay = await Pay.findOneAndUpdate(
@@ -68,7 +68,7 @@ module.exports = {
         new: true,
       }
     );
-    // console.log('tradeConfirm updatePay', updatePay);
+    // console.log('ecpay_tradeConfirm updatePay', updatePay);
     const findPayUser = await User.findByIdAndUpdate(updatePay.user.id, {
       premiumMember: {
         paid: 1, // 1 成為付費會員 / 0 未付費
@@ -76,13 +76,13 @@ module.exports = {
         startAt: updatePay.createdAt,
       },
     });
-    // console.log('tradeConfirm findPayUser', findPayUser);
+    // console.log('ecpay_tradeConfirm findPayUser', findPayUser);
     res.status(200).send('OK'); // 需回應 OK 綠界才會中斷連線
   }),
-  tradeRedirect: handleErrorAsync(async (req, res, next) => {
+  ecpay_tradeRedirect: handleErrorAsync(async (req, res, next) => {
     res.redirect(process.env.FRONTEND_MEMBER_URL);
   }),
-  getTradeResult: handleErrorAsync(async (req, res, next) => {
+  get_ecpay_tradeResult: handleErrorAsync(async (req, res, next) => {
     const user = req.userID;
     const payId = req.params.id;
     if (!mongoose.isObjectIdOrHexString(payId)) {

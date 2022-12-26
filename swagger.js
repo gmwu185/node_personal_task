@@ -10,7 +10,7 @@ const doc = {
   },
   host:
     process.env.NODE_ENV === 'dev'
-      ? process.env.DOMAIN_SERVER_DEV
+      ? `${process.env.DOMAIN_SERVER_DEV}:${process.env.DOMAIN_SERVER_DEFAULTPORT}`
       : process.env.DOMAIN_SERVER_PRODUCTION,
   schemes: process.env.NODE_ENV === 'dev' ? ['http'] : ['https'],
   securityDefinitions: {

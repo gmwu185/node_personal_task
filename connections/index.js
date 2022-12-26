@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'production') {
 let serverPath =
   process.env.NODE_ENV === 'production'
     ? process.env.DOMAIN_SERVER_PRODUCTION
-    : process.env.DOMAIN_SERVER_DEV;
+    : `${process.env.DOMAIN_SERVER_DEV}:${process.env.DOMAIN_SERVER_DEFAULTPORT}`;
 
 mongoose
   .connect(DB)

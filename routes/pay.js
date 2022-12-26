@@ -33,7 +33,7 @@ router.post(
   '/pay/ecpay_tradeConfirm',
   (req, res, next) => PayController.ecpay_tradeConfirm(req, res, next)
   /** #swagger.summary = '綠界-接收回傳的 url',
-    * #swag1.ger.tags = ['第三方支付'],
+    * #swagger.tags = ['第三方支付'],
     * #swagger.description = `
       <ul>
         <li>接收綠界回傳的 url</li>
@@ -58,7 +58,7 @@ router.get(
   (req, res, next) => PayController.get_ecpay_tradeResult(req, res, next)
   /** #swagger.summary = '綠界-取得付款結果',
     * #swagger.tags = ['第三方支付'],
-    #swagger.description = `
+    * #swagger.description = `
       <p>取得付款結果</p>
     `,
     * #swagger.security = [{

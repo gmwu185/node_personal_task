@@ -1,14 +1,13 @@
 {
-  "name": "week3-express-mvc",
+  "name": "metawall-personal-task-mvc",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "cross-env NODE_ENV=production npm run swagger:prod\n NODE_ENV=production node ./bin/www",
-    "locall:dev": "cross-env NODE_ENV=dev nodemon ./bin/www ",
-    "locall:prod": "cross-env NODE_ENV=production nodemon ./bin/www ",
-    "server": "cross-env NODE_ENV=production nodemon ./bin/www",
+    "start": "cross-env NODE_ENV=prod npm run swagger:prod\n NODE_ENV=prod node ./bin/www",
+    "dev": "cross-env NODE_ENV=dev npm run swagger:dev\n NODE_ENV=dev nodemon ./bin/www ",
+    "prod": "cross-env NODE_ENV=prod npm run swagger:prod \n NODE_ENV=prod nodemon ./bin/www",
     "swagger:dev": "cross-env NODE_ENV=dev node ./swagger.js",
-    "swagger:prod": "cross-env NODE_ENV=production node ./swagger.js",
+    "swagger:prod": "cross-env NODE_ENV=prod node ./swagger.js",
     "swagger": "cross-env npm run swagger:dev\n npm run swagger:prod"
   },
   "dependencies": {

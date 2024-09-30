@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs'); // 密碼加密
 const validator = require('validator'); // 格式驗證
 const dotenv = require('dotenv');
-dotenv.config({ path: './.env' });
+dotenv.config({ path: `./.env.${process.env.NODE_ENV}` });
 
 const { isAuth, generateSendJWT } = require('../../middlewares/auth');
 const { handleSuccess } = require('../../handStates/handles');

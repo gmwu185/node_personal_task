@@ -5,14 +5,14 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('week3-express-mvc:server');
+var debug = require('debug')('metawall-personal-task-mvc:server');
 var http = require('http');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || process.env.DOMAIN_SERVER_DEFAULTPORT);
+var port = normalizePort(process.env.PORT || process.env.CUSTOMPORT);
 app.set('port', port);
 
 /**

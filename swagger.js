@@ -1,6 +1,13 @@
 const swaggerAutogen = require('swagger-autogen')();
 const dotenv = require('dotenv');
-dotenv.config({ path: './config.env' });
+dotenv.config({ path: `./.env.${process.env.NODE_ENV}` });
+
+let doc_server_path = "";
+if (process.env.NODE_ENV === "prod") {
+  doc_server_path = `${process.env.DOMAIN_SERVER}`;
+} else {
+  doc_server_path = `${process.env.DOMAIN_SERVER}:${process.env.CUSTOMPORT}`;
+}
 
 const doc = {
   // 生成資料、格式、設定
@@ -8,11 +15,8 @@ const doc = {
     title: 'API DOC',
     description: '',
   },
-  host:
-    process.env.NODE_ENV === 'dev'
-      ? `${process.env.DOMAIN_SERVER_DEV}:${process.env.DOMAIN_SERVER_DEFAULTPORT}`
-      : process.env.DOMAIN_SERVER_PRODUCTION,
-  schemes: process.env.NODE_ENV === 'dev' ? ['http'] : ['https'],
+  host: doc_server_path,
+  schemes: [process.env.PROTOCOL],
   securityDefinitions: {
     apiKeyAuth: {
       type: 'apiKey',

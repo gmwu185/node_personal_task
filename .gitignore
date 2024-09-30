@@ -1,7 +1,11 @@
 config.env
+.env
+.env.dev
+.env.prod
+
 node_modules
 .DS_Store
 swagger-output_dev.json
-swagger-output_production.json
+swagger-output_prod.json
 .vscode
 /inbox

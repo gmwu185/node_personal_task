@@ -8,7 +8,8 @@
     "prod": "cross-env NODE_ENV=prod npm run swagger:prod \n NODE_ENV=prod nodemon ./bin/www",
     "swagger:dev": "cross-env NODE_ENV=dev node ./swagger.js",
     "swagger:prod": "cross-env NODE_ENV=prod node ./swagger.js",
-    "swagger": "cross-env npm run swagger:dev\n npm run swagger:prod"
+    "swagger": "cross-env npm run swagger:dev\n npm run swagger:prod",
+    "pm2_start": "pm2 reload ecosystem.config.js --only metawall_persona"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
